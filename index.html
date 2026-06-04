@@ -1,704 +1,757 @@
 <!DOCTYPE html>
 <html lang="en" prefix="og: https://ogp.me/ns#">
 <head>
-  <!-- ═══════════════════════════════════════════
-       CHARSET & VIEWPORT — always first
-  ══════════════════════════════════════════════ -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <!-- ═══════════════════════════════════════════
-       PRIMARY SEO META TAGS
-  ══════════════════════════════════════════════ -->
-  <title>VideoHub — Popular Usa Girl Sex Videos</title>
-  <meta name="description"
-        content="Most popular Usa Girl fuck videos can be watched on this amazing free adult porn tube. Enjoy the best porn video now.">
-  <meta name="keywords"
-        content=" america american girl 18 year old, pakistani girl, sex video pakistan full, russian fucking with 20 year old, america american girl sexy latest, 18 years old british girl sex video, usa school girl fuck, japan usa, usa girl xxx, american night two girls, tamil aunty fucking boy, indian, indian bhabhi, maleshion girl, united states hot girls, girl">
-  <meta name="author" content="VideoHub">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-  <meta name="theme-color" content="#0a0a0f">
-  <meta name="color-scheme" content="dark">
+  <!-- PRIMARY SEO — title updated dynamically from Firebase -->
+  <title id="pageTitle">VideoHub — Watch Free Videos Online</title>
+  <meta name="description"    id="metaDesc"    content="Stream unlimited free videos online. Watch trending, featured and recommended videos in HD quality.">
+  <meta name="robots"                          content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="theme-color"                     content="#0d0d14">
 
-  <!-- ═══════════════════════════════════════════
-       CANONICAL URL — change to your real domain
-  ══════════════════════════════════════════════ -->
-  <link rel="canonical" href="https://cineinsight.info">
+  <!-- OPEN GRAPH -->
+  <meta property="og:type"        content="website">
+  <meta property="og:site_name"   content="VideoHub">
+  <meta property="og:url"         id="ogUrl"   content="https://yourdomain.com/">
+  <meta property="og:title"       id="ogTitle" content="VideoHub — Watch Free Videos Online">
+  <meta property="og:description" id="ogDesc"  content="Stream unlimited free videos online.">
+  <meta property="og:image"       id="ogImage" content="https://yourdomain.com/og-cover.jpg">
 
-  <!-- ═══════════════════════════════════════════
-       OPEN GRAPH (Facebook / LinkedIn / WhatsApp)
-  ══════════════════════════════════════════════ -->
-  <meta property="og:type"          content="website">
-  <meta property="og:site_name"     content="VideoHub">
-  <meta property="og:url"           content="https://cineinsight.info">
-  <meta property="og:title"         content="VideoHub — Best Free Porn Clips: Explore the Top-Rated Videos Today">
-  <meta property="og:description"   content="Discover Top-Rated Free Porn Videos: Your Ultimate Online Destination">
-  <meta property="og:image"         content="https://cineinsight.info/og-cover.jpg">
-  <meta property="og:image:width"   content="1200">
-  <meta property="og:image:height"  content="630">
-  <meta property="og:image:alt"     content="VideoHub — Stream Unlimited Videos">
-  <meta property="og:locale"        content="en_US">
-
-  <!-- ═══════════════════════════════════════════
-       TWITTER / X CARD
-  ══════════════════════════════════════════════ -->
+  <!-- TWITTER CARD -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:site"        content="@VideoHub">
-  <meta name="twitter:creator"     content="@VideoHub">
-  <meta name="twitter:title"       content="VideoHub — Stream Unlimited Free Videos Online">
-  <meta name="twitter:description" content="Watch trending and featured videos for free. Dynamic Firebase-powered streaming.">
-  <meta name="twitter:image"       content="https://cineinsight.info/og-cover.jpg">
-  <meta name="twitter:image:alt"   content="VideoHub streaming platform">
+  <meta name="twitter:title"       id="twTitle" content="VideoHub — Watch Free Videos Online">
+  <meta name="twitter:description" id="twDesc"  content="Stream unlimited free videos online.">
+  <meta name="twitter:image"       id="twImage" content="https://yourdomain.com/og-cover.jpg">
 
-  <!-- ═══════════════════════════════════════════
-       FAVICONS — all sizes for all devices
-  ══════════════════════════════════════════════ -->
-  <link rel="icon"             href="/favicon.ico"          sizes="any">
-  <link rel="icon"             href="/favicon.svg"          type="image/svg+xml">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
-  <link rel="manifest"         href="/site.webmanifest">
+  <!-- CANONICAL -->
+  <link rel="canonical" id="canonicalTag" href="https://yourdomain.com/">
 
-  <!-- ═══════════════════════════════════════════
-       PERFORMANCE: DNS PREFETCH & PRECONNECT
-       Reduces latency for external origins
-  ══════════════════════════════════════════════ -->
-  <link rel="preconnect"    href="https://fonts.googleapis.com">
-  <link rel="preconnect"    href="https://fonts.gstatic.com"      crossorigin>
-  <link rel="dns-prefetch"  href="https://www.gstatic.com">
-  <link rel="dns-prefetch"  href="https://firestore.googleapis.com">
+  <!-- PRECONNECT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://www.gstatic.com">
 
-  <!-- ═══════════════════════════════════════════
-       FONTS — non-render-blocking via media trick
-  ══════════════════════════════════════════════ -->
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap"
-        media="print" onload="this.media='all'">
+  <!-- FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
   <noscript>
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   </noscript>
 
-  <!-- ═══════════════════════════════════════════
-       STRUCTURED DATA: WebSite + SearchAction
-       Enables Google Sitelinks Searchbox
-  ══════════════════════════════════════════════ -->
+  <!-- STRUCTURED DATA: WebSite -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "VideoHub",
-    "url": "https://cineinsight.info/",
-    "description": "Watch the Best Free Porn Videos: Top Clips Just a Click Away.",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": {
-        "@type": "EntryPoint",
-        "urlTemplate": "https://cineinsight.info/?q={search_term_string}"
-      },
-      "query-input": "required name=search_term_string"
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"VideoHub",
+    "url":"https://yourdomain.com/",
+    "potentialAction":{
+      "@type":"SearchAction",
+      "target":{"@type":"EntryPoint","urlTemplate":"https://yourdomain.com/?q={search_term_string}"},
+      "query-input":"required name=search_term_string"
     }
   }
   </script>
 
-  <!-- ═══════════════════════════════════════════
-       STRUCTURED DATA: VideoObject (injected
-       dynamically via JS after Firebase loads)
-  ══════════════════════════════════════════════ -->
-  <script type="application/ld+json" id="videoListSchema">
-  {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Featured Videos on VideoHub",
-    "url": "https://cineinsight.info/",
-    "itemListElement": []
-  }
-  </script>
+  <!-- STRUCTURED DATA: ItemList (populated by JS) -->
+  <script type="application/ld+json" id="itemListSchema">{}</script>
 
-  <!-- ═══════════════════════════════════════════
-       CRITICAL CSS — inlined to eliminate
-       render-blocking stylesheet requests
-  ══════════════════════════════════════════════ -->
+  <!-- STRUCTURED DATA: VideoObject (populated by JS on player page) -->
+  <script type="application/ld+json" id="videoObjectSchema">{}</script>
+
   <style>
-    /* ── RESET & VARIABLES ─────────────────── */
-    *, *::before, *::after {
-      margin: 0; padding: 0;
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 
     :root {
-      --bg:      #0a0a0f;
-      --card:    #1a1a24;
-      --border:  #2a2a3a;
-      --accent:  #f5a623;
-      --text:    #f0f0f5;
-      --muted:   #7a7a90;
-      --radius:  14px;
-      --font-display: 'Bebas Neue', 'Arial Black', sans-serif;
-      --font-body:    'DM Sans', system-ui, -apple-system, sans-serif;
+      --bg:        #0d0d14;
+      --surface:   #13131e;
+      --card:      #1c1c2a;
+      --border:    #2a2a3e;
+      --accent:    #e8433a;
+      --accent2:   #f5a623;
+      --text:      #eeeef5;
+      --muted:     #6b6b85;
+      --radius:    12px;
+      --font-d:    'Bebas Neue', 'Arial Black', sans-serif;
+      --font-b:    'DM Sans', system-ui, sans-serif;
     }
 
-    /* ── BASE ──────────────────────────────── */
     html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: var(--font-body);
+      font-family: var(--font-b);
       -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
     }
 
-    img {
-      display: block;
-      max-width: 100%;
-      height: auto;
-    }
+    /* ── SKIP LINK ── */
+    .skip { position:absolute; top:-100%; left:0; padding:8px 16px;
+      background:var(--accent); color:#fff; font-weight:600;
+      border-radius:0 0 8px 0; z-index:9999; transition:top .2s; }
+    .skip:focus { top:0; }
 
-    a { color: inherit; text-decoration: none; }
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width:6px; }
+    ::-webkit-scrollbar-track { background:var(--bg); }
+    ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
 
-    /* ── SKIP LINK (accessibility + Lighthouse) */
-    .skip-link {
-      position: absolute;
-      top: -100%;
-      left: 0;
-      padding: 8px 16px;
-      background: var(--accent);
-      color: #000;
-      font-weight: 600;
-      border-radius: 0 0 var(--radius) 0;
-      z-index: 9999;
-      transition: top .2s;
-    }
-    .skip-link:focus { top: 0; }
-
-    /* ── HEADER ────────────────────────────── */
+    /* ── HEADER ── */
     header {
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      background: rgba(10,10,15,.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      z-index: 999;
+      height:68px; display:flex; align-items:center;
+      justify-content:space-between; padding:0 24px;
+      border-bottom:1px solid var(--border);
+      position:sticky; top:0;
+      background:rgba(13,13,20,.95);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      z-index:999;
     }
 
     .logo {
-      font-size: 30px;
-      font-family: var(--font-display);
-      letter-spacing: 2px;
-      color: var(--accent);
-      /* Decorative — hidden from screen readers, text below handles label */
+      font-size:28px; font-family:var(--font-d);
+      letter-spacing:3px; color:var(--accent);
+      text-decoration:none;
+    }
+    .logo span { color:var(--accent2); }
+
+    .header-right {
+      display:flex; align-items:center; gap:12px;
     }
 
-    /* ── HERO ──────────────────────────────── */
-    .hero { padding: 50px 20px; }
+    /* Search bar */
+    .search-wrap {
+      position:relative; display:flex; align-items:center;
+    }
+    .search-wrap input {
+      background:var(--card); border:1px solid var(--border);
+      color:var(--text); border-radius:50px;
+      padding:8px 40px 8px 16px;
+      font-family:var(--font-b); font-size:14px;
+      outline:none; width:220px;
+      transition:border-color .2s, width .3s;
+    }
+    .search-wrap input:focus { border-color:var(--accent); width:260px; }
+    .search-wrap input::placeholder { color:var(--muted); }
+    .search-wrap svg {
+      position:absolute; right:12px;
+      color:var(--muted); pointer-events:none;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding:60px 24px 40px;
+      background: linear-gradient(135deg, #0d0d14 60%, #1a0a0a 100%);
+      position:relative; overflow:hidden;
+    }
+    .hero::before {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(ellipse 80% 60% at 60% 50%,
+        rgba(232,67,58,.12) 0%, transparent 70%);
+      pointer-events:none;
+    }
+
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:6px;
+      background:rgba(232,67,58,.15); border:1px solid rgba(232,67,58,.3);
+      color:var(--accent); font-size:12px; font-weight:600;
+      letter-spacing:1px; text-transform:uppercase;
+      padding:5px 12px; border-radius:50px; margin-bottom:16px;
+    }
+    .hero-badge::before { content:'●'; font-size:8px; animation:pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
 
     .hero h1 {
-      font-size: 60px;
-      font-family: var(--font-display);
-      line-height: 1;
-      margin-bottom: 10px;
+      font-size:64px; font-family:var(--font-d);
+      line-height:1; margin-bottom:14px; position:relative;
     }
+    .hero h1 em { font-style:normal; color:var(--accent); }
+    .hero h1 strong { font-style:normal; color:var(--accent2); font-weight:400; }
 
-    .hero h1 span { color: var(--accent); }
+    .hero p { color:var(--muted); max-width:480px; line-height:1.8; font-size:15px; }
 
-    .hero p {
-      color: var(--muted);
-      max-width: 500px;
-      line-height: 1.7;
+    .hero-stats {
+      display:flex; gap:32px; margin-top:28px; flex-wrap:wrap;
     }
+    .stat { display:flex; flex-direction:column; gap:2px; }
+    .stat-num { font-family:var(--font-d); font-size:32px; color:var(--text); }
+    .stat-label { font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
 
-    /* ── SECTIONS ──────────────────────────── */
-    .section { padding: 20px; }
+    /* ── TABS ── */
+    .tabs {
+      display:flex; gap:0; padding:0 24px;
+      border-bottom:1px solid var(--border);
+      overflow-x:auto;
+    }
+    .tab-btn {
+      padding:14px 20px; font-family:var(--font-b); font-size:14px;
+      font-weight:500; color:var(--muted); background:none; border:none;
+      border-bottom:2px solid transparent; cursor:pointer;
+      white-space:nowrap; transition:color .2s, border-color .2s;
+    }
+    .tab-btn.active { color:var(--text); border-bottom-color:var(--accent); }
+    .tab-btn:hover { color:var(--text); }
 
+    /* ── SECTION ── */
+    .section { padding:24px; }
+
+    .section-header {
+      display:flex; align-items:center; justify-content:space-between;
+      margin-bottom:20px;
+    }
     .section-title {
-      font-size: 28px;
-      font-family: var(--font-display);
-      letter-spacing: 2px;
-      margin-bottom: 20px;
+      font-size:24px; font-family:var(--font-d); letter-spacing:2px;
+    }
+    .section-count {
+      font-size:13px; color:var(--muted);
+      background:var(--card); padding:4px 10px; border-radius:50px;
     }
 
-    /* ── VIDEO GRID ────────────────────────── */
+    /* ── GRID ── */
     .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(260px,1fr));
+      gap:20px;
     }
 
-    /* ── CARD ──────────────────────────────── */
+    /* ── CARD ── */
     .card {
-      background: var(--card);
-      border-radius: var(--radius);
-      overflow: hidden;
-      cursor: pointer;
-      border: 1px solid var(--border);
-      transition: transform .25s ease, border-color .25s ease,
-                  box-shadow .25s ease;
-      /* contain prevents layout thrash on hover */
-      contain: layout style;
+      background:var(--card); border-radius:var(--radius);
+      overflow:hidden; cursor:pointer;
+      border:1px solid var(--border);
+      transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+      contain:layout style;
+      text-decoration:none; display:block; color:inherit;
+    }
+    .card:hover {
+      transform:translateY(-6px);
+      border-color:var(--accent);
+      box-shadow:0 16px 40px rgba(232,67,58,.18);
+    }
+    .card:focus { outline:2px solid var(--accent); }
+
+    .card-thumb {
+      position:relative; overflow:hidden;
+      background:#111;
+    }
+    .card-thumb img {
+      width:100%; height:175px; object-fit:cover;
+      transition:transform .4s ease;
+      display:block;
+    }
+    .card:hover .card-thumb img { transform:scale(1.05); }
+
+    /* Play overlay */
+    .play-overlay {
+      position:absolute; inset:0;
+      background:rgba(0,0,0,.4);
+      display:flex; align-items:center; justify-content:center;
+      opacity:0; transition:opacity .25s;
+    }
+    .card:hover .play-overlay { opacity:1; }
+    .play-btn-icon {
+      width:48px; height:48px;
+      background:var(--accent);
+      border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .play-btn-icon svg { margin-left:3px; }
+
+    /* Duration badge */
+    .duration-badge {
+      position:absolute; bottom:8px; right:8px;
+      background:rgba(0,0,0,.85);
+      color:#fff; font-size:11px; font-weight:600;
+      padding:2px 6px; border-radius:4px;
+      letter-spacing:.5px;
     }
 
-    .card:hover, .card:focus-within {
-      transform: translateY(-5px);
-      border-color: var(--accent);
-      box-shadow: 0 12px 30px rgba(245,166,35,.15);
+    /* New badge */
+    .new-badge {
+      position:absolute; top:8px; left:8px;
+      background:var(--accent); color:#fff;
+      font-size:10px; font-weight:700;
+      padding:2px 7px; border-radius:4px;
+      letter-spacing:1px; text-transform:uppercase;
     }
 
-    .card:focus { outline: 2px solid var(--accent); }
-
-    .card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      /* lazy-load applied via attribute below */
-    }
-
-    .card-info { padding: 12px; }
+    .card-info { padding:13px; }
 
     .card-title {
-      font-size: 15px;
-      font-weight: 500;
-      line-height: 1.5;
-      /* Clamp to 2 lines — better than fixed height */
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+      font-size:14px; font-weight:500; line-height:1.5;
+      display:-webkit-box; -webkit-line-clamp:2;
+      -webkit-box-orient:vertical; overflow:hidden;
+      margin-bottom:8px;
     }
 
     .card-meta {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-      font-size: 12px;
-      color: var(--muted);
+      display:flex; justify-content:space-between;
+      font-size:12px; color:var(--muted);
+      align-items:center;
     }
 
-    /* ── PLAYER PAGE ───────────────────────── */
-    .player-page { display: none; }
+    .card-views { display:flex; align-items:center; gap:4px; }
 
-    .back-btn {
-      margin: 20px;
-      padding: 10px 22px;
-      background: var(--card);
-      color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      cursor: pointer;
-      font-family: var(--font-body);
-      font-size: 14px;
-      transition: border-color .2s, background .2s;
-    }
-    .back-btn:hover { border-color: var(--accent); background: #22222e; }
-    .back-btn:focus { outline: 2px solid var(--accent); }
-
-    .video-box {
-      width: 100%;
-      background: #000;
-      /* Intrinsic ratio wrapper */
-      position: relative;
-      padding-top: 56.25%; /* 16:9 */
-    }
-
-    .video-box iframe {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    .player-content {
-      padding: 20px;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    .player-title {
-      font-size: 28px;
-      margin-bottom: 10px;
-    }
-
-    .player-meta {
-      color: var(--muted);
-      margin-bottom: 20px;
-    }
-
-    .recommended { margin-top: 40px; }
-
-    .rec-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 15px;
-    }
-
-    /* ── STATES ────────────────────────────── */
+    /* ── LOADING / EMPTY ── */
     .loading {
-      text-align: center;
-      padding: 100px 20px;
-      font-size: 20px;
-      color: var(--muted);
+      grid-column:1/-1; text-align:center;
+      padding:80px 20px; font-size:18px; color:var(--muted);
+    }
+    .loading-spinner {
+      width:36px; height:36px; border:3px solid var(--border);
+      border-top-color:var(--accent); border-radius:50%;
+      animation:spin .7s linear infinite; margin:0 auto 16px;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    /* ── FOOTER ── */
+    footer {
+      padding:32px 24px; border-top:1px solid var(--border);
+      margin-top:60px; text-align:center;
+    }
+    .footer-logo { font-family:var(--font-d); font-size:24px; color:var(--accent); margin-bottom:16px; }
+    .footer-links {
+      display:flex; gap:20px; justify-content:center;
+      flex-wrap:wrap; font-size:13px; color:var(--muted); margin-bottom:14px;
+    }
+    .footer-links a { color:var(--muted); text-decoration:none; }
+    .footer-links a:hover { color:var(--text); }
+    .footer-copy { font-size:12px; color:var(--muted); }
+
+    /* ── SITEMAP PAGE ── */
+    #sitemapPage { display:none; }
+    .sitemap-list {
+      list-style:none; display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(300px,1fr));
+      gap:10px; padding:24px;
+    }
+    .sitemap-list li a {
+      display:block; padding:10px 14px;
+      background:var(--card); border:1px solid var(--border);
+      border-radius:var(--radius); color:var(--text);
+      font-size:13px; text-decoration:none;
+      transition:border-color .2s;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .sitemap-list li a:hover { border-color:var(--accent); }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:768px) {
+      .hero h1 { font-size:44px; }
+      .hero-stats { gap:20px; }
+      .search-wrap input { width:160px; }
+      .search-wrap input:focus { width:180px; }
+    }
+    @media(max-width:480px) {
+      .hero h1 { font-size:36px; }
+      .video-grid { grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px; }
+      .card-thumb img { height:110px; }
     }
 
-    /* ── RESPONSIVE ────────────────────────── */
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 42px; }
-      .player-title { font-size: 22px; }
-    }
-
-    /* ── PRINT ─────────────────────────────── */
+    /* ── PRINT ── */
     @media print {
-      header, .back-btn, .video-box, .recommended { display: none; }
-      body { background: #fff; color: #000; }
+      header, footer, .tabs { display:none; }
+      body { background:#fff; color:#000; }
     }
   </style>
 </head>
-
 <body>
 
-  <!-- Accessibility: skip straight to content -->
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+<a class="skip" href="#main">Skip to content</a>
 
-  <!-- ═══════════════════════════════════════════
-       HEADER
-  ══════════════════════════════════════════════ -->
-  <header role="banner">
-    <!-- aria-label gives screen readers the brand name
-         even though the visual text is decorative font -->
-    <a href="/" class="logo" aria-label="VideoHub — Home">VideoHub</a>
+<!-- ═══════ HEADER ═══════ -->
+<header role="banner">
+  <a href="/" class="logo" aria-label="VideoHub Home">VIDEO<span>HUB</span></a>
 
-    <!-- Breadcrumb structured data injection point -->
-    <nav aria-label="Breadcrumb" id="breadcrumbNav" style="display:none;">
-      <ol itemscope itemtype="https://schema.org/BreadcrumbList" style="display:flex;gap:8px;list-style:none;font-size:13px;color:var(--muted)">
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
-          <meta itemprop="position" content="1">
-        </li>
-        <li aria-hidden="true">/</li>
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <span itemprop="name" id="breadcrumbCurrent">Watch</span>
-          <meta itemprop="position" content="2">
-        </li>
-      </ol>
-    </nav>
-  </header>
+  <div class="header-right">
+    <div class="search-wrap">
+      <input type="search" id="searchInput" placeholder="Search videos…" aria-label="Search videos">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+    </div>
+  </div>
+</header>
 
-  <!-- ═══════════════════════════════════════════
-       HOME PAGE
-  ══════════════════════════════════════════════ -->
-  <main id="main-content">
+<!-- ═══════ MAIN ═══════ -->
+<main id="main">
 
-    <div id="homePage">
+  <!-- HOME PAGE -->
+  <div id="homePage">
 
-      <!-- Hero — h1 is on this page; only one h1 per page -->
-      <section class="hero" aria-label="Site introduction">
-        <h1>Watch <span>Unlimited</span> Videos</h1>
-        <p>Stream trending videos instantly — powered by a Firebase dynamic video CMS.</p>
-      </section>
-
-      <section class="section" aria-labelledby="featured-heading">
-        <h2 id="featured-heading" class="section-title">Featured Videos</h2>
-
-        <!-- role=list so Safari VoiceOver announces count -->
-        <div id="videoGrid"
-             class="video-grid"
-             role="list"
-             aria-live="polite"
-             aria-label="Featured videos">
-          <p class="loading" role="status">Loading videos…</p>
+    <section class="hero" aria-label="Welcome">
+      <div class="hero-badge">Live Streaming</div>
+      <h1>Watch <em>Unlimited</em><br><strong>Videos</strong> Free</h1>
+      <p>Stream trending videos instantly — powered by a Firebase dynamic CMS. HD quality, zero buffering.</p>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num" id="totalCount">—</span>
+          <span class="stat-label">Videos</span>
         </div>
-      </section>
+        <div class="stat">
+          <span class="stat-num">HD</span>
+          <span class="stat-label">Quality</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">Free</span>
+          <span class="stat-label">Forever</span>
+        </div>
+      </div>
+    </section>
 
+    <div class="tabs" role="tablist" aria-label="Video categories">
+      <button class="tab-btn active" role="tab" aria-selected="true"  data-filter="all">All Videos</button>
+      <button class="tab-btn"        role="tab" aria-selected="false" data-filter="new">New</button>
+      <button class="tab-btn"        role="tab" aria-selected="false" onclick="showSitemap()">Sitemap</button>
     </div>
 
-    <!-- ═══════════════════════════════════════════
-         PLAYER PAGE
-    ══════════════════════════════════════════════ -->
-    <div id="playerPage" class="player-page" aria-label="Video player">
-
-      <button class="back-btn"
-              onclick="goHome()"
-              aria-label="Go back to home page">
-        ← Back
-      </button>
-
-      <!-- 16:9 responsive wrapper -->
-      <div class="video-box" role="region" aria-label="Video player">
-        <iframe id="playerFrame"
-                title="Video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
-                loading="lazy"
-                referrerpolicy="strict-origin-when-cross-origin">
-        </iframe>
+    <section class="section" aria-labelledby="feat-heading">
+      <div class="section-header">
+        <h2 id="feat-heading" class="section-title">Featured Videos</h2>
+        <span class="section-count" id="videoCount">0 videos</span>
       </div>
-
-      <div class="player-content">
-        <!-- h1 on player page — the video title IS the page heading -->
-        <h1 id="playerTitle" class="player-title">Video Title</h1>
-        <p  id="playerViews" class="player-meta" aria-label="View count">Views</p>
-
-        <section class="recommended" aria-labelledby="rec-heading">
-          <h2 id="rec-heading" class="section-title">Recommended</h2>
-          <div id="recommendedGrid"
-               class="rec-grid"
-               role="list"
-               aria-label="Recommended videos">
-          </div>
-        </section>
+      <div id="videoGrid" class="video-grid" role="list" aria-live="polite">
+        <div class="loading">
+          <div class="loading-spinner"></div>
+          Loading videos…
+        </div>
       </div>
+    </section>
 
+  </div>
+
+  <!-- SITEMAP PAGE -->
+  <div id="sitemapPage">
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">XML Sitemap Preview</h2>
+        <button onclick="goHome()" style="padding:8px 18px;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:50px;cursor:pointer;font-family:var(--font-b);">← Back</button>
+      </div>
+      <p style="color:var(--muted);margin-bottom:20px;font-size:14px;">
+        Auto-generated sitemap from Firebase. Download the XML file and submit to Google Search Console.
+      </p>
+      <div style="display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;">
+        <button onclick="downloadSitemap()" style="padding:10px 22px;background:var(--accent);color:#fff;border:none;border-radius:50px;cursor:pointer;font-family:var(--font-b);font-weight:600;">
+          ⬇ Download sitemap.xml
+        </button>
+        <button onclick="copySitemap()" id="copyBtn" style="padding:10px 22px;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:50px;cursor:pointer;font-family:var(--font-b);">
+          Copy XML
+        </button>
+      </div>
+      <ul id="sitemapList" class="sitemap-list" aria-label="Sitemap URLs"></ul>
     </div>
+  </div>
 
-  </main>
+</main>
 
-  <!-- ═══════════════════════════════════════════
-       FOOTER — helps Google understand site scope
-  ══════════════════════════════════════════════ -->
-  <footer role="contentinfo" style="padding:30px 20px;border-top:1px solid var(--border);text-align:center;font-size:13px;color:var(--muted);margin-top:60px;">
-    <p>© <span id="footerYear"></span> VideoHub. All rights reserved.</p>
-    <nav aria-label="Footer navigation" style="margin-top:10px;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
-      <a href="/privacy-policy" style="color:var(--muted);">Privacy Policy</a>
-      <a href="/terms"          style="color:var(--muted);">Terms of Use</a>
-      <a href="/sitemap.xml"    style="color:var(--muted);">Sitemap</a>
-      <a href="/contact"        style="color:var(--muted);">Contact</a>
-    </nav>
-  </footer>
+<!-- ═══════ FOOTER ═══════ -->
+<footer role="contentinfo">
+  <div class="footer-logo">VIDEO<span style="color:var(--accent2)">HUB</span></div>
+  <nav class="footer-links" aria-label="Footer navigation">
+    <a href="/">Home</a>
+    <a href="/privacy-policy">Privacy Policy</a>
+    <a href="/terms">Terms of Use</a>
+    <a href="#" onclick="showSitemap();return false;">Sitemap</a>
+    <a href="/contact">Contact</a>
+  </nav>
+  <p class="footer-copy">© <span id="yr"></span> VideoHub. All rights reserved.</p>
+</footer>
 
-  <!-- ═══════════════════════════════════════════
-       FIREBASE — type="module" defers automatically
-  ══════════════════════════════════════════════ -->
-  <script type="module">
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, collection, getDocs }
-      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+<!-- ═══════ FIREBASE ═══════ -->
+<script type="module">
+  import { initializeApp }    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, getDocs }
+                              from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    /* ── CONFIG ──────────────────────────── */
-    const firebaseConfig = {
-      apiKey:            "AIzaSyBYNU7wTq9_1-TdIVuG-yxAlKjeFb9Rm_M",
-      authDomain:        "video-cms-b7c1e.firebaseapp.com",
-      projectId:         "video-cms-b7c1e",
-      storageBucket:     "video-cms-b7c1e.firebasestorage.app",
-      messagingSenderId: "991575420179",
-      appId:             "1:991575420179:web:23459a09aa36f868e37ee6",
-      measurementId:     "G-S9R2HDC5FZ"
-    };
+  /* ── CONFIG — replace with your own ── */
+  const firebaseConfig = {
+    apiKey:            "YOUR_API_KEY",
+    authDomain:        "YOUR_PROJECT.firebaseapp.com",
+    projectId:         "YOUR_PROJECT_ID",
+    storageBucket:     "YOUR_PROJECT.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId:             "YOUR_APP_ID"
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const db  = getFirestore(app);
+  const SITE_URL   = "https://cineinsight.info";   // ← change
+  const SITE_NAME  = "VideoHub";
 
-    let videos = [];
+  const app = initializeApp(apiKey: "AIzaSyBYNU7wTq9_1-TdIVuG-yxAlKjeFb9Rm_M",
+  authDomain: "video-cms-b7c1e.firebaseapp.com",
+  projectId: "video-cms-b7c1e",
+  storageBucket: "video-cms-b7c1e.firebasestorage.app",
+  messagingSenderId: "991575420179",
+  appId: "1:991575420179:web:23459a09aa36f868e37ee6",
+  measurementId: "G-S9R2HDC5FZ);
+  const db  = getFirestore(app);
 
-    /* ── HELPERS ─────────────────────────── */
+  let videos      = [];
+  let allVideos   = [];
 
-    /** Sanitise user-supplied strings before innerHTML injection */
-    const sanitise = (str = '') =>
-      String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+  /* ── SANITISE ── */
+  const esc = s => String(s||'')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
-    /** Build a card element (reused for grid + recommended) */
-    function buildCard(video) {
-      const article = document.createElement('article');
-      article.className  = 'card';
-      article.setAttribute('role', 'listitem');
-      article.setAttribute('tabindex', '0');
-      article.setAttribute('aria-label', sanitise(video.title));
+  /* ── UPDATE HEAD META ── */
+  function setMeta({ title, desc, image, url }) {
+    const t = title || `${SITE_NAME} — Watch Free Videos Online`;
+    const d = desc  || `Stream unlimited free videos online on ${SITE_NAME}.`;
+    const u = url   || `${SITE_URL}/`;
+    const i = image || `${SITE_URL}/og-cover.jpg`;
 
-      article.innerHTML = `
-        <img src="${sanitise(video.thumb)}"
-             alt="${sanitise(video.title)} thumbnail"
-             width="400" height="180"
-             loading="lazy"
-             decoding="async">
-        <div class="card-info">
-          <p class="card-title">${sanitise(video.title)}</p>
-          <div class="card-meta">
-            <span aria-label="Views">${sanitise(video.views || '0 views')}</span>
-            <span aria-label="Duration">${sanitise(video.duration || '00:00')}</span>
+    document.title = t;
+    document.getElementById('metaDesc').content  = d;
+    document.getElementById('ogTitle').content   = t;
+    document.getElementById('ogDesc').content    = d;
+    document.getElementById('ogUrl').content     = u;
+    document.getElementById('ogImage').content   = i;
+    document.getElementById('twTitle').content   = t;
+    document.getElementById('twDesc').content    = d;
+    document.getElementById('twImage').content   = i;
+    document.getElementById('canonicalTag').href = u;
+  }
+
+  /* ── BUILD CARD ── */
+  function buildCard(video, index) {
+    const a = document.createElement('a');
+    a.className = 'card';
+    a.setAttribute('role', 'listitem');
+    a.setAttribute('aria-label', esc(video.title));
+    a.href = `${SITE_URL}/?v=${encodeURIComponent(video.id)}`;
+    a.target = '_blank';           // ← Opens in NEW TAB
+    a.rel    = 'noopener noreferrer';
+
+    const isNew = index < 6;
+
+    a.innerHTML = `
+      <div class="card-thumb">
+        <img src="${esc(video.thumb)}"
+             alt="${esc(video.title)} thumbnail"
+             width="400" height="175"
+             loading="${index < 8 ? 'eager' : 'lazy'}"
+             decoding="async"
+             onerror="this.src='https://placehold.co/400x175/1c1c2a/6b6b85?text=No+Thumbnail'">
+        <div class="play-overlay" aria-hidden="true">
+          <div class="play-btn-icon">
+            <svg width="18" height="18" fill="white" viewBox="0 0 24 24">
+              <polygon points="5,3 19,12 5,21"/>
+            </svg>
           </div>
-        </div>`;
+        </div>
+        ${video.duration ? `<span class="duration-badge">${esc(video.duration)}</span>` : ''}
+        ${isNew ? `<span class="new-badge">New</span>` : ''}
+      </div>
+      <div class="card-info">
+        <p class="card-title">${esc(video.title)}</p>
+        <div class="card-meta">
+          <span class="card-views">
+            <svg width="12" height="12" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M1 12S5 4 12 4s11 8 11 8-4 8-11 8S1 12 1 12z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            ${esc(video.views || '0 views')}
+          </span>
+          <span>${esc(video.duration || '')}</span>
+        </div>
+      </div>`;
 
-      const activate = () => openVideo(video.id);
-      article.addEventListener('click', activate);
-      article.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+    return a;
+  }
+
+  /* ── LOAD VIDEOS ── */
+  async function loadVideos() {
+    try {
+      const snap = await getDocs(collection(db, 'videos'));
+      allVideos  = snap.docs.map(d => ({ id: d.id, ...d.data() })).reverse();
+      videos     = [...allVideos];
+
+      document.getElementById('totalCount').textContent = allVideos.length + '+';
+      document.getElementById('videoCount').textContent = allVideos.length + ' videos';
+
+      renderVideos(videos);
+      buildSitemap(allVideos);
+      injectItemListSchema(allVideos);
+    } catch (err) {
+      console.error('Firebase error:', err);
+      document.getElementById('videoGrid').innerHTML =
+        '<p class="loading" role="alert">⚠ Failed to load videos. Check your Firebase config.</p>';
+    }
+  }
+
+  /* ── RENDER GRID ── */
+  function renderVideos(list) {
+    const grid = document.getElementById('videoGrid');
+    if (!list.length) {
+      grid.innerHTML = '<p class="loading">No videos found.</p>';
+      return;
+    }
+    grid.innerHTML = '';
+    list.forEach((v, i) => grid.appendChild(buildCard(v, i)));
+    document.getElementById('videoCount').textContent = list.length + ' videos';
+  }
+
+  /* ── SEARCH ── */
+  document.getElementById('searchInput').addEventListener('input', e => {
+    const q = e.target.value.toLowerCase().trim();
+    if (!q) { renderVideos(allVideos); return; }
+    renderVideos(allVideos.filter(v =>
+      (v.title || '').toLowerCase().includes(q)
+    ));
+  });
+
+  /* ── TABS ── */
+  document.querySelectorAll('.tab-btn[data-filter]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected','false');
       });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected','true');
+      const f = btn.dataset.filter;
+      renderVideos(f === 'new' ? allVideos.slice(0,12) : allVideos);
+    });
+  });
 
-      return article;
-    }
+  /* ── SITEMAP BUILD ── */
+  let sitemapXml = '';
 
-    /* ── LOAD VIDEOS ─────────────────────── */
-    async function loadVideos() {
-      try {
-        const snap = await getDocs(collection(db, 'videos'));
-        videos = snap.docs.map(d => ({ id: d.id, ...d.data() })).reverse();
-        renderVideos();
-        injectVideoListSchema();
-      } catch (err) {
-        console.error('Firebase error:', err);
-        document.getElementById('videoGrid').innerHTML =
-          '<p class="loading" role="alert">Failed to load videos. Please refresh.</p>';
-      }
-    }
+  function buildSitemap(list) {
+    const now = new Date().toISOString().split('T')[0];
+    let xml  = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+    xml += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n`;
+    xml += `        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">\n`;
 
-    /* ── RENDER HOME ─────────────────────── */
-    function renderVideos() {
-      const grid = document.getElementById('videoGrid');
-      if (!videos.length) {
-        grid.innerHTML = '<p class="loading">No videos found.</p>';
-        return;
-      }
-      grid.innerHTML = '';
-      videos.forEach(v => grid.appendChild(buildCard(v)));
-    }
+    /* Home page */
+    xml += `  <url>\n    <loc>${SITE_URL}/</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n    <lastmod>${now}</lastmod>\n  </url>\n`;
 
-    /* ── OPEN VIDEO ──────────────────────── */
-    window.openVideo = function(id) {
-      const video = videos.find(v => v.id === id);
-      if (!video) return;
-
-      /* Update page title & meta for crawlers that follow SPA navigation */
-      document.title = `${sanitise(video.title)} — VideoHub`;
-      updateMetaTag('og:title',       `${sanitise(video.title)} — VideoHub`);
-      updateMetaTag('og:description', `Watch "${sanitise(video.title)}" on VideoHub.`);
-      updateMetaTag('og:image',       sanitise(video.thumb || ''));
-      updateMetaTag('twitter:title',  `${sanitise(video.title)} — VideoHub`);
-      updateMetaTag('twitter:image',  sanitise(video.thumb || ''));
-
-      /* Push SPA URL so Google can crawl individual videos */
-      history.pushState({ videoId: id }, '', `?v=${encodeURIComponent(id)}`);
-
-      /* Show breadcrumb */
-      document.getElementById('breadcrumbCurrent').textContent = video.title;
-      document.getElementById('breadcrumbNav').style.display = '';
-
-      /* Inject per-video VideoObject schema */
-      injectVideoObjectSchema(video);
-
-      document.getElementById('homePage').style.display   = 'none';
-      document.getElementById('playerPage').style.display = 'block';
-      document.getElementById('playerFrame').src          = sanitise(video.src);
-      document.getElementById('playerTitle').textContent  = video.title;
-      document.getElementById('playerViews').textContent  = video.views || '0 views';
-
-      renderRecommended(id);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
-    /* ── GO HOME ─────────────────────────── */
-    window.goHome = function() {
-      document.title = 'VideoHub — Stream Unlimited Free Videos Online';
-      history.pushState({}, '', '/');
-      document.getElementById('breadcrumbNav').style.display  = 'none';
-      document.getElementById('playerPage').style.display     = 'none';
-      document.getElementById('homePage').style.display       = 'block';
-      document.getElementById('playerFrame').src              = '';  // stop playback
-    };
-
-    /* Handle browser back/forward */
-    window.addEventListener('popstate', e => {
-      if (e.state?.videoId) {
-        openVideo(e.state.videoId);
-      } else {
-        goHome();
-      }
+    /* Per-video URLs with video:video extension */
+    list.forEach(v => {
+      const url = `${SITE_URL}/?v=${encodeURIComponent(v.id)}`;
+      xml += `  <url>\n`;
+      xml += `    <loc>${url}</loc>\n`;
+      xml += `    <lastmod>${v.uploadDate || now}</lastmod>\n`;
+      xml += `    <changefreq>weekly</changefreq>\n`;
+      xml += `    <priority>0.8</priority>\n`;
+      xml += `    <video:video>\n`;
+      xml += `      <video:thumbnail_loc>${esc(v.thumb||'')}</video:thumbnail_loc>\n`;
+      xml += `      <video:title>${esc(v.title||'')}</video:title>\n`;
+      xml += `      <video:description>${esc(v.description||v.title||'')}</video:description>\n`;
+      xml += `      <video:content_loc>${esc(v.src||'')}</video:content_loc>\n`;
+      xml += `      <video:duration>${v.durationSec||0}</video:duration>\n`;
+      xml += `    </video:video>\n`;
+      xml += `  </url>\n`;
     });
 
-    /* ── RECOMMENDED ─────────────────────── */
-    function renderRecommended(currentId) {
-      const grid = document.getElementById('recommendedGrid');
-      grid.innerHTML = '';
-      videos
-        .filter(v => v.id !== currentId)
-        .sort(() => Math.random() - .5)
-        .slice(0, 6)
-        .forEach(v => grid.appendChild(buildCard(v)));
-    }
+    xml += `</urlset>`;
+    sitemapXml = xml;
 
-    /* ── META TAG HELPER ─────────────────── */
-    function updateMetaTag(property, content) {
-      const el = document.querySelector(
-        `meta[property="${property}"], meta[name="${property}"]`
-      );
-      if (el) el.setAttribute('content', content);
-    }
+    /* Render preview list */
+    const ul = document.getElementById('sitemapList');
+    ul.innerHTML = '';
+    [{ id:'home', title:'Home Page' }, ...list].forEach((v, i) => {
+      const href = i === 0
+        ? `${SITE_URL}/`
+        : `${SITE_URL}/?v=${encodeURIComponent(v.id)}`;
+      const li = document.createElement('li');
+      li.innerHTML = `<a href="${href}" target="_blank" rel="noopener">${esc(v.title || href)}</a>`;
+      ul.appendChild(li);
+    });
+  }
 
-    /* ── SCHEMA: ItemList (home) ─────────── */
-    function injectVideoListSchema() {
-      const schema = {
-        '@context':     'https://schema.org',
-        '@type':        'ItemList',
-        name:           'Featured Videos on VideoHub',
-        url:            'https://cineinsight.info/',
-        itemListElement: videos.slice(0, 20).map((v, i) => ({
-          '@type':    'ListItem',
-          position:   i + 1,
-          name:       v.title,
-          url:        `https://cineinsight.info/?v=${encodeURIComponent(v.id)}`
-        }))
-      };
-      document.getElementById('videoListSchema').textContent = JSON.stringify(schema);
-    }
+  /* ── DOWNLOAD SITEMAP ── */
+  window.downloadSitemap = function() {
+    const blob = new Blob([sitemapXml], { type:'application/xml' });
+    const a    = document.createElement('a');
+    a.href     = URL.createObjectURL(blob);
+    a.download = 'sitemap.xml';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
 
-    /* ── SCHEMA: VideoObject (player) ────── */
-    function injectVideoObjectSchema(video) {
-      let el = document.getElementById('videoObjectSchema');
-      if (!el) {
-        el = document.createElement('script');
-        el.type = 'application/ld+json';
-        el.id   = 'videoObjectSchema';
-        document.head.appendChild(el);
+  /* ── COPY SITEMAP ── */
+  window.copySitemap = function() {
+    navigator.clipboard.writeText(sitemapXml).then(() => {
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => btn.textContent = 'Copy XML', 2000);
+    });
+  };
+
+  /* ── SHOW / HIDE SITEMAP ── */
+  window.showSitemap = function() {
+    document.getElementById('homePage').style.display    = 'none';
+    document.getElementById('sitemapPage').style.display = 'block';
+    history.pushState({}, '', '?page=sitemap');
+    setMeta({ title: `Sitemap — ${SITE_NAME}`, url: `${SITE_URL}/?page=sitemap` });
+    window.scrollTo({ top:0, behavior:'smooth' });
+  };
+
+  window.goHome = function() {
+    document.getElementById('sitemapPage').style.display = 'none';
+    document.getElementById('homePage').style.display    = 'block';
+    history.pushState({}, '', '/');
+    setMeta({});
+    window.scrollTo({ top:0, behavior:'smooth' });
+  };
+
+  /* ── SCHEMA: ItemList ── */
+  function injectItemListSchema(list) {
+    document.getElementById('itemListSchema').textContent = JSON.stringify({
+      '@context':      'https://schema.org',
+      '@type':         'ItemList',
+      name:            `Featured Videos on ${SITE_NAME}`,
+      url:             `${SITE_URL}/`,
+      numberOfItems:   list.length,
+      itemListElement: list.slice(0,20).map((v,i) => ({
+        '@type':   'ListItem',
+        position:  i + 1,
+        name:      v.title,
+        url:       `${SITE_URL}/?v=${encodeURIComponent(v.id)}`
+      }))
+    });
+  }
+
+  /* ── SCHEMA: VideoObject (injected on new tab — optional server side) ── */
+  window.injectVideoSchema = function(video) {
+    document.getElementById('videoObjectSchema').textContent = JSON.stringify({
+      '@context':   'https://schema.org',
+      '@type':      'VideoObject',
+      name:         video.title,
+      description:  video.description || `Watch ${video.title} on ${SITE_NAME}.`,
+      thumbnailUrl: video.thumb,
+      embedUrl:     video.src,
+      uploadDate:   video.uploadDate || new Date().toISOString().split('T')[0],
+      publisher: {
+        '@type': 'Organization',
+        name:    SITE_NAME,
+        logo: { '@type':'ImageObject', url:`${SITE_URL}/logo.png` }
       }
-      el.textContent = JSON.stringify({
-        '@context':     'https://schema.org',
-        '@type':        'VideoObject',
-        name:           video.title,
-        description:    video.description || `Watch ${video.title} on VideoHub.`,
-        thumbnailUrl:   video.thumb,
-        embedUrl:       video.src,
-        uploadDate:     video.uploadDate || new Date().toISOString().split('T')[0],
-        duration:       video.isoDuration || 'PT0S',
-        interactionStatistic: {
-          '@type':             'InteractionCounter',
-          interactionType:     'https://schema.org/WatchAction',
-          userInteractionCount: parseInt(video.views) || 0
-        },
-        publisher: {
-          '@type': 'Organization',
-          name:    'VideoHub',
-          logo: {
-            '@type': 'ImageObject',
-            url:     'https://cineinsight.info/logo.png'
-          }
-        }
-      });
-    }
+    });
+  };
 
-    /* ── FOOTER YEAR ─────────────────────── */
-    document.getElementById('footerYear').textContent = new Date().getFullYear();
-
-    /* ── INIT ────────────────────────────── */
+  /* ── HANDLE INITIAL URL PARAMS ── */
+  const params = new URLSearchParams(location.search);
+  if (params.get('page') === 'sitemap') {
+    // sitemap shown after load
+    loadVideos().then(showSitemap);
+  } else {
     loadVideos();
+  }
 
-    /* On deep-link load (?v=...) open the video */
-    const params = new URLSearchParams(location.search);
-    if (params.has('v')) {
-      /* Wait for videos to load, then openVideo is called inside loadVideos
-         via a flag approach — simplified here with a small delay guard */
-      window._pendingVideoId = params.get('v');
-    }
+  /* ── POPSTATE ── */
+  window.addEventListener('popstate', () => {
+    const p = new URLSearchParams(location.search);
+    if (p.get('page') === 'sitemap') showSitemap();
+    else goHome();
+  });
 
-  </script>
+  /* ── FOOTER YEAR ── */
+  document.getElementById('yr').textContent = new Date().getFullYear();
 
+</script>
 </body>
 </html>
