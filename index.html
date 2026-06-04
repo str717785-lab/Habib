@@ -1,3 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: https://ogp.me/ns#">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <!-- PRIMARY SEO — title updated dynamically from Firebase -->
+  <title id="pageTitle">VideoHub — Watch Free Videos Online</title>
+  <meta name="description"    id="metaDesc"    content="Stream unlimited free videos online. Watch trending, featured and recommended videos in HD quality.">
+  <meta name="robots"                          content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="theme-color"                     content="#0d0d14">
+
+  <!-- OPEN GRAPH -->
+  <meta property="og:type"        content="website">
+  <meta property="og:site_name"   content="VideoHub">
+  <meta property="og:url"         id="ogUrl"   content="https://yourdomain.com/">
+  <meta property="og:title"       id="ogTitle" content="VideoHub — Watch Free Videos Online">
+  <meta property="og:description" id="ogDesc"  content="Stream unlimited free videos online.">
+  <meta property="og:image"       id="ogImage" content="https://yourdomain.com/og-cover.jpg">
+
+  <!-- TWITTER CARD -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       id="twTitle" content="VideoHub — Watch Free Videos Online">
+  <meta name="twitter:description" id="twDesc"  content="Stream unlimited free videos online.">
+  <meta name="twitter:image"       id="twImage" content="https://yourdomain.com/og-cover.jpg">
+
+  <!-- CANONICAL -->
+  <link rel="canonical" id="canonicalTag" href="https://yourdomain.com/">
+
+  <!-- PRECONNECT -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://www.gstatic.com">
+
+  <!-- FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  </noscript>
+
+  <!-- STRUCTURED DATA: WebSite -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"VideoHub",
+    "url":"https://yourdomain.com/",
+    "potentialAction":{
+      "@type":"SearchAction",
+      "target":{"@type":"EntryPoint","urlTemplate":"https://cineinsight.info/?q={search_term_string}"},
+      "query-input":"required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- STRUCTURED DATA: ItemList (populated by JS) -->
+  <script type="application/ld+json" id="itemListSchema">{}</script>
+
+  <!-- STRUCTURED DATA: VideoObject (populated by JS on player page) -->
+  <script type="application/ld+json" id="videoObjectSchema">{}</script>
+
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --bg:        #0d0d14;
+      --surface:   #13131e;
+      --card:      #1c1c2a;
+      --border:    #2a2a3e;
+      --accent:    #e8433a;
+      --accent2:   #f5a623;
+      --text:      #eeeef5;
+      --muted:     #6b6b85;
+      --radius:    12px;
+      --font-d:    'Bebas Neue', 'Arial Black', sans-serif;
+      --font-b:    'DM Sans', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-b);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── SKIP LINK ── */
+    .skip { position:absolute; top:-100%; left:0; padding:8px 16px;
+      background:var(--accent); color:#fff; font-weight:600;
+      border-radius:0 0 8px 0; z-index:9999; transition:top .2s; }
+    .skip:focus { top:0; }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width:6px; }
+    ::-webkit-scrollbar-track { background:var(--bg); }
+    ::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+
+    /* ── HEADER ── */
+    header {
+      height:68px; display:flex; align-items:center;
+      justify-content:space-between; padding:0 24px;
+      border-bottom:1px solid var(--border);
+      position:sticky; top:0;
       background:rgba(13,13,20,.95);
       backdrop-filter:blur(14px);
       -webkit-backdrop-filter:blur(14px);
@@ -373,13 +479,7 @@
   const SITE_URL   = "https://cineinsight.info";   // ← change
   const SITE_NAME  = "VideoHub";
 
-  const app = initializeApp(apiKey: "AIzaSyBYNU7wTq9_1-TdIVuG-yxAlKjeFb9Rm_M",
-  authDomain: "video-cms-b7c1e.firebaseapp.com",
-  projectId: "video-cms-b7c1e",
-  storageBucket: "video-cms-b7c1e.firebasestorage.app",
-  messagingSenderId: "991575420179",
-  appId: "1:991575420179:web:23459a09aa36f868e37ee6",
-  measurementId: "G-S9R2HDC5FZ);
+  const app = initializeApp(firebaseConfig);
   const db  = getFirestore(app);
 
   let videos      = [];
