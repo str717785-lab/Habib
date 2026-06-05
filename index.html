@@ -539,18 +539,52 @@
 
     /* ── LOAD VIDEOS ─────────────────────── */
     async function loadVideos() {
-      try {
-        const snap = await getDocs(collection(db, 'videos'));
-        videos = snap.docs.map(d => ({ id: d.id, ...d.data() })).reverse();
-        renderVideos();
-        injectVideoListSchema();
-      } catch (err) {
-        console.error('Firebase error:', err);
-        document.getElementById('videoGrid').innerHTML =
-          '<p class="loading" role="alert">Failed to load videos. Please refresh.</p>';
-      }
-    }
 
+try {
+
+const snap = await
+
+getDocs (collection (db, 'videos'));
+
+videos snap.docs.map(d => ({
+
+id: d.id,
+
+...d.data()
+
+})).reverse();
+
+render Videos();
+
+injectVideoListSchema();
+
+const params = new
+
+URLSearchParams (location.search);
+
+const videoId = params.get("v");
+
+if (videoId) {
+
+openVideo(videoId);
+
+}
+
+} catch (err) {
+
+console.error('Firebase error:', err);
+
+document.getElementById('videoGrid').innerH
+
+TML =
+
+'<p class="loading"
+
+role="alert">Failed to load videos. Please
+
+refresh.</p>';
+}
+  }
     /* ── RENDER HOME ─────────────────────── */
     function renderVideos() {
       const grid = document.getElementById('videoGrid');
@@ -576,8 +610,11 @@
       updateMetaTag('twitter:image',  sanitise(video.thumb || ''));
 
       /* Push SPA URL so Google can crawl individual videos */
-      history.pushState({ videoId: id }, '', `?v=${encodeURIComponent(id)}`);
-
+      history.pushState(
+  { videoId: id },
+  '',
+  `/video?v=${encodeURIComponent(id)}`
+);
       /* Show breadcrumb */
       document.getElementById('breadcrumbCurrent').textContent = video.title;
       document.getElementById('breadcrumbNav').style.display = '';
