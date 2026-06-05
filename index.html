@@ -398,49 +398,35 @@
       videos.forEach(v => grid.appendChild(buildCard(v)));
     }
     window.openVideo = function(id) {
-  const video = videos.find(v => v.id === id);
-  if (!video) return;
+      const video = videos.find(v => v.id === id);
+      if (!video) return;
 
-  const title = video.title;
-  const desc  = video.description || video.title;
-  const thumb = video.thumb || '';
+      document.title = `${sanitise(video.title)} — VideoHub`;
+      updateMeta('og:title',       `${sanitise(video.title)} — VideoHub`);
+      updateMeta('og:description', `Watch "${sanitise(video.title)}" on VideoHub.`);
+      updateMeta('og:image',        sanitise(video.thumb || ''));
+      updateMeta('twitter:title',  `${sanitise(video.title)} — VideoHub`);
+      updateMeta('twitter:image',   sanitise(video.thumb || ''));
 
-  // Page title
-  document.title = `${title} — VideoHub`;
+      history.pushState({ videoId: id }, '', `/video?v=${encodeURIComponent(id)}`);
 
-  // Meta tags (safe update)
-  updateMeta('meta[name="description"]', desc);
+      document.getElementById('breadcrumbCurrent').textContent = video.title;
+      document.getElementById('breadcrumbNav').style.display   = '';
 
-  updateMeta('meta[property="og:title"]', title);
-  updateMeta('meta[property="og:description"]', desc);
-  updateMeta('meta[property="og:image"]', thumb);
+      injectVideoObjectSchema(video);
 
-  updateMeta('meta[name="twitter:title"]', title);
-  updateMeta('meta[name="twitter:description"]', desc);
-  updateMeta('meta[name="twitter:image"]', thumb);
+      document.getElementById('homePage').style.display   = 'none';
+      document.getElementById('playerPage').style.display = 'block';
+      document.getElementById('playerFrame').src          = sanitise(video.src);
+      document.getElementById('playerTitle').textContent  = video.title;
+      document.getElementById('playerViews').textContent  = video.views || '0 views';
 
-  // URL update
-  history.pushState(
-    { videoId: id },
-    '',
-    `/video?v=${encodeURIComponent(id)}`
-  );
-
-  // UI switch
-  document.getElementById('homePage').style.display = 'none';
-  document.getElementById('playerPage').style.display = 'block';
-
-  // Video load
-  document.getElementById('playerFrame').src = video.src;
-  document.getElementById('playerTitle').textContent = title;
-  document.getElementById('playerViews').textContent = video.views || '0 views';
-
-  renderRecommended(id);
-};
-
+      renderRecommended(id);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
     
 
-    window.goHome = function() {
+  window.goHome = function() {
       document.title = 'VideoHub — Watch Free Online Videos';
       history.pushState({}, '', '/');
       document.getElementById('breadcrumbNav').style.display = 'none';
