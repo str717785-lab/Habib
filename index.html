@@ -11,14 +11,14 @@
 <link rel="canonical" href="https://cineinsight.info/video">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="VideoHub">
-<meta property="og:url" content="https://cineinsight.info/video">
+<meta property="og:url" content="https://cineinsight.info/">
 <meta property="og:title" content="VideoHub — Stream Unlimited Free Videos Online">
 <meta property="og:description" content="Watch trending and featured videos for free. Firebase-powered streaming.">
 <meta property="og:image" content="https://cineinsight.info/og-cover.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="VideoHub — Stream Unlimited Free Videos Online">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"VideoHub","url":"https://cineinsight.info/video","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cineinsight.info/?q={search_term_string}"},"query-input":"required name=search_term_string"}}</script>
-<script type="application/ld+json" id="videoListSchema">{"@context":"https://schema.org","@type":"ItemList","name":"Featured Videos","url":"https://cineinsight.info/","itemListElement":[]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"VideoHub","url":"https://videohub.example.com/","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://videohub.example.com/?q={search_term_string}"},"query-input":"required name=search_term_string"}}</script>
+<script type="application/ld+json" id="videoListSchema">{"@context":"https://schema.org","@type":"ItemList","name":"Featured Videos","url":"https://videohub.example.com/","itemListElement":[]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" media="print" onload="this.media='all'">
@@ -279,10 +279,9 @@ header{
 
 /* ── THUMB ── */
 .card-thumb{position:relative;overflow:hidden;aspect-ratio:16/9;background:#08080f;line-height:0}
-.card-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .55s cubic-bezier(.22,1,.36,1),filter .3s;filter:brightness(.88)}
-.card:hover .card-thumb img{transform:scale(1.04);filter:brightness(1.02)}
-/* scrim */
-.card-thumb::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to top,rgba(10,10,18,.92) 0%,transparent 100%);pointer-events:none;z-index:1}
+.card-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .55s cubic-bezier(.22,1,.36,1),filter .3s;filter:brightness(1)}
+.card:hover .card-thumb img{transform:scale(1.04);filter:brightness(1)}
+.card-thumb::after{display:none}
 
 /* ── 3D QUALITY BADGE — top right ── */
 .badge-quality{
@@ -709,19 +708,12 @@ function buildCard(video){
       </div>
     </div>`;
 
-  const open=()=>{
-  window.location.href =
-    `https://cineinsight.info/video?v=${encodeURIComponent(video.id)}`;
-};
+  const open=()=>openVideo(video.id);
+  el.addEventListener('click',open);
+  el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
+  return el;
+}
 
-el.addEventListener('click', open);
-
-el.addEventListener('keydown', e=>{
-  if(e.key==='Enter'||e.key===' '){
-    e.preventDefault();
-    open();
-  }
-});
 /* ══ LOAD VIDEOS ═════════════════════════════════════════ */
 async function loadVideos(){
   try{
@@ -888,7 +880,10 @@ window.openVideo=function(id){
   document.title=`${s(video.title)} — VideoHub`;
   updateMeta('og:title',`${s(video.title)} — VideoHub`);
   updateMeta('og:image',s(video.thumb||''));
-  history.pushState({videoId:id},'',`?v=${encodeURIComponent(id)}`);
+  // Update canonical link for video page
+  let canon=document.querySelector('link[rel="canonical"]');
+  if(canon) canon.setAttribute('href',`https://cineinsight.info/video?id=${encodeURIComponent(id)}`);
+  history.pushState({videoId:id},'',`/video?id=${encodeURIComponent(id)}`);
   document.getElementById('breadcrumbCurrent').textContent=video.title;
   document.getElementById('breadcrumbNav').style.display='';
   injectVideoSchema(video);
@@ -911,6 +906,9 @@ window.openVideo=function(id){
 window.goHome=function(){
   document.title='VideoHub — Stream Unlimited Free Videos Online';
   history.pushState({},'','/');
+  // Reset canonical
+  let canon=document.querySelector('link[rel="canonical"]');
+  if(canon) canon.setAttribute('href','https://cineinsight.info/');
   document.getElementById('breadcrumbNav').style.display='none';
   document.getElementById('playerPage').style.display='none';
   document.getElementById('homePage').style.display='block';
@@ -966,8 +964,8 @@ function updateMeta(prop,content){
 function injectListSchema(){
   document.getElementById('videoListSchema').textContent=JSON.stringify({
     '@context':'https://schema.org','@type':'ItemList',
-    name:'Featured Videos on VideoHub',url:'https://cineinsight.info/',
-    itemListElement:allVideos.slice(0,20).map((v,i)=>({'@type':'ListItem',position:i+1,name:v.title,url:`https://videohub.example.com/?v=${encodeURIComponent(v.id)}`}))
+    name:'Featured Videos on VideoHub',url:'https://videohub.example.com/',
+    itemListElement:allVideos.slice(0,20).map((v,i)=>({'@type':'ListItem',position:i+1,name:v.title,url:`https://cineinsight.info/video?id=${encodeURIComponent(v.id)}`}))
   });
 }
 function injectVideoSchema(video){
@@ -992,11 +990,16 @@ if(savedTheme==='light'){document.documentElement.setAttribute('data-theme','lig
 // Restore lang
 const savedLang=localStorage.getItem('vh-lang');
 if(savedLang){document.documentElement.setAttribute('lang',savedLang);}
-// Load
-loadVideos();
-// Deep link
-const params=new URLSearchParams(location.search);
-if(params.has('v'))window._pendingVideoId=params.get('v');
+// Load videos then check for deep-link /video?id=...
+loadVideos().then(()=>{
+  const path=location.pathname;
+  const params=new URLSearchParams(location.search);
+  // Support both /video?id=XXX and legacy ?v=XXX
+  const deepId=params.get('id')||params.get('v');
+  if((path==='/video'||path==='/video/')&&deepId){
+    openVideo(deepId);
+  }
+});
 </script>
 </body>
 </html>
