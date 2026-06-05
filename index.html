@@ -689,15 +689,6 @@
 
     /* ── INIT ────────────────────────────── */
     loadVideos();
-
-    /* On deep-link load (?v=...) open the video */
-    const params = new URLSearchParams(location.search);
-    if (params.has('v')) {
-      /* Wait for videos to load, then openVideo is called inside loadVideos
-         via a flag approach — simplified here with a small delay guard */
-      window._pendingVideoId = params.get('v');
-    }
-
   </script>
 
 </body>
