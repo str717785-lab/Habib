@@ -539,7 +539,6 @@
 
     /* ── LOAD VIDEOS ─────────────────────── */
     async function loadVideos() {
-async function loadVideos() {
   try {
     const snap = await getDocs(collection(db, 'videos'));
 
@@ -577,9 +576,11 @@ async function loadVideos() {
     }
 
     /* ── OPEN VIDEO ──────────────────────── */
-    window.openVideo = function(id) {
-      const video = videos.find(v => v.id === id);
-      if (!video) return;
+    history.pushState(
+  { videoId: id },
+  '',
+  `?v=${encodeURIComponent(id)}`
+);
 
       /* Update page title & meta for crawlers that follow SPA navigation */
       document.title = `${sanitise(video.title)} — VideoHub`;
