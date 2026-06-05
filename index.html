@@ -11,13 +11,13 @@
 <link rel="canonical" href="https://cineinsight.info/video">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="VideoHub">
-<meta property="og:url" content="https://cineinsight.info">
+<meta property="og:url" content="https://cineinsight.info/video">
 <meta property="og:title" content="VideoHub — Stream Unlimited Free Videos Online">
 <meta property="og:description" content="Watch trending and featured videos for free. Firebase-powered streaming.">
 <meta property="og:image" content="https://cineinsight.info/og-cover.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="VideoHub — Stream Unlimited Free Videos Online">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"VideoHub","url":"https://cineinsight.info/","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cineinsight.info/?q={search_term_string}"},"query-input":"required name=search_term_string"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"VideoHub","url":"https://cineinsight.info/video","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cineinsight.info/?q={search_term_string}"},"query-input":"required name=search_term_string"}}</script>
 <script type="application/ld+json" id="videoListSchema">{"@context":"https://schema.org","@type":"ItemList","name":"Featured Videos","url":"https://cineinsight.info/","itemListElement":[]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -709,12 +709,19 @@ function buildCard(video){
       </div>
     </div>`;
 
-  const open=()=>openVideo(video.id);
-  el.addEventListener('click',open);
-  el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
-  return el;
-}
+  const open=()=>{
+  window.location.href =
+    `https://cineinsight.info/video?v=${encodeURIComponent(video.id)}`;
+};
 
+el.addEventListener('click', open);
+
+el.addEventListener('keydown', e=>{
+  if(e.key==='Enter'||e.key===' '){
+    e.preventDefault();
+    open();
+  }
+});
 /* ══ LOAD VIDEOS ═════════════════════════════════════════ */
 async function loadVideos(){
   try{
@@ -959,7 +966,7 @@ function updateMeta(prop,content){
 function injectListSchema(){
   document.getElementById('videoListSchema').textContent=JSON.stringify({
     '@context':'https://schema.org','@type':'ItemList',
-    name:'Featured Videos on VideoHub',url:'https://videohub.example.com/',
+    name:'Featured Videos on VideoHub',url:'https://cineinsight.info/',
     itemListElement:allVideos.slice(0,20).map((v,i)=>({'@type':'ListItem',position:i+1,name:v.title,url:`https://videohub.example.com/?v=${encodeURIComponent(v.id)}`}))
   });
 }
