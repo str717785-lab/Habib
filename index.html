@@ -539,52 +539,32 @@
 
     /* ── LOAD VIDEOS ─────────────────────── */
     async function loadVideos() {
+async function loadVideos() {
+  try {
+    const snap = await getDocs(collection(db, 'videos'));
 
-try {
+    videos = snap.docs.map(d => ({
+      id: d.id,
+      ...d.data()
+    })).reverse();
 
-const snap = await
+    renderVideos();
+    injectVideoListSchema();
 
-getDocs (collection (db, 'videos'));
+    const params = new URLSearchParams(location.search);
+    const videoId = params.get("v");
 
-videos snap.docs.map(d => ({
+    if (videoId) {
+      openVideo(videoId);
+    }
 
-id: d.id,
+  } catch (err) {
+    console.error('Firebase error:', err);
 
-...d.data()
-
-})).reverse();
-
-render Videos();
-
-injectVideoListSchema();
-
-const params = new
-
-URLSearchParams (location.search);
-
-const videoId = params.get("v");
-
-if (videoId) {
-
-openVideo(videoId);
-
-}
-
-} catch (err) {
-
-console.error('Firebase error:', err);
-
-document.getElementById('videoGrid').innerH
-
-TML =
-
-'<p class="loading"
-
-role="alert">Failed to load videos. Please
-
-refresh.</p>';
-}
+    document.getElementById('videoGrid').innerHTML =
+      '<p class="loading" role="alert">Failed to load videos. Please refresh.</p>';
   }
+    }
     /* ── RENDER HOME ─────────────────────── */
     function renderVideos() {
       const grid = document.getElementById('videoGrid');
