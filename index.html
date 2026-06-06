@@ -881,20 +881,27 @@ async function loadVideos(){
 /* ══ CHANNEL STRIP ═══════════════════════════════════════ */
 function buildChannelStrip(){
   const strip=document.getElementById('channelStrip');
-  const channels=[...new Set(allVideos.map(v=>v.channel).filter(Boolean))];
+
+  const channels=[
+    ...new Map(
+      allVideos
+        .filter(v=>v.channel)
+        .map(v=>[v.channel.trim().toLowerCase(), v.channel.trim()])
+    ).values()
+  ];
+
   channels.forEach(ch=>{
     const btn=document.createElement('button');
-    btn.setAttribute('role','listitem');
     btn.className='ch-name-chip';
-    btn.setAttribute('aria-label',`Filter by channel: ${ch}`);
-    btn.setAttribute('aria-pressed','false');
     btn.textContent=ch;
+
     btn.onclick=()=>{
       filterChannel(ch);
-      document.querySelectorAll('.ch-name-chip').forEach(b=>{b.classList.remove('strip-active');b.setAttribute('aria-pressed','false');});
+      document.querySelectorAll('.ch-name-chip')
+        .forEach(b=>b.classList.remove('strip-active'));
       btn.classList.add('strip-active');
-      btn.setAttribute('aria-pressed','true');
     };
+
     strip.appendChild(btn);
   });
 }
