@@ -4,17 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Free Porn Videos, HD Sex Movies</title>
-<meta name="description" content="The latest free porn movies and sex videos. The ultimate xxx collection! Download or stream HD porn for free!">
-<meta name="keywords" content="porn, sex, free porn, porn tube, xxx videos, fuck movies, sex movies"><meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<title>VideoHub — Stream Unlimited Free Videos Online</title>
+<meta name="description" content="VideoHub is a free online video streaming platform. Watch trending, featured, and recommended videos in HD. Powered by Firebase CMS.">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 <meta name="theme-color" content="#0d0d14">
-<link rel="canonical" href="https://cineinsight.info/video">
+<link rel="canonical" href="https://videohub.example.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="VideoHub">
-<meta property="og:url" content="https://cineinsight.info/">
-<meta property="og:title" content="VideoHub — Free Porn Videos, HD Sex Movies">
-<meta property="og:description" content="The latest free porn movies and sex videos. The ultimate xxx collection! Download or stream HD porn for free!">
-<meta property="og:image" content="https://cineinsight.info/og-cover.jpg">
+<meta property="og:url" content="https://videohub.example.com/">
+<meta property="og:title" content="VideoHub — Stream Unlimited Free Videos Online">
+<meta property="og:description" content="Watch trending and featured videos for free. Firebase-powered streaming.">
+<meta property="og:image" content="https://videohub.example.com/og-cover.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="VideoHub — Stream Unlimited Free Videos Online">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"VideoHub","url":"https://videohub.example.com/","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://videohub.example.com/?q={search_term_string}"},"query-input":"required name=search_term_string"}}</script>
@@ -236,17 +236,67 @@ header{
 .ch-item.active .ch-avatar-placeholder{border-color:var(--y);box-shadow:0 0 0 2px var(--y),0 0 12px rgba(245,200,66,.3)}
 .ch-name{font-size:10px;color:var(--sub);white-space:nowrap;max-width:56px;overflow:hidden;text-overflow:ellipsis;text-align:center}
 .ch-item.active .ch-name{color:var(--y);font-weight:600}
-/* "All" chip */
+/* ── Channel strip quick-filter chips ── */
+.ch-all,.ch-trending,.ch-popular{
+  flex-shrink:0;
+  padding:8px 18px;
+  border-radius:40px;
+  font-family:var(--fm);font-size:11px;font-weight:700;letter-spacing:1.2px;
+  cursor:pointer;white-space:nowrap;
+  transition:background .2s,box-shadow .2s,border-color .2s,color .2s;
+  display:inline-flex;align-items:center;gap:7px;
+}
+/* ALL */
 .ch-all{
+  border:1.5px solid var(--y);color:var(--y);background:var(--yd);
+}
+.ch-all:hover,.ch-all.strip-active{
+  background:rgba(245,200,66,.22);box-shadow:0 0 12px rgba(245,200,66,.25);
+}
+/* TRENDING — red live style */
+.ch-trending{
+  border:1.5px solid #e03535;color:#ff5555;
+  background:rgba(224,53,53,.1);
+}
+.ch-trending:hover,.ch-trending.strip-active{
+  background:rgba(224,53,53,.2);box-shadow:0 0 14px rgba(224,53,53,.3);
+}
+/* live pulsing red dot */
+.live-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:#ff4444;flex-shrink:0;
+  box-shadow:0 0 6px #ff4444,0 0 12px rgba(255,68,68,.5);
+  animation:live-pulse 1.4s ease-in-out infinite;
+}
+@keyframes live-pulse{
+  0%,100%{transform:scale(1);box-shadow:0 0 6px #ff4444,0 0 14px rgba(255,68,68,.55);}
+  50%{transform:scale(.6);box-shadow:0 0 2px #ff4444,0 0 4px rgba(255,68,68,.2);}
+}
+/* MOST POPULAR */
+.ch-popular{
+  border:1.5px solid var(--y);color:var(--y);background:var(--yd);
+}
+.ch-popular:hover,.ch-popular.strip-active{
+  background:rgba(245,200,66,.22);box-shadow:0 0 12px rgba(245,200,66,.25);
+}
+/* ── Green channel name chips ── */
+.ch-name-chip{
   flex-shrink:0;
   padding:8px 16px;
-  border:1.5px solid var(--y);border-radius:40px;
+  border:1.5px solid #22c55e;
+  border-radius:40px;
   font-family:var(--fm);font-size:11px;font-weight:700;letter-spacing:1px;
-  color:var(--y);background:var(--yd);cursor:pointer;
-  white-space:nowrap;
-  transition:background .2s,box-shadow .2s;
+  color:#22c55e;
+  background:rgba(34,197,94,.1);
+  cursor:pointer;white-space:nowrap;
+  transition:background .2s,box-shadow .2s,color .2s;
+  box-shadow:0 0 8px rgba(34,197,94,.15);
 }
-.ch-all:hover{background:rgba(245,200,66,.22);box-shadow:0 0 10px rgba(245,200,66,.2)}
+.ch-name-chip:hover,.ch-name-chip.strip-active{
+  background:rgba(34,197,94,.2);
+  box-shadow:0 0 16px rgba(34,197,94,.35);
+  color:#4ade80;
+}
 
 /* ═══════════════════════════════════════════════════════════
    MAIN CONTENT
@@ -326,59 +376,82 @@ header{
 .badge-duration{
   position:absolute;bottom:12px;left:14px;z-index:3;
   display:inline-flex;align-items:center;gap:5px;
-  background:linear-gradient(145deg,#1c1c2a 0%,#0f0f18 60%);
-  border:1px solid rgba(255,255,255,.18);
+  background:linear-gradient(145deg,#2a2008 0%,#1a1400 60%);
+  border:1.5px solid #f5c842;
   border-radius:5px;
-  padding:3px 9px;
+  padding:4px 10px 4px 8px;
   pointer-events:none;user-select:none;
   box-shadow:
-    0 1px 0 0 rgba(255,255,255,.12) inset,
-    0 -1px 0 0 rgba(0,0,0,.5) inset,
-    2px 3px 0 0 rgba(0,0,0,.7),
-    2px 5px 10px rgba(0,0,0,.5);
+    0 1px 0 0 rgba(255,220,100,.35) inset,
+    0 -1px 0 0 rgba(0,0,0,.6) inset,
+    2px 4px 0 0 rgba(120,80,0,.8),
+    3px 6px 12px rgba(0,0,0,.55),
+    0 0 16px rgba(245,200,66,.22);
   transform:perspective(200px) rotateX(4deg);
+  transition:transform .2s,box-shadow .2s;
+}
+.card:hover .badge-duration{
+  transform:perspective(200px) rotateX(2deg) translateY(-1px);
+  box-shadow:
+    0 1px 0 0 rgba(255,220,100,.4) inset,
+    0 -1px 0 0 rgba(0,0,0,.6) inset,
+    2px 5px 0 0 rgba(120,80,0,.8),
+    3px 8px 18px rgba(0,0,0,.6),
+    0 0 22px rgba(245,200,66,.32);
 }
 .badge-duration-icon{
-  width:7px;height:7px;border-radius:50%;
-  border:1.5px solid rgba(255,255,255,.5);
+  width:6px;height:6px;border-radius:50%;
+  background:var(--y);
+  box-shadow:0 0 5px var(--y),0 0 10px rgba(245,200,66,.6);
   flex-shrink:0;
+  animation:pulse-dot 2.2s ease-in-out infinite;
 }
 .badge-duration-text{
-  font-family:var(--fm);font-size:11.5px;font-weight:600;letter-spacing:1.2px;
-  color:#dde0f5;text-shadow:0 1px 3px rgba(0,0,0,.9);
+  font-family:var(--fm);font-size:11px;font-weight:700;letter-spacing:2px;
+  color:var(--y);text-shadow:0 1px 4px rgba(0,0,0,.8);line-height:1;
 }
 
 /* ── 3D VIEWS BADGE — bottom right ── */
 .badge-views{
-  position:absolute;bottom:12px;right:14px;z-index:3;
+  position:absolute;bottom:12px;right:12px;z-index:3;
   display:inline-flex;align-items:center;gap:5px;
-  background:linear-gradient(145deg,#201a00 0%,#140f00 60%);
-  border:1px solid rgba(245,200,66,.35);
+  background:linear-gradient(145deg,#2a2008 0%,#1a1400 60%);
+  border:1.5px solid #f5c842;
   border-radius:5px;
-  padding:3px 9px;
+  padding:4px 10px 4px 8px;
   pointer-events:none;user-select:none;
   box-shadow:
-    0 1px 0 0 rgba(245,200,66,.2) inset,
-    0 -1px 0 0 rgba(0,0,0,.5) inset,
-    2px 3px 0 0 rgba(100,70,0,.7),
-    2px 5px 10px rgba(0,0,0,.45),
-    0 0 10px rgba(245,200,66,.12);
+    0 1px 0 0 rgba(255,220,100,.35) inset,
+    0 -1px 0 0 rgba(0,0,0,.6) inset,
+    2px 4px 0 0 rgba(120,80,0,.8),
+    3px 6px 12px rgba(0,0,0,.55),
+    0 0 16px rgba(245,200,66,.22);
   transform:perspective(200px) rotateX(4deg);
+  transition:transform .2s,box-shadow .2s;
 }
-.badge-views svg{width:7px;height:8px;fill:var(--y);flex-shrink:0}
+.card:hover .badge-views{
+  transform:perspective(200px) rotateX(2deg) translateY(-1px);
+  box-shadow:
+    0 1px 0 0 rgba(255,220,100,.4) inset,
+    0 -1px 0 0 rgba(0,0,0,.6) inset,
+    2px 5px 0 0 rgba(120,80,0,.8),
+    3px 8px 18px rgba(0,0,0,.6),
+    0 0 22px rgba(245,200,66,.32);
+}
+.badge-views svg{width:8px;height:9px;fill:var(--y);flex-shrink:0}
 .badge-views-text{
-  font-family:var(--fm);font-size:10px;font-weight:600;letter-spacing:.8px;
-  color:var(--y);text-shadow:0 1px 3px rgba(0,0,0,.8);
+  font-family:var(--fm);font-size:11px;font-weight:700;letter-spacing:2px;
+  color:var(--y);text-shadow:0 1px 4px rgba(0,0,0,.8);line-height:1;
 }
 
 /* ── CARD INFO ── */
-.card-info{padding:14px 16px 14px}
+.card-info{padding:10px 14px 14px}
 .card-title{
   font-size:15px;font-weight:500;line-height:1.55;color:var(--text);
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
   margin-bottom:10px;
 }
-.card-meta-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card-meta-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px}
 .meta-chip{
   display:inline-flex;align-items:center;gap:5px;
   font-family:var(--fm);font-size:10.5px;letter-spacing:.6px;
@@ -387,6 +460,26 @@ header{
 .meta-chip-y{color:var(--y);background:var(--yd);border:1px solid rgba(245,200,66,.2)}
 .meta-chip-n{color:var(--sub);background:rgba(255,255,255,.04);border:1px solid var(--border)}
 .meta-chip svg{width:7px;height:8px;fill:currentColor}
+/* ── bottom meta strip below thumbnail ── */
+.card-bottom-meta{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:7px 14px 0;
+  margin-bottom:4px;
+}
+.meta-time-badge{
+  font-family:var(--fm);
+  font-size:12px;font-weight:500;
+  color:var(--sub);
+  letter-spacing:.4px;
+}
+.meta-views-badge{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:var(--fm);
+  font-size:12px;font-weight:600;
+  color:#4ade80;
+  letter-spacing:.3px;
+}
+.meta-views-badge svg{width:8px;height:9px;fill:#4ade80;flex-shrink:0}
 
 /* ═══════════════════════════════════════════════════════════
    LOADING / EMPTY STATES
@@ -413,7 +506,53 @@ header{
 .video-box{width:100%;background:#000;position:relative;padding-top:56.25%}
 .video-box iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
 .player-content{padding:20px 16px;max-width:780px;margin:0 auto}
-.player-title{font-size:22px;font-weight:500;line-height:1.4;margin-bottom:12px}
+.player-title{font-size:22px;font-weight:500;line-height:1.4;margin-bottom:10px}
+/* Channel row below title */
+.player-channel-row{
+  display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;
+}
+.player-channel-name{
+  font-family:var(--fm);font-size:12px;font-weight:600;letter-spacing:1px;
+  color:#22c55e;
+  background:rgba(34,197,94,.1);
+  border:1.5px solid #22c55e;
+  border-radius:40px;padding:4px 14px;
+  box-shadow:0 0 8px rgba(34,197,94,.18);
+}
+/* Animated Subscribe button */
+.subscribe-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 18px;border-radius:40px;
+  background:linear-gradient(135deg,#dc2626,#b91c1c);
+  border:none;color:#fff;
+  font-family:var(--fm);font-size:11px;font-weight:700;letter-spacing:1.5px;
+  cursor:pointer;text-decoration:none;
+  box-shadow:0 0 12px rgba(220,38,38,.4),2px 3px 0 0 rgba(120,10,10,.6);
+  transform:perspective(200px) rotateX(3deg);
+  transition:transform .2s,box-shadow .2s,background .2s;
+  animation:sub-pulse 2.8s ease-in-out infinite;
+  position:relative;overflow:hidden;
+}
+.subscribe-btn::before{
+  content:'';position:absolute;top:-50%;left:-60%;
+  width:40%;height:200%;
+  background:rgba(255,255,255,.18);
+  transform:skewX(-20deg);
+  animation:sub-shine 2.8s ease-in-out infinite;
+}
+@keyframes sub-pulse{
+  0%,100%{box-shadow:0 0 12px rgba(220,38,38,.4),2px 3px 0 0 rgba(120,10,10,.6);}
+  50%{box-shadow:0 0 22px rgba(220,38,38,.7),2px 3px 0 0 rgba(120,10,10,.6);}
+}
+@keyframes sub-shine{
+  0%{left:-60%}60%,100%{left:130%}
+}
+.subscribe-btn:hover{
+  background:linear-gradient(135deg,#ef4444,#dc2626);
+  transform:perspective(200px) rotateX(1deg) translateY(-1px);
+  box-shadow:0 0 26px rgba(220,38,38,.65),2px 4px 0 0 rgba(120,10,10,.7);
+}
+.subscribe-btn svg{width:10px;height:10px;fill:#fff;flex-shrink:0}
 .player-badges{display:flex;align-items:center;gap:8px;margin-bottom:24px;flex-wrap:wrap}
 .p-badge{
   display:inline-flex;align-items:center;gap:5px;
@@ -588,7 +727,7 @@ footer{
 
     <!-- Channel strip -->
     <div class="channel-strip" id="channelStrip" role="list" aria-label="Channels">
-      <button class="ch-all active" onclick="filterChannel('all')" aria-pressed="true">ALL</button>
+      <button class="ch-all active" onclick="filterChannel('all');setStripActive(this)" aria-pressed="true">ALL</button>
     </div>
 
     <!-- Videos -->
@@ -680,8 +819,21 @@ function buildCard(video){
   el.setAttribute('aria-label',s(video.title));
 
   const qual=s(video.quality||'4K');
-  const dur=s(video.duration||'00:00');
-  const views=s(video.views||'0 views');
+  // Duration: accept string "12:34" or number 754 (seconds) from Firestore
+  let rawDur=video.duration;
+  if(typeof rawDur==='number'){
+    const m=Math.floor(rawDur/60),sc=String(rawDur%60).padStart(2,'0');
+    rawDur=`${m}:${sc}`;
+  }
+  const dur=s(rawDur||'00:00');
+  // Views: accept number or string
+  let rawViews=video.views;
+  if(typeof rawViews==='number'){
+    rawViews=rawViews>=1000000?`${(rawViews/1000000).toFixed(1)}M views`
+      :rawViews>=1000?`${(rawViews/1000).toFixed(1)}K views`
+      :`${rawViews} views`;
+  }
+  const views=s(rawViews||'0 views');
 
   el.innerHTML=`
     <div class="card-thumb">
@@ -691,14 +843,11 @@ function buildCard(video){
         <span class="badge-quality-dot" aria-hidden="true"></span>
         <span class="badge-quality-text">${qual}</span>
       </span>
-      <span class="badge-duration" aria-label="Duration ${dur}">
-        <span class="badge-duration-icon" aria-hidden="true"></span>
-        <span class="badge-duration-text">${dur}</span>
-      </span>
-      <span class="badge-views" aria-label="${views}">
-        ${PLAY_SVG}
-        <span class="badge-views-text">${views}</span>
-      </span>
+
+    </div>
+    <div class="card-bottom-meta">
+      <span class="meta-time-badge" aria-label="Duration ${dur}">${dur}</span>
+      <span class="meta-views-badge" aria-label="${views}">${PLAY_SVG}${views}</span>
     </div>
     <div class="card-info">
       <p class="card-title">${s(video.title)}</p>
@@ -736,12 +885,16 @@ function buildChannelStrip(){
   channels.forEach(ch=>{
     const btn=document.createElement('button');
     btn.setAttribute('role','listitem');
-    btn.className='ch-item';
-    btn.setAttribute('aria-label',`Channel: ${ch}`);
-    btn.innerHTML=`
-      <div class="ch-avatar-placeholder" aria-hidden="true">${ch.charAt(0).toUpperCase()}</div>
-      <span class="ch-name">${s(ch)}</span>`;
-    btn.onclick=()=>filterChannel(ch);
+    btn.className='ch-name-chip';
+    btn.setAttribute('aria-label',`Filter by channel: ${ch}`);
+    btn.setAttribute('aria-pressed','false');
+    btn.textContent=ch;
+    btn.onclick=()=>{
+      filterChannel(ch);
+      document.querySelectorAll('.ch-name-chip').forEach(b=>{b.classList.remove('strip-active');b.setAttribute('aria-pressed','false');});
+      btn.classList.add('strip-active');
+      btn.setAttribute('aria-pressed','true');
+    };
     strip.appendChild(btn);
   });
 }
@@ -761,6 +914,10 @@ function buildCategoryList(){
 }
 
 /* ══ FILTER: channel ═════════════════════════════════════ */
+window.setStripActive=function(el){
+  document.querySelectorAll('.ch-all,.ch-trending,.ch-popular').forEach(b=>b.classList.remove('strip-active'));
+  if(el)el.classList.add('strip-active');
+};
 window.filterChannel=function(ch){
   currentChannel=ch;
   document.querySelectorAll('.ch-item,.ch-all').forEach(b=>{
@@ -891,6 +1048,21 @@ window.openVideo=function(id){
   document.getElementById('playerPage').style.display='block';
   document.getElementById('playerFrame').src=s(video.src);
   document.getElementById('playerTitle').textContent=video.title;
+  // Channel row + Subscribe button
+  let chRow=document.getElementById('playerChannelRow');
+  if(!chRow){
+    chRow=document.createElement('div');
+    chRow.id='playerChannelRow';
+    chRow.className='player-channel-row';
+    document.getElementById('playerTitle').insertAdjacentElement('afterend',chRow);
+  }
+  const subLink=video.channelUrl||video.channel_url||'#';
+  chRow.innerHTML=`
+    ${video.channel?`<span class="player-channel-name">${s(video.channel)}</span>`:''}
+    <a class="subscribe-btn" href="${s(subLink)}" target="_blank" rel="noopener noreferrer" aria-label="Subscribe to ${s(video.channel||'channel')}">
+      <svg viewBox="0 0 10 10"><path d="M0 0h10v10H0z" fill="none"/><path d="M4 2.5l4 2.5-4 2.5V2.5z"/></svg>
+      SUBSCRIBE
+    </a>`;
   // Player badges
   const pb=document.getElementById('playerBadges');
   pb.innerHTML=`
@@ -904,7 +1076,7 @@ window.openVideo=function(id){
 
 /* ══ GO HOME ═════════════════════════════════════════════ */
 window.goHome=function(){
-  document.title='Free Porn Videos, HD Sex Movies';
+  document.title='VideoHub — Stream Unlimited Free Videos Online';
   history.pushState({},'','/');
   // Reset canonical
   let canon=document.querySelector('link[rel="canonical"]');
