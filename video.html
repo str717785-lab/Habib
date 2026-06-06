@@ -91,8 +91,7 @@ header{position:sticky;top:0;z-index:900;background:rgba(13,13,20,.95);backdrop-
 .p-badge svg{width:7px;height:8px;fill:var(--y)}
 
 /* Description */
-.player-desc{font-size:13.5px;color:var(--sub);line-height:1.75;margin-bottom:28px;white-space:pre-wrap;display:none}
-.player-desc.visible{display:block}
+.player-desc{font-size:13.5px;color:var(--sub);line-height:1.75;margin-bottom:8px}
 .desc-toggle{background:none;border:none;color:var(--muted);font-family:var(--fm);font-size:11px;cursor:pointer;letter-spacing:1px;padding:0;margin-bottom:28px;display:flex;align-items:center;gap:5px;transition:color .2s}
 .desc-toggle:hover{color:var(--y)}
 
@@ -315,8 +314,11 @@ function renderPlayer(v){
   if(v.description){
     const desc=document.getElementById('playerDesc');
     desc.textContent=v.description;
-    desc.classList.add('visible');
-    document.getElementById('descToggle').style.display='flex';
+    desc.setAttribute('data-open','false');
+    desc.style.cssText='display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;color:var(--sub);font-size:13.5px;line-height:1.75;margin-bottom:8px;white-space:normal';
+    const tog=document.getElementById('descToggle');
+    tog.style.display='flex';
+    tog.innerHTML=`<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><polyline points="2,3 5,7 8,3"/></svg> SHOW MORE`;
   }
 
   /* Tags */
@@ -385,13 +387,19 @@ function showError(){
 window.toggleDesc=function(){
   const d=document.getElementById('playerDesc');
   const t=document.getElementById('descToggle');
-  const open=d.style.maxHeight!=='none'&&d.style.maxHeight;
-  if(!open||d.style.maxHeight===''){
-    d.style.maxHeight='none';
-    t.innerHTML=`<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><polyline points="2,7 5,3 8,7"/></svg> SHOW LESS`;
-  }else{
-    d.style.maxHeight='';
+  const isOpen=d.getAttribute('data-open')==='true';
+  if(isOpen){
+    d.setAttribute('data-open','false');
+    d.style.webkitLineClamp='3';
+    d.style.overflow='hidden';
+    d.style.display='-webkit-box';
     t.innerHTML=`<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><polyline points="2,3 5,7 8,3"/></svg> SHOW MORE`;
+  }else{
+    d.setAttribute('data-open','true');
+    d.style.webkitLineClamp='unset';
+    d.style.overflow='visible';
+    d.style.display='block';
+    t.innerHTML=`<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><polyline points="2,7 5,3 8,7"/></svg> SHOW LESS`;
   }
 };
 
