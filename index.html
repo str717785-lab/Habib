@@ -881,27 +881,20 @@ async function loadVideos(){
 /* ══ CHANNEL STRIP ═══════════════════════════════════════ */
 function buildChannelStrip(){
   const strip=document.getElementById('channelStrip');
-
-  const channels=[
-    ...new Map(
-      allVideos
-        .filter(v=>v.channel)
-        .map(v=>[v.channel.trim().toLowerCase(), v.channel.trim()])
-    ).values()
-  ];
-
+  const channels=[...new Set(allVideos.map(v=>v.channel).filter(Boolean))];
   channels.forEach(ch=>{
     const btn=document.createElement('button');
+    btn.setAttribute('role','listitem');
     btn.className='ch-name-chip';
+    btn.setAttribute('aria-label',`Filter by channel: ${ch}`);
+    btn.setAttribute('aria-pressed','false');
     btn.textContent=ch;
-
     btn.onclick=()=>{
       filterChannel(ch);
-      document.querySelectorAll('.ch-name-chip')
-        .forEach(b=>b.classList.remove('strip-active'));
+      document.querySelectorAll('.ch-name-chip').forEach(b=>{b.classList.remove('strip-active');b.setAttribute('aria-pressed','false');});
       btn.classList.add('strip-active');
+      btn.setAttribute('aria-pressed','true');
     };
-
     strip.appendChild(btn);
   });
 }
@@ -926,9 +919,7 @@ window.setStripActive=function(el){
   if(el)el.classList.add('strip-active');
 };
 window.filterChannel=function(ch){
-  currentChannel = ch.trim().toLowerCase();
-  applyFilter();
-};
+  currentChannel=ch;
   document.querySelectorAll('.ch-item,.ch-all').forEach(b=>{
     b.classList.remove('active');
     b.setAttribute('aria-pressed','false');
@@ -957,11 +948,7 @@ window.filterCategory=function(cat){
 function applyFilter(){
   let vids=[...allVideos];
   // Channel filter
-  if(currentChannel!=='all'){
-  vids = vids.filter(v =>
-    (v.channel || '').trim().toLowerCase() === currentChannel
-  );
-}
+  if(currentChannel!=='all') vids=vids.filter(v=>v.channel===currentChannel);
   // Type / category filter
   if(currentFilter==='latest'){
     vids=vids.sort((a,b)=>(b.uploadDate||'').localeCompare(a.uploadDate||''));
