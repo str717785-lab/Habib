@@ -926,7 +926,9 @@ window.setStripActive=function(el){
   if(el)el.classList.add('strip-active');
 };
 window.filterChannel=function(ch){
-  currentChannel=ch;
+  currentChannel = ch.trim().toLowerCase();
+  applyFilter();
+};
   document.querySelectorAll('.ch-item,.ch-all').forEach(b=>{
     b.classList.remove('active');
     b.setAttribute('aria-pressed','false');
@@ -955,7 +957,11 @@ window.filterCategory=function(cat){
 function applyFilter(){
   let vids=[...allVideos];
   // Channel filter
-  if(currentChannel!=='all') vids=vids.filter(v=>v.channel===currentChannel);
+  if(currentChannel!=='all'){
+  vids = vids.filter(v =>
+    (v.channel || '').trim().toLowerCase() === currentChannel
+  );
+}
   // Type / category filter
   if(currentFilter==='latest'){
     vids=vids.sort((a,b)=>(b.uploadDate||'').localeCompare(a.uploadDate||''));
