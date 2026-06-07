@@ -1,254 +1,527 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>VideoHub — Watch Free HD &amp; 4K Videos Online</title>
-<meta name="description" content="Watch free HD and 4K videos on VideoHub. Thousands of action, drama, comedy, thriller and more — stream instantly, no signup required.">
-<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
-<meta name="author" content="VideoHub">
-<link rel="canonical" href="https://cineinsight.info/">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
 
-<!-- Open Graph / Facebook -->
+<!-- ═══ PRIMARY SEO ════════════════════════════════ -->
+<title>CineInsight — Watch Free HD Videos Online | Stream Now</title>
+<meta name="description" content="CineInsight is your free HD video streaming platform. Discover trending, popular and latest videos across all categories. Powered by real-time Firebase CMS.">
+<meta name="keywords" content="free streaming, watch videos online, HD videos, trending videos, CineInsight, video platform">
+<meta name="author" content="CineInsight">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta name="theme-color" content="#08080e">
+<meta name="color-scheme" content="dark light">
+<link rel="canonical" href="https://cineinsight.info/">
+
+<!-- ═══ OPEN GRAPH ═════════════════════════════════ -->
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="VideoHub">
-<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="CineInsight">
 <meta property="og:url" content="https://cineinsight.info/">
-<meta property="og:title" content="VideoHub — Watch Free HD &amp; 4K Videos Online">
-<meta property="og:description" content="Watch free HD and 4K videos on VideoHub. Thousands of action, drama, comedy, thriller and more — stream instantly, no signup required.">
+<meta property="og:title" content="CineInsight — Watch Free HD Videos Online">
+<meta property="og:description" content="Stream trending and featured videos for free. Real-time Firebase-powered video platform.">
 <meta property="og:image" content="https://cineinsight.info/og-cover.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="VideoHub — Free Streaming">
+<meta property="og:image:alt" content="CineInsight video streaming platform">
+<meta property="og:locale" content="en_US">
 
-<!-- Twitter / X -->
+<!-- ═══ TWITTER CARD ══════════════════════════════ -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@VideoHub">
-<meta name="twitter:title" content="VideoHub — Watch Free HD &amp; 4K Videos Online">
-<meta name="twitter:description" content="Watch free HD and 4K videos on VideoHub. Stream instantly, no signup required.">
+<meta name="twitter:site" content="@CineInsight">
+<meta name="twitter:title" content="CineInsight — Watch Free HD Videos Online">
+<meta name="twitter:description" content="Stream trending and featured videos free. Firebase-powered.">
 <meta name="twitter:image" content="https://cineinsight.info/og-cover.jpg">
-<meta name="twitter:image:alt" content="VideoHub — Free Streaming">
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"VideoHub","url":"https://cineinsight.info","description":"Watch free HD and 4K videos online","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cineinsight.info/?q={search_term_string}"},"query-input":"required name=search_term_string"}}</script>
+<!-- ═══ STRUCTURED DATA ════════════════════════════ -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"CineInsight","url":"https://cineinsight.info/","description":"Free HD video streaming platform powered by Firebase.","potentialAction":{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://cineinsight.info/?q={search_term_string}"},"query-input":"required name=search_term_string"}}
+</script>
+<script type="application/ld+json" id="videoListSchema">
+{"@context":"https://schema.org","@type":"ItemList","name":"Featured Videos on CineInsight","url":"https://cineinsight.info/","itemListElement":[]}
+</script>
 
+<!-- ═══ PERFORMANCE ════════════════════════════════ -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap"></noscript>
+<link rel="dns-prefetch" href="https://www.gstatic.com">
+<link rel="dns-prefetch" href="https://firestore.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap"></noscript>
 
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* ═══════════════════════════════════════════════════
+   RESET + TOKENS
+═══════════════════════════════════════════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#080810;--bg2:#0f0f1a;--bg3:#15151f;
-  --border:rgba(255,255,255,.07);
-  --accent:#3d6fff;--accent2:#5f87ff;
-  --text:#f0f0f8;--muted:#6a6a88;--muted2:#9090b0;
-  --badge4k:#0a2060;--badge4kT:#7eb3ff;
-  --badgehd:#0a2d12;--badgehdT:#5fce7f;
-  --tag-bg:rgba(61,111,255,.12);--tag-border:rgba(61,111,255,.3);
-  --radius:12px;--radius-sm:7px;
+  --ink:#08080e;--ink2:#0f0f1a;--ink3:#161622;--ink4:#1e1e2e;
+  --edge:#252538;--edge2:#32324a;
+  --fog:#9090aa;--ghost:#5a5a72;
+  --snow:#f0f0f8;--white:#ffffff;
+  --gold:#f0b429;--gold-d:rgba(240,180,41,.12);--gold-g:rgba(240,180,41,.28);
+  --green:#10d97e;--green-d:rgba(16,217,126,.1);
+  --red:#ff3b5c;--red-d:rgba(255,59,92,.12);
+  --blue:#4f8ef7;
+  --r:10px;--r-sm:6px;--r-lg:16px;--r-xl:22px;
+  --fd:'Syne','Arial Black',sans-serif;
+  --fb:'Space Grotesk',system-ui,sans-serif;
+  --fm:'Space Mono','Consolas',monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+  --shadow-card:0 2px 8px rgba(0,0,0,.35),0 8px 32px rgba(0,0,0,.25);
+  --shadow-hover:0 8px 24px rgba(0,0,0,.5),0 20px 60px rgba(0,0,0,.3);
 }
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh;overscroll-behavior:none}
+[data-theme="light"]{
+  --ink:#f8f8fc;--ink2:#f0f0f8;--ink3:#e8e8f2;--ink4:#dcdcee;
+  --edge:#d0d0e4;--edge2:#b8b8d4;
+  --fog:#555568;--ghost:#8888a0;
+  --snow:#0a0a18;--white:#08080e;
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--ink);color:var(--snow);font-family:var(--fb);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;min-height:100vh;overflow-x:hidden;transition:background .35s,color .35s}
 img{display:block;max-width:100%;height:auto}
 a{color:inherit;text-decoration:none}
+button{font-family:var(--fb);cursor:pointer}
+::selection{background:var(--gold);color:#000}
 
-/* SKIP LINK */
-.skip{position:absolute;top:-100%;left:0;padding:8px 18px;background:var(--accent);color:#fff;font-weight:600;font-size:13px;border-radius:0 0 var(--radius) 0;z-index:9999;transition:top .2s}
+/* SKIP */
+.skip{position:absolute;top:-100%;left:0;padding:8px 20px;background:var(--gold);color:#000;font-weight:700;font-size:13px;z-index:9999;transition:top .2s;border-radius:0 0 var(--r) 0}
 .skip:focus{top:0}
 
-/* HEADER */
-#header{position:sticky;top:0;z-index:100;background:rgba(8,8,16,.95);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:10px 14px}
-.header-row{display:flex;align-items:center;gap:10px}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--accent2);letter-spacing:-.5px;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:5px;text-decoration:none}
-.logo svg{width:20px;height:20px;fill:var(--accent)}
-.search-wrap{flex:1;position:relative}
-.search-wrap svg.s-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:15px;height:15px;stroke:var(--muted);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none}
-#searchInput{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:30px;padding:8px 12px 8px 34px;color:var(--text);font-family:'Inter',sans-serif;font-size:13px;outline:none;transition:border-color .2s}
-#searchInput:focus{border-color:rgba(61,111,255,.5)}
-#searchInput::placeholder{color:var(--muted)}
-.menu-btn{background:var(--bg3);border:1px solid var(--border);border-radius:8px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:border-color .2s,background .2s}
-.menu-btn:hover{border-color:var(--accent);background:rgba(61,111,255,.1)}
-.menu-btn svg{width:18px;height:18px;stroke:var(--muted2);fill:none;stroke-width:2;stroke-linecap:round}
+/* ═══════════════════════════════════════════════════
+   NOISE TEXTURE OVERLAY
+═══════════════════════════════════════════════════ */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.6;
+}
 
-/* SEARCH DROP */
-#searchDrop{display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;z-index:200;box-shadow:0 20px 60px rgba(0,0,0,.6)}
-#searchDrop.show{display:block}
-.s-item{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;border-bottom:1px solid var(--border);font-size:13px;color:var(--muted2);transition:background .15s}
-.s-item:last-child{border-bottom:none}
-.s-item:hover{background:var(--bg3);color:var(--text)}
-.s-item svg{width:14px;height:14px;stroke:var(--accent);fill:none;stroke-width:2;stroke-linecap:round;flex-shrink:0}
+/* ═══════════════════════════════════════════════════
+   DRAWER OVERLAY
+═══════════════════════════════════════════════════ */
+.drawer-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.drawer-overlay.open{opacity:1;pointer-events:all}
 
-/* CATEGORY / CHANNEL BAR */
-#catBar{display:flex;gap:7px;padding:10px 14px;overflow-x:auto;scrollbar-width:none;background:var(--bg);border-bottom:1px solid var(--border)}
-#catBar::-webkit-scrollbar{display:none}
-.cat{white-space:nowrap;padding:6px 15px;border-radius:30px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);color:var(--muted2);background:var(--bg2);transition:all .2s;flex-shrink:0}
-.cat:hover{border-color:var(--accent2);color:var(--text)}
-.cat.active{background:var(--accent);border-color:var(--accent);color:#fff}
+/* ═══════════════════════════════════════════════════
+   DRAWER SIDEBAR
+═══════════════════════════════════════════════════ */
+.drawer{
+  position:fixed;top:0;left:0;bottom:0;width:300px;
+  background:var(--ink2);border-right:1px solid var(--edge);
+  z-index:1001;transform:translateX(-100%);
+  transition:transform .38s var(--ease);
+  display:flex;flex-direction:column;overflow-y:auto;
+  scrollbar-width:thin;scrollbar-color:var(--edge) transparent;
+}
+.drawer.open{transform:translateX(0)}
+.drawer-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 22px;border-bottom:1px solid var(--edge);flex-shrink:0;
+}
+.drawer-brand{font-family:var(--fd);font-size:20px;letter-spacing:2px;color:var(--gold)}
+.drawer-close{
+  width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+  background:none;border:1px solid var(--edge);border-radius:var(--r-sm);
+  color:var(--fog);transition:border-color .2s,color .2s,background .2s;
+}
+.drawer-close:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-d)}
+.drawer-section{padding:16px 0}
+.drawer-label{
+  font-family:var(--fm);font-size:9px;letter-spacing:3px;
+  color:var(--ghost);padding:0 22px 10px;text-transform:uppercase;
+}
+.drawer-btn{
+  display:flex;align-items:center;gap:12px;width:100%;
+  padding:11px 22px;background:none;border:none;border-left:2px solid transparent;
+  font-size:14px;font-weight:500;color:var(--fog);text-align:left;
+  transition:background .2s,color .2s,border-color .2s;
+}
+.drawer-btn:hover,.drawer-btn.active{
+  background:var(--gold-d);color:var(--gold);border-left-color:var(--gold);
+}
+.drawer-btn svg{width:17px;height:17px;flex-shrink:0;opacity:.65;transition:opacity .2s}
+.drawer-btn:hover svg,.drawer-btn.active svg{opacity:1}
+.drawer-divider{height:1px;background:var(--edge);margin:6px 22px}
+.drawer-settings{
+  padding:16px 22px;border-top:1px solid var(--edge);
+  margin-top:auto;flex-shrink:0;display:flex;flex-direction:column;gap:4px;
+}
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0}
+.setting-label{font-size:13px;color:var(--fog);display:flex;align-items:center;gap:9px}
+.setting-label svg{width:15px;height:15px;opacity:.7}
+.toggle{position:relative;width:42px;height:23px}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{position:absolute;inset:0;background:var(--edge);border-radius:23px;cursor:pointer;transition:.3s;border:1px solid var(--edge2)}
+.toggle-track::before{content:'';position:absolute;width:17px;height:17px;left:2px;top:2px;background:var(--ghost);border-radius:50%;transition:.3s}
+.toggle input:checked ~ .toggle-track{background:var(--gold);border-color:var(--gold)}
+.toggle input:checked ~ .toggle-track::before{transform:translateX(19px);background:#000}
+.lang-sel{background:var(--ink3);border:1px solid var(--edge);color:var(--snow);border-radius:var(--r-sm);padding:5px 10px;font-size:12px;font-family:var(--fb);outline:none;cursor:pointer}
 
-/* FEED */
-#feed{padding:12px 14px;display:flex;flex-direction:column;gap:14px}
+/* ═══════════════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════════════ */
+header{
+  position:sticky;top:0;z-index:900;
+  background:rgba(8,8,14,.92);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid var(--edge);
+}
+[data-theme="light"] header{background:rgba(248,248,252,.92)}
 
-/* CARD — now an <a> element */
-.vcard{display:block;background:var(--bg2);border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:border-color .2s,transform .2s;text-decoration:none;color:inherit}
-.vcard:hover{border-color:rgba(61,111,255,.4);transform:translateY(-2px)}
-.vcard:active{transform:translateY(0)}
-.vcard:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.header-row1{
+  display:grid;grid-template-columns:52px 1fr 52px;
+  align-items:center;padding:0 18px;height:60px;gap:12px;
+}
+.ham-btn{
+  width:38px;height:38px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:5px;
+  background:none;border:1px solid var(--edge);border-radius:var(--r-sm);
+  transition:border-color .2s,background .2s;
+}
+.ham-btn:hover{border-color:var(--gold);background:var(--gold-d)}
+.ham-btn span{display:block;width:16px;height:1.5px;background:var(--snow);border-radius:2px;transition:transform .3s,opacity .3s}
+.ham-btn.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.ham-btn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.ham-btn.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
 
-/* THUMBNAIL — NO bottom gradient */
-.thumb-wrap{position:relative;overflow:hidden;line-height:0}
-.thumb-wrap img{width:100%;height:190px;object-fit:cover;display:block;background:var(--bg3)}
+/* Logo */
+.logo-center{display:flex;align-items:center;justify-content:center}
+.logo{
+  font-family:var(--fd);font-size:22px;letter-spacing:4px;
+  color:var(--gold);display:flex;align-items:center;gap:8px;line-height:1;
+}
+.logo-ring{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--gold);
+  box-shadow:0 0 0 2px var(--ink),0 0 0 3px var(--gold),0 0 12px var(--gold);
+  animation:ring-pulse 3s ease-in-out infinite;
+}
+@keyframes ring-pulse{
+  0%,100%{box-shadow:0 0 0 2px var(--ink),0 0 0 3px var(--gold),0 0 12px var(--gold)}
+  50%{box-shadow:0 0 0 2px var(--ink),0 0 0 3px var(--gold),0 0 4px var(--gold)}
+}
+.search-trigger{
+  width:38px;height:38px;display:flex;align-items:center;justify-content:center;
+  background:none;border:1px solid var(--edge);border-radius:var(--r-sm);
+  color:var(--fog);transition:border-color .2s,color .2s,background .2s;
+  margin-left:auto;
+}
+.search-trigger:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-d)}
 
-/* 4K BADGE — top right corner */
-.badge-quality{position:absolute;top:8px;right:8px;z-index:3;display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:5px;font-size:11px;font-weight:800;letter-spacing:1px;pointer-events:none;user-select:none}
-.badge-4k{background:#1a1200;color:#f5c842;border:1.5px solid #f5c842;box-shadow:0 0 8px rgba(245,200,66,.45),0 0 20px rgba(245,200,66,.15);text-shadow:0 0 8px rgba(245,200,66,.7);animation:badge4k-glow 2.4s ease-in-out infinite}
-@keyframes badge4k-glow{0%,100%{box-shadow:0 0 8px rgba(245,200,66,.45),0 0 20px rgba(245,200,66,.15)}50%{box-shadow:0 0 4px rgba(245,200,66,.2),0 0 10px rgba(245,200,66,.08)}}
-.badge-hd{background:var(--badgehd);color:var(--badgehdT);border:1px solid rgba(95,206,127,.3)}
+/* Search row */
+.header-row2{padding:0 18px 14px}
+.search-shell{position:relative}
+.search-input{
+  width:100%;height:40px;
+  background:var(--ink3);border:1px solid var(--edge);border-radius:var(--r-xl);
+  padding:0 44px 0 18px;color:var(--snow);
+  font-family:var(--fb);font-size:13px;font-weight:400;outline:none;
+  transition:border-color .25s,box-shadow .25s,background .25s;
+}
+.search-input::placeholder{color:var(--ghost)}
+.search-input:focus{
+  border-color:var(--gold);background:var(--ink4);
+  box-shadow:0 0 0 3px rgba(240,180,41,.1);
+}
+.search-go{
+  position:absolute;right:14px;top:50%;transform:translateY(-50%);
+  background:none;border:none;color:var(--ghost);
+  display:flex;align-items:center;transition:color .2s;padding:4px;
+}
+.search-go:hover{color:var(--gold)}
 
-/* Duration badge — bottom left */
-.dur{position:absolute;bottom:7px;left:8px;background:rgba(0,0,0,.78);color:#fff;font-size:11px;font-weight:500;padding:2px 7px;border-radius:4px;z-index:3;pointer-events:none}
+/* Search dropdown */
+.search-drop{
+  position:absolute;top:calc(100% + 8px);left:0;right:0;
+  background:var(--ink3);border:1px solid var(--edge);
+  border-radius:var(--r-lg);overflow:hidden;z-index:800;
+  box-shadow:var(--shadow-hover);display:none;
+}
+.search-drop.open{display:block}
+.sdr-item{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 16px;cursor:pointer;transition:background .15s;
+  border-bottom:1px solid var(--edge);
+}
+.sdr-item:last-child{border-bottom:none}
+.sdr-item:hover{background:var(--ink4)}
+.sdr-thumb{
+  width:72px;height:42px;border-radius:var(--r-sm);
+  object-fit:cover;flex-shrink:0;background:var(--edge);
+}
+.sdr-info{flex:1;min-width:0}
+.sdr-title{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--snow)}
+.sdr-meta{font-family:var(--fm);font-size:10px;color:var(--ghost);margin-top:3px}
+.sdr-empty{padding:24px;text-align:center;font-family:var(--fm);font-size:12px;letter-spacing:1px;color:var(--ghost)}
 
-.card-info{padding:11px 13px 13px}
-.card-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;line-height:1.45;color:var(--text);margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.card-channel{display:flex;align-items:center;gap:6px;margin-bottom:10px}
-.channel-chip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:500;color:var(--accent2);padding:3px 10px;border-radius:20px;background:var(--tag-bg);border:1px solid var(--tag-border);transition:background .2s,color .2s;cursor:pointer;text-decoration:none}
-.channel-chip:hover{background:rgba(61,111,255,.25);color:#fff}
-.channel-chip svg{width:11px;height:11px;stroke:var(--accent2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.card-stats{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
-.stat{display:flex;align-items:center;gap:4px}
-.stat svg{width:13px;height:13px;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill:none}
-.stat.like svg{stroke:#e05555}
-.stat.view svg{stroke:var(--muted)}
+/* ═══════════════════════════════════════════════════
+   CHANNEL STRIP
+═══════════════════════════════════════════════════ */
+.ch-strip{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 18px;overflow-x:auto;
+  border-bottom:1px solid var(--edge);scrollbar-width:none;
+}
+.ch-strip::-webkit-scrollbar{display:none}
+.ch-pill{
+  flex-shrink:0;padding:7px 16px;border-radius:var(--r-xl);
+  font-family:var(--fm);font-size:10.5px;font-weight:700;letter-spacing:1.2px;
+  cursor:pointer;white-space:nowrap;border:1.5px solid var(--edge);
+  color:var(--fog);background:none;
+  transition:all .22s var(--ease);display:inline-flex;align-items:center;gap:7px;
+}
+.ch-pill:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-d)}
+.ch-pill.active{border-color:var(--gold);color:var(--gold);background:var(--gold-d);box-shadow:0 0 14px rgba(240,180,41,.2)}
+.ch-pill-green{border-color:rgba(16,217,126,.35);color:var(--green)}
+.ch-pill-green:hover,.ch-pill-green.active{border-color:var(--green);color:var(--green);background:var(--green-d);box-shadow:0 0 14px rgba(16,217,126,.18)}
 
-/* STATES */
-.state-msg{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px}
-.spinner{width:32px;height:32px;border-radius:50%;border:2px solid var(--border);border-top-color:var(--accent);animation:spin .7s linear infinite;margin:0 auto 14px}
-@keyframes spin{to{transform:rotate(360deg)}}
+/* ═══════════════════════════════════════════════════
+   MAIN LAYOUT
+═══════════════════════════════════════════════════ */
+.main-wrap{max-width:800px;margin:0 auto;padding:28px 18px 80px;position:relative;z-index:1}
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;gap:12px}
+.sec-title{font-family:var(--fd);font-size:22px;letter-spacing:2.5px;color:var(--snow)}
+.sec-count{font-family:var(--fm);font-size:10px;color:var(--ghost);letter-spacing:1px;padding:4px 10px;border:1px solid var(--edge);border-radius:var(--r-xl)}
 
-/* OVERLAY */
-#overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(5,5,12,.97);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);flex-direction:column}
-#overlay.open{display:flex;animation:fadeIn .2s ease}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.overlay-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--border)}
-.overlay-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--accent2)}
-.close-btn{background:var(--bg3);border:1px solid var(--border);border-radius:8px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s}
-.close-btn:hover{border-color:var(--accent)}
-.close-btn svg{width:18px;height:18px;stroke:var(--muted2);fill:none;stroke-width:2.5;stroke-linecap:round}
-.overlay-nav{flex:1;display:flex;flex-direction:column;justify-content:center;padding:10px 28px;gap:2px}
-.nav-item{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:padding-left .2s}
-.nav-item:last-child{border-bottom:none}
-.nav-item:hover{padding-left:6px}
-.nav-icon{width:38px;height:38px;border-radius:10px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s,border-color .2s}
-.nav-item:hover .nav-icon{background:rgba(61,111,255,.15);border-color:var(--accent)}
-.nav-icon svg{width:18px;height:18px;stroke:var(--accent2);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.nav-label{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--text)}
-.nav-item:hover .nav-label{color:var(--accent2)}
-.overlay-footer{padding:16px 28px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
-.toggle-row{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted2)}
-.toggle-row svg{width:16px;height:16px;stroke:var(--accent2);fill:none;stroke-width:2;stroke-linecap:round}
-.toggle{width:40px;height:22px;background:var(--accent);border-radius:11px;position:relative;cursor:pointer;transition:background .2s}
-.toggle.off{background:var(--bg3);border:1px solid var(--border)}
-.toggle::after{content:'';position:absolute;top:3px;right:3px;width:16px;height:16px;background:#fff;border-radius:50%;transition:right .2s}
-.toggle.off::after{right:auto;left:3px;background:var(--muted)}
-.lang-btn{background:var(--bg3);border:1px solid var(--border);color:var(--muted2);font-size:12px;font-weight:500;padding:7px 14px;border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;transition:border-color .2s}
-.lang-btn:hover{border-color:var(--accent2);color:var(--text)}
-.lang-btn svg{width:15px;height:15px;stroke:var(--accent2);fill:none;stroke-width:2;stroke-linecap:round}
+/* ═══════════════════════════════════════════════════
+   VIDEO CARD — 2026 DESIGN
+═══════════════════════════════════════════════════ */
+.vgrid{display:flex;flex-direction:column;gap:0}
 
-footer{padding:24px 14px;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--muted);margin-top:20px}
+.vcard{
+  display:block;text-decoration:none;
+  position:relative;
+  border-bottom:1px solid var(--edge);
+  transition:background .25s var(--ease);
+  padding:16px 0;
+}
+.vcard:first-child{border-top:1px solid var(--edge)}
+.vcard:hover{background:rgba(255,255,255,.025)}
+.vcard:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:var(--r)}
+
+/* Card inner grid */
+.vcard-inner{display:flex;gap:14px;align-items:flex-start}
+
+/* Thumb */
+.vcard-thumb{
+  flex-shrink:0;width:160px;
+  border-radius:var(--r);overflow:hidden;
+  position:relative;aspect-ratio:16/9;background:var(--ink3);
+}
+@media(min-width:500px){.vcard-thumb{width:200px}}
+.vcard-thumb img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .5s var(--ease),filter .3s;
+  filter:brightness(.95);
+}
+.vcard:hover .vcard-thumb img{transform:scale(1.06);filter:brightness(1.05)}
+
+/* Quality pill — top right */
+.qbadge{
+  position:absolute;top:7px;right:7px;z-index:2;
+  font-family:var(--fm);font-size:9.5px;font-weight:700;letter-spacing:1.8px;
+  color:var(--gold);background:rgba(8,8,14,.85);
+  border:1px solid rgba(240,180,41,.5);border-radius:4px;
+  padding:2px 7px;
+  box-shadow:0 0 8px rgba(240,180,41,.2),inset 0 1px 0 rgba(255,220,80,.2);
+  pointer-events:none;
+}
+/* Duration — bottom left */
+.dbadge{
+  position:absolute;bottom:6px;left:7px;z-index:2;
+  font-family:var(--fm);font-size:10px;font-weight:700;letter-spacing:.8px;
+  color:#fff;background:rgba(8,8,14,.82);
+  border-radius:4px;padding:2px 7px;
+  pointer-events:none;
+}
+
+/* Card content */
+.vcard-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.vcard-title{
+  font-family:var(--fd);font-size:16px;font-weight:600;letter-spacing:.5px;
+  color:var(--snow);line-height:1.35;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  transition:color .2s;
+}
+.vcard:hover .vcard-title{color:var(--gold)}
+.vcard-channel{
+  font-family:var(--fm);font-size:10.5px;letter-spacing:.8px;
+  color:var(--green);display:flex;align-items:center;gap:5px;
+}
+.vcard-channel::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--green);box-shadow:0 0 5px var(--green);flex-shrink:0}
+.vcard-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:2px}
+.vcard-views{
+  font-family:var(--fm);font-size:10.5px;font-weight:700;
+  color:var(--gold);letter-spacing:.6px;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.vcard-views svg{width:8px;height:9px;fill:var(--gold)}
+.vcard-cat{
+  font-family:var(--fm);font-size:10px;letter-spacing:.8px;
+  color:var(--ghost);background:var(--ink4);
+  border:1px solid var(--edge);border-radius:var(--r-xl);
+  padding:2px 9px;
+}
+
+/* ═══════════════════════════════════════════════════
+   STATE MESSAGES
+═══════════════════════════════════════════════════ */
+.state-msg{
+  padding:70px 20px;text-align:center;
+  font-family:var(--fm);font-size:12px;letter-spacing:2.5px;color:var(--ghost);
+}
+.state-msg::before{content:'//  '}
+
+/* ═══════════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════════ */
+footer{
+  border-top:1px solid var(--edge);padding:28px 18px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;
+  position:relative;z-index:1;
+}
+.footer-left .footer-brand{font-family:var(--fd);font-size:16px;letter-spacing:3px;color:var(--gold)}
+.footer-left .footer-copy{font-size:11px;color:var(--ghost);margin-top:3px}
+.footer-links{display:flex;gap:18px;list-style:none;flex-wrap:wrap}
+.footer-links a{font-size:11.5px;color:var(--ghost);transition:color .2s}
+.footer-links a:hover{color:var(--gold)}
+
+@media(max-width:480px){
+  .vcard-thumb{width:120px}
+  .vcard-title{font-size:14px}
+}
+@media print{header,footer,.drawer,.drawer-overlay{display:none}body{background:#fff;color:#000}}
 </style>
 </head>
 <body>
-<a class="skip" href="#feed">Skip to content</a>
-<h1 class="sr-only">VideoHub — Watch Free HD &amp; 4K Videos Online</h1>
+<a class="skip" href="#main">Skip to main content</a>
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()" aria-hidden="true" role="presentation"></div>
 
-<!-- HEADER -->
-<header id="header" role="banner">
-  <div class="header-row">
-    <a href="/" class="logo" aria-label="VideoHub Home">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>
-      VideoHub
-    </a>
-    <div class="search-wrap" role="search">
-      <svg class="s-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="search" id="searchInput" placeholder="Search videos…" autocomplete="off" aria-label="Search videos">
-      <div id="searchDrop" role="listbox" aria-label="Search suggestions"></div>
-    </div>
-    <button class="menu-btn" onclick="openOverlay()" aria-label="Open navigation menu" aria-expanded="false" id="menuBtn">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+<!-- ════ DRAWER ════════════════════════════════════ -->
+<nav class="drawer" id="drawer" aria-label="Main navigation">
+  <div class="drawer-head">
+    <span class="drawer-brand">CINEINSIGHT</span>
+    <button class="drawer-close" onclick="closeDrawer()" aria-label="Close menu" type="button">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="2" y1="2" x2="12" y2="12"/><line x1="12" y1="2" x2="2" y2="12"/></svg>
     </button>
+  </div>
+  <div class="drawer-section">
+    <p class="drawer-label">Browse</p>
+    <button class="drawer-btn active" onclick="setFilter('latest');closeDrawer()" data-filter="latest" type="button">
+      <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="9" cy="9" r="7"/><polyline points="9,5 9,9 12,11"/></svg>Latest
+    </button>
+    <button class="drawer-btn" onclick="setFilter('trending');closeDrawer()" data-filter="trending" type="button">
+      <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><polyline points="2,14 6,8 10,11 16,4"/><polyline points="12,4 16,4 16,8"/></svg>Trending
+    </button>
+    <button class="drawer-btn" onclick="setFilter('popular');closeDrawer()" data-filter="popular" type="button">
+      <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><polygon points="9,2 11.5,7 17,7.6 13,11.4 14.2,17 9,14.2 3.8,17 5,11.4 1,7.6 6.5,7"/></svg>Most Popular
+    </button>
+    <div class="drawer-divider"></div>
+    <p class="drawer-label">Categories</p>
+    <div id="categoryList"></div>
+    <div class="drawer-divider"></div>
+    <button class="drawer-btn" onclick="alert('Upload coming soon!');closeDrawer()" type="button">
+      <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><polyline points="9,2 9,12"/><polyline points="5,6 9,2 13,6"/><path d="M3,13v2a1,1,0,0,0,1,1H14a1,1,0,0,0,1-1v-2"/></svg>Upload Video
+    </button>
+  </div>
+  <div class="drawer-settings">
+    <div class="setting-row">
+      <span class="setting-label">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><line x1="8" y1="1" x2="8" y2="2.5"/><line x1="8" y1="13.5" x2="8" y2="15"/><line x1="1" y1="8" x2="2.5" y2="8"/><line x1="13.5" y1="8" x2="15" y2="8"/></svg>
+        Light Mode
+      </span>
+      <label class="toggle" aria-label="Toggle light mode">
+        <input type="checkbox" id="themeToggle" onchange="toggleTheme(this)">
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+    <div class="setting-row">
+      <span class="setting-label">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="7"/><path d="M8 1a7 7 0 0 1 0 14"/><line x1="1" y1="8" x2="15" y2="8"/></svg>
+        Language
+      </span>
+      <select class="lang-sel" onchange="setLang(this.value)" aria-label="Select language">
+        <option value="en">English</option>
+        <option value="bn">বাংলা</option>
+        <option value="hi">हिन्दी</option>
+        <option value="ar">العربية</option>
+        <option value="es">Español</option>
+      </select>
+    </div>
+  </div>
+</nav>
+
+<!-- ════ HEADER ════════════════════════════════════ -->
+<header role="banner">
+  <div class="header-row1">
+    <button class="ham-btn" id="hamBtn" onclick="openDrawer()" aria-label="Open navigation" aria-expanded="false" type="button">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="logo-center">
+      <a href="/" class="logo" aria-label="CineInsight Home">
+        <span class="logo-ring" aria-hidden="true"></span>CINEINSIGHT
+      </a>
+    </div>
+    <button class="search-trigger" aria-label="Focus search" onclick="document.getElementById('searchInput').focus()" type="button">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7" cy="7" r="5"/><line x1="11" y1="11" x2="15" y2="15"/></svg>
+    </button>
+  </div>
+  <div class="header-row2">
+    <div class="search-shell">
+      <input class="search-input" type="search" id="searchInput"
+        placeholder="Search titles, tags, channels…"
+        autocomplete="off" spellcheck="false"
+        aria-label="Search videos"
+        oninput="onSearch(this.value)"
+        onfocus="showDrop()" onblur="hideDrop()">
+      <button class="search-go" type="button" aria-label="Search" onclick="doSearch()">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="7" cy="7" r="5"/><line x1="11" y1="11" x2="15" y2="15"/></svg>
+      </button>
+      <div class="search-drop" id="searchDrop" role="listbox" aria-label="Search suggestions"></div>
+    </div>
   </div>
 </header>
 
-<!-- CHANNEL / CATEGORY BAR -->
-<nav id="catBar" aria-label="Filter by channel">
-  <button class="cat active" data-filter="all" aria-pressed="true">All</button>
-</nav>
-
-<!-- FEED -->
-<main id="feed" aria-label="Video feed" aria-live="polite">
-  <div class="state-msg" role="status"><div class="spinner" aria-hidden="true"></div>Loading videos…</div>
-</main>
-
-<!-- OVERLAY MENU -->
-<div id="overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
-  <div class="overlay-head">
-    <span class="overlay-logo">VideoHub</span>
-    <button class="close-btn" onclick="closeOverlay()" aria-label="Close navigation menu">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
-  </div>
-  <nav class="overlay-nav" aria-label="Main navigation">
-    <div class="nav-item" onclick="menuAction('latest')" tabindex="0" role="button">
-      <div class="nav-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div>
-      <span class="nav-label">Latest</span>
-    </div>
-    <div class="nav-item" onclick="menuAction('top')" tabindex="0" role="button">
-      <div class="nav-icon"><svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div>
-      <span class="nav-label">Top Rated</span>
-    </div>
-    <div class="nav-item" onclick="menuAction('viewed')" tabindex="0" role="button">
-      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
-      <span class="nav-label">Most Viewed</span>
-    </div>
-    <div class="nav-item" onclick="menuAction('categories')" tabindex="0" role="button">
-      <div class="nav-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
-      <span class="nav-label">Categories</span>
-    </div>
-    <div class="nav-item" onclick="menuAction('stars')" tabindex="0" role="button">
-      <div class="nav-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
-      <span class="nav-label">Stars</span>
-    </div>
-  </nav>
-  <div class="overlay-footer">
-    <div class="toggle-row">
-      <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-      <span>Dark Mode</span>
-      <div class="toggle" id="darkToggle" onclick="toggleDark()" role="switch" aria-checked="true" tabindex="0"></div>
-    </div>
-    <button class="lang-btn" onclick="cycleLang()" id="langBtn" aria-label="Change language">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-      <span id="langLabel">EN</span>
-    </button>
-  </div>
+<!-- ════ CHANNEL STRIP ═════════════════════════════ -->
+<div class="ch-strip" id="chStrip" role="list" aria-label="Filter by channel">
+  <button class="ch-pill active" onclick="setChannel('all');activePill(this)" aria-pressed="true" type="button" role="listitem">ALL</button>
 </div>
 
+<!-- ════ MAIN ══════════════════════════════════════ -->
+<main id="main" role="main">
+  <div class="main-wrap">
+    <div class="sec-header">
+      <h1 class="sec-title" id="secTitle">Latest Videos</h1>
+      <span class="sec-count" id="secCount" aria-live="polite" aria-atomic="true"></span>
+    </div>
+    <div id="vgrid" class="vgrid" role="list" aria-live="polite" aria-label="Video list">
+      <p class="state-msg" role="status" aria-label="Loading">LOADING VIDEOS</p>
+    </div>
+  </div>
+</main>
+
+<!-- ════ FOOTER ════════════════════════════════════ -->
 <footer role="contentinfo">
-  <p>&copy; <span id="footerYear"></span> VideoHub. All rights reserved.</p>
+  <div class="footer-left">
+    <p class="footer-brand">CINEINSIGHT</p>
+    <p class="footer-copy">© <span id="footerYear"></span> CineInsight. All rights reserved.</p>
+  </div>
+  <ul class="footer-links">
+    <li><a href="/privacy-policy">Privacy</a></li>
+    <li><a href="/terms">Terms</a></li>
+    <li><a href="/sitemap.xml">Sitemap</a></li>
+    <li><a href="/contact">Contact</a></li>
+  </ul>
 </footer>
 
-<!-- FIREBASE MODULE -->
 <script type="module">
 import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import{getFirestore,collection,getDocs}from"https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const SITE='https://cineinsight.info';
-const cfg={
+const FB={
   apiKey:"AIzaSyBYNU7wTq9_1-TdIVuG-yxAlKjeFb9Rm_M",
   authDomain:"video-cms-b7c1e.firebaseapp.com",
   projectId:"video-cms-b7c1e",
@@ -256,161 +529,148 @@ const cfg={
   messagingSenderId:"991575420179",
   appId:"1:991575420179:web:23459a09aa36f868e37ee6"
 };
-const app=initializeApp(cfg);
-const db=getFirestore(app);
-const esc=s=>String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const db=getFirestore(initializeApp(FB));
+let all=[],channel='all',filter='latest';
+const e=v=>String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const PLAY=`<svg viewBox="0 0 7 8" fill="currentColor"><path d="M1 1L6 4L1 7Z"/></svg>`;
 
-window._allVideos=[];
-window._activeFilter='all';
+function dur(d){if(!d)return'';if(typeof d==='number'){return`${Math.floor(d/60)}:${String(d%60).padStart(2,'0')}`;}return String(d);}
+function views(v){if(!v)return'';if(typeof v==='number'){if(v>=1e6)return`${(v/1e6).toFixed(1)}M`;if(v>=1000)return`${(v/1000).toFixed(1)}K`;return String(v);}return String(v).replace(/\s*views?/i,'');}
 
-/* ── FETCH ── */
-async function fetchVideos(){
-  try{
-    const snap=await getDocs(collection(db,'videos'));
-    window._allVideos=snap.docs.map(d=>({id:d.id,...d.data()})).reverse();
-    buildChannelBar();
-    renderFeed(window._allVideos);
-  }catch(e){
-    console.error(e);
-    document.getElementById('feed').innerHTML='<div class="state-msg">Failed to load. Please refresh.</div>';
-  }
-}
-
-/* ── CHANNEL BAR (replaces tag bar) ── */
-function buildChannelBar(){
-  const seen=new Set();
-  const bar=document.getElementById('catBar');
-  window._allVideos.forEach(v=>{
-    const ch=(v.channel||'').trim();
-    if(ch&&!seen.has(ch.toLowerCase())){
-      seen.add(ch.toLowerCase());
-      const btn=document.createElement('button');
-      btn.className='cat';
-      btn.dataset.filter=ch;
-      btn.setAttribute('aria-pressed','false');
-      btn.textContent=ch;
-      btn.onclick=()=>filterByChannel(ch,btn);
-      bar.appendChild(btn);
-    }
-  });
-  document.querySelector('.cat[data-filter="all"]').onclick=()=>filterByChannel('all',document.querySelector('.cat[data-filter="all"]'));
-}
-
-function filterByChannel(ch,btn){
-  window._activeFilter=ch;
-  document.querySelectorAll('.cat').forEach(c=>{c.classList.remove('active');c.setAttribute('aria-pressed','false')});
-  btn.classList.add('active');
-  btn.setAttribute('aria-pressed','true');
-  const list=ch==='all'?window._allVideos:window._allVideos.filter(v=>(v.channel||'').toLowerCase()===(ch||'').toLowerCase());
-  renderFeed(list);
-}
-
-/* ── RENDER ── */
-window.renderFeed=function(videos){
-  const feed=document.getElementById('feed');
-  if(!videos.length){feed.innerHTML='<div class="state-msg">No videos found.</div>';return;}
-  feed.innerHTML='';
-  videos.forEach(v=>feed.appendChild(buildCard(v)));
-};
-
-/* ── BUILD CARD ── */
 function buildCard(v){
-  const qual=(v.quality||'').toLowerCase();
-  const badge=qual==='4k'?`<span class="badge-quality badge-4k">4K</span>`:qual==='hd'?`<span class="badge-quality badge-hd">HD</span>`:'';
-  const dur=esc(v.duration||'');
-  const views=esc(v.views||'0 views');
-  const likes=esc(v.likes||'0%');
-  const ch=esc(v.channel||'');
-
   const a=document.createElement('a');
   a.className='vcard';
   a.href=`/video?id=${encodeURIComponent(v.id)}`;
-  a.setAttribute('aria-label',esc(v.title));
+  a.setAttribute('role','listitem');
+  a.setAttribute('aria-label',`Watch: ${e(v.title)}`);
+  const d=dur(v.duration),vw=views(v.views),q=e(v.quality||'4K');
   a.innerHTML=`
-    <div class="thumb-wrap">
-      <img src="${esc(v.thumb)}" alt="${esc(v.title)} thumbnail" loading="lazy" width="400" height="190">
-      ${badge}
-      ${dur?`<span class="dur" aria-label="Duration ${dur}">${dur}</span>`:''}
+  <div class="vcard-inner">
+    <div class="vcard-thumb">
+      <img src="${e(v.thumb)}" alt="${e(v.title)} thumbnail" width="320" height="180" loading="lazy" decoding="async">
+      <span class="qbadge" aria-hidden="true">${q}</span>
+      ${d?`<span class="dbadge" aria-hidden="true">${e(d)}</span>`:''}
     </div>
-    <div class="card-info">
-      <p class="card-title">${esc(v.title)}</p>
-      ${ch?`<div class="card-channel">
-        <span class="channel-chip" data-channel="${ch}" role="button" tabindex="0" aria-label="Filter by channel ${ch}">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-          ${ch}
-        </span>
-      </div>`:''}
-      <div class="card-stats">
-        <span class="stat like">
-          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          ${likes}
-        </span>
-        <span class="stat view">
-          <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          ${views}
-        </span>
+    <div class="vcard-body">
+      <h2 class="vcard-title">${e(v.title)}</h2>
+      ${v.channel?`<p class="vcard-channel">${e(v.channel)}</p>`:''}
+      <div class="vcard-meta">
+        ${vw?`<span class="vcard-views">${PLAY}${e(vw)} views</span>`:''}
+        ${v.category?`<span class="vcard-cat">${e(v.category)}</span>`:''}
       </div>
-    </div>`;
-
-  /* channel chip click — filter without navigating */
-  const chip=a.querySelector('.channel-chip');
-  if(chip){
-    chip.addEventListener('click',e=>{
-      e.preventDefault();
-      e.stopPropagation();
-      const chName=chip.dataset.channel;
-      const btn=document.querySelector(`.cat[data-filter="${CSS.escape(chName)}"]`);
-      if(btn)filterByChannel(chName,btn);
-    });
-    chip.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();chip.click();}});
-  }
+    </div>
+  </div>`;
   return a;
 }
 
-/* ── SEARCH ── */
-const searchInput=document.getElementById('searchInput');
-const searchDrop=document.getElementById('searchDrop');
-searchInput.addEventListener('input',function(){
-  const q=this.value.trim().toLowerCase();
-  if(!q||!window._allVideos.length){searchDrop.classList.remove('show');return;}
-  const hits=window._allVideos.filter(v=>(v.title||'').toLowerCase().includes(q)||(v.channel||'').toLowerCase().includes(q)||(v.tags||[]).some(t=>t.toLowerCase().includes(q))).slice(0,8);
-  searchDrop.innerHTML=!hits.length
-    ?'<div class="s-item">No results found</div>'
-    :hits.map(v=>`<div class="s-item" onclick="window._goVideo('${esc(v.id)}')"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>${esc(v.title)}</div>`).join('');
-  searchDrop.classList.add('show');
-});
-window._goVideo=function(id){window.location.href=`/video?id=${encodeURIComponent(id)}`;};
-document.addEventListener('click',e=>{if(!e.target.closest('.search-wrap'))searchDrop.classList.remove('show');});
+async function load(){
+  try{
+    const snap=await getDocs(collection(db,'videos'));
+    all=snap.docs.map(d=>({id:d.id,...d.data()}));
+    buildStrip();buildCats();render();injectSchema();
+  }catch(err){
+    console.error(err);
+    document.getElementById('vgrid').innerHTML='<p class="state-msg" role="alert">LOAD FAILED — REFRESH PAGE</p>';
+  }
+}
 
-/* ── MENU ACTIONS ── */
-window.menuAction=function(type){
-  closeOverlay();
-  let list=[...window._allVideos];
-  if(type==='latest'){}
-  if(type==='top')list.sort((a,b)=>parseFloat(b.likes||0)-parseFloat(a.likes||0));
-  if(type==='viewed')list.sort((a,b)=>{
-    const n=s=>parseFloat((s||'0').replace(/[^0-9.]/g,''))*((s||'').includes('M')?1e6:(s||'').includes('K')?1e3:1);
-    return n(b.views)-n(a.views);
+function buildStrip(){
+  const strip=document.getElementById('chStrip');
+  [...new Set(all.map(v=>v.channel).filter(Boolean))].forEach(ch=>{
+    const btn=document.createElement('button');
+    btn.className='ch-pill ch-pill-green';btn.type='button';
+    btn.textContent=ch;btn.setAttribute('aria-pressed','false');btn.setAttribute('role','listitem');
+    btn.onclick=()=>{setChannel(ch);activePill(btn);};
+    strip.appendChild(btn);
   });
-  if(type==='categories'){document.getElementById('catBar').scrollIntoView({behavior:'smooth'});return;}
-  renderFeed(list);
-  document.querySelectorAll('.cat').forEach(c=>{c.classList.remove('active');c.setAttribute('aria-pressed','false')});
+}
+
+function buildCats(){
+  const list=document.getElementById('categoryList');
+  [...new Set(all.map(v=>v.category).filter(Boolean))].forEach(cat=>{
+    const btn=document.createElement('button');
+    btn.className='drawer-btn';btn.type='button';
+    btn.innerHTML=`<svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="2" y="2" width="6" height="6" rx="1"/><rect x="10" y="2" width="6" height="6" rx="1"/><rect x="2" y="10" width="6" height="6" rx="1"/><rect x="10" y="10" width="6" height="6" rx="1"/></svg>${e(cat)}`;
+    btn.onclick=()=>{filter=`cat:${cat}`;channel='all';render();activePill(document.querySelector('.ch-pill'));closeDrawer();};
+    list.appendChild(btn);
+  });
+}
+
+window.setChannel=function(ch){channel=ch;render();};
+window.setFilter=function(type){
+  filter=type;channel='all';
+  document.querySelectorAll('.drawer-btn[data-filter]').forEach(b=>b.classList.remove('active'));
+  const a=document.querySelector(`.drawer-btn[data-filter="${type}"]`);if(a)a.classList.add('active');
+  activePill(document.querySelector('.ch-pill'));render();
+};
+window.activePill=function(el){
+  document.querySelectorAll('.ch-pill').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-pressed','false');});
+  if(el){el.classList.add('active');el.setAttribute('aria-pressed','true');}
 };
 
-fetchVideos();
-</script>
+function render(){
+  let vids=[...all];
+  if(channel!=='all')vids=vids.filter(v=>v.channel===channel);
+  const titleEl=document.getElementById('secTitle');
+  if(filter==='latest'){vids.sort((a,b)=>(b.uploadDate||'').localeCompare(a.uploadDate||''));titleEl.textContent='Latest Videos';}
+  else if(filter==='trending'){vids.sort((a,b)=>parseFloat(b.views||0)-parseFloat(a.views||0));vids=vids.slice(0,20);titleEl.textContent='Trending Now';}
+  else if(filter==='popular'){vids.sort((a,b)=>parseFloat(b.views||0)-parseFloat(a.views||0));titleEl.textContent='Most Popular';}
+  else if(filter.startsWith('cat:')){const cat=filter.slice(4);vids=vids.filter(v=>v.category===cat);titleEl.textContent=cat;}
+  const grid=document.getElementById('vgrid'),cnt=document.getElementById('secCount');
+  if(!vids.length){grid.innerHTML='<p class="state-msg">NO VIDEOS FOUND</p>';cnt.textContent='';return;}
+  grid.innerHTML='';vids.forEach(v=>grid.appendChild(buildCard(v)));
+  cnt.textContent=`${vids.length} videos`;
+}
 
-<!-- UTILS -->
-<script>
-function openOverlay(){document.getElementById('overlay').classList.add('open');document.body.style.overflow='hidden';document.getElementById('menuBtn').setAttribute('aria-expanded','true');}
-function closeOverlay(){document.getElementById('overlay').classList.remove('open');document.body.style.overflow='';document.getElementById('menuBtn').setAttribute('aria-expanded','false');}
-document.getElementById('overlay').addEventListener('click',e=>{if(e.target===document.getElementById('overlay'))closeOverlay();});
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlay();});
-let darkOn=true;
-function toggleDark(){darkOn=!darkOn;const t=document.getElementById('darkToggle');t.classList.toggle('off',!darkOn);t.setAttribute('aria-checked',darkOn);if(!darkOn){document.documentElement.style.setProperty('--bg','#f4f4f8');document.documentElement.style.setProperty('--bg2','#ffffff');document.documentElement.style.setProperty('--bg3','#eaeaf0');document.documentElement.style.setProperty('--text','#111120');document.documentElement.style.setProperty('--muted','#888898');document.documentElement.style.setProperty('--muted2','#555568');document.documentElement.style.setProperty('--border','rgba(0,0,0,.09)');}else{document.documentElement.style.setProperty('--bg','#080810');document.documentElement.style.setProperty('--bg2','#0f0f1a');document.documentElement.style.setProperty('--bg3','#15151f');document.documentElement.style.setProperty('--text','#f0f0f8');document.documentElement.style.setProperty('--muted','#6a6a88');document.documentElement.style.setProperty('--muted2','#9090b0');document.documentElement.style.setProperty('--border','rgba(255,255,255,.07)');}}
-const langs=['EN','BN','AR','FR','ES'];let langIdx=0;
-function cycleLang(){langIdx=(langIdx+1)%langs.length;document.getElementById('langLabel').textContent=langs[langIdx];}
+/* Search */
+let st;
+window.onSearch=q=>{clearTimeout(st);st=setTimeout(()=>runSearch(q),200)};
+function runSearch(q){
+  const drop=document.getElementById('searchDrop');
+  q=q.trim().toLowerCase();
+  if(!q){drop.innerHTML='';drop.classList.remove('open');return;}
+  const res=all.filter(v=>{
+    const tags=Array.isArray(v.tags)?v.tags.join(' ').toLowerCase():(v.tags||'').toLowerCase();
+    return(v.title||'').toLowerCase().includes(q)||tags.includes(q)||(v.category||'').toLowerCase().includes(q);
+  }).slice(0,7);
+  if(!res.length){drop.innerHTML=`<p class="sdr-empty">NO RESULTS FOR "${e(q)}"</p>`;drop.classList.add('open');return;}
+  drop.innerHTML='';
+  res.forEach(v=>{
+    const a=document.createElement('a');
+    a.className='sdr-item';a.href=`/video?id=${encodeURIComponent(v.id)}`;
+    a.setAttribute('role','option');
+    a.innerHTML=`<img class="sdr-thumb" src="${e(v.thumb)}" alt="" loading="lazy"><div class="sdr-info"><p class="sdr-title">${e(v.title)}</p><p class="sdr-meta">${e(views(v.views)||'')} views · ${e(dur(v.duration)||'')}</p></div>`;
+    drop.appendChild(a);
+  });
+  drop.classList.add('open');
+}
+window.showDrop=()=>{if(document.getElementById('searchInput').value.trim())document.getElementById('searchDrop').classList.add('open');};
+window.hideDrop=()=>{setTimeout(()=>document.getElementById('searchDrop').classList.remove('open'),220)};
+window.doSearch=()=>runSearch(document.getElementById('searchInput').value);
+
+/* Drawer */
+window.openDrawer=()=>{document.getElementById('drawer').classList.add('open');document.getElementById('drawerOverlay').classList.add('open');document.getElementById('hamBtn').classList.add('open');document.getElementById('hamBtn').setAttribute('aria-expanded','true');document.body.style.overflow='hidden';};
+window.closeDrawer=()=>{document.getElementById('drawer').classList.remove('open');document.getElementById('drawerOverlay').classList.remove('open');document.getElementById('hamBtn').classList.remove('open');document.getElementById('hamBtn').setAttribute('aria-expanded','false');document.body.style.overflow='';};
+
+/* Theme */
+window.toggleTheme=cb=>{document.documentElement.setAttribute('data-theme',cb.checked?'light':'dark');localStorage.setItem('ci-theme',cb.checked?'light':'dark');};
+window.setLang=lang=>{document.documentElement.setAttribute('lang',lang);localStorage.setItem('ci-lang',lang);};
+
+/* Schema */
+function injectSchema(){
+  document.getElementById('videoListSchema').textContent=JSON.stringify({
+    '@context':'https://schema.org','@type':'ItemList',
+    name:'Videos on CineInsight',url:'https://cineinsight.info/',
+    itemListElement:all.slice(0,20).map((v,i)=>({'@type':'ListItem',position:i+1,name:v.title,url:`https://cineinsight.info/video?id=${encodeURIComponent(v.id)}`}))
+  });
+}
+
+/* Init */
 document.getElementById('footerYear').textContent=new Date().getFullYear();
+const t=localStorage.getItem('ci-theme');
+if(t==='light'){document.documentElement.setAttribute('data-theme','light');document.getElementById('themeToggle').checked=true;}
+const l=localStorage.getItem('ci-lang');if(l)document.documentElement.setAttribute('lang',l);
+load();
 </script>
 </body>
 </html>
