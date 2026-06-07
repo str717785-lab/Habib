@@ -38,6 +38,7 @@
 <style>
 /* ═══ RESET ═══════════════════════════════════════════════ */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 /* ═══ TOKENS ══════════════════════════════════════════════ */
 :root{
   --bg:#0d0d14;--bg2:#111118;--card:#15151e;--card-h:#1b1b27;
@@ -571,6 +572,7 @@ footer{border-top:1px solid var(--border);padding:28px 16px;display:flex;align-i
 <main id="main">
 
   <div id="homePage">
+    <h1 class="sr-only">VideoHub — Free Online Video Streaming Platform</h1>
     <div class="channel-strip" id="channelStrip" role="list" aria-label="Channels">
       <button class="ch-all active" onclick="filterChannel('all');setStripActive(this)" aria-pressed="true">ALL</button>
     </div>
@@ -658,10 +660,11 @@ const PLAY_SVG=`<svg viewBox="0 0 7 8"><path d="M1 1L6 4L1 7V1Z"/></svg>`;
 
 /* ══ BUILD CARD ══════════════════════════════════════════ */
 function buildCard(video){
-  const el=document.createElement('article');
+  /* Use <a href> so Googlebot can discover & index every video page */
+  const el=document.createElement('a');
   el.className='card';
+  el.href=`/video?id=${encodeURIComponent(video.id)}`;
   el.setAttribute('role','listitem');
-  el.setAttribute('tabindex','0');
   el.setAttribute('aria-label',s(video.title));
 
   const qual=s(video.quality||'4K');
@@ -689,9 +692,9 @@ function buildCard(video){
       </div>
     </div>`;
 
-  const open=()=>openVideo(video.id);
-  el.addEventListener('click',open);
-  el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
+  /* SPA: intercept click so the page doesn't reload */
+  el.addEventListener('click',e=>{e.preventDefault();openVideo(video.id);});
+  el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openVideo(video.id);}});
   return el;
 }
 

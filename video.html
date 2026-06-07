@@ -6,10 +6,20 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Watch — VideoHub</title>
 <meta name="description" content="Watch this video on VideoHub — free online streaming.">
-<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta name="robots" id="robotsMeta" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 <meta name="theme-color" content="#0d0d14">
 <meta name="author" content="VideoHub">
 <link rel="canonical" id="canonicalTag" href="https://cineinsight.info/video">
+<script>
+/* If no video ID in URL, block indexing of the bare /video page */
+(function(){
+  var id=new URLSearchParams(location.search).get('id')||new URLSearchParams(location.search).get('v');
+  if(!id){
+    document.getElementById('robotsMeta').content='noindex,nofollow';
+    document.getElementById('canonicalTag').href='https://cineinsight.info/';
+  }
+})();
+</script>
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">

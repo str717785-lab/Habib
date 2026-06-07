@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- ═══ STATIC PAGES ═══════════════════════════════════════ -->
+  <url>
+    <loc>https://cineinsight.info/</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://cineinsight.info/privacy-policy</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://cineinsight.info/terms</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!--
+  ═══ VIDEO PAGES ════════════════════════════════════════════
+  Add one <url> block per video below.
+  Replace VIDEO_ID, TITLE, DESCRIPTION, THUMBNAIL_URL, UPLOAD_DATE.
+
+  Example:
+  <url>
+    <loc>https://cineinsight.info/video?id=VIDEO_ID</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <video:video>
+      <video:thumbnail_loc>THUMBNAIL_URL</video:thumbnail_loc>
+      <video:title>TITLE</video:title>
+      <video:description>DESCRIPTION</video:description>
+      <video:publication_date>UPLOAD_DATE</video:publication_date>
+    </video:video>
+  </url>
+  ═══════════════════════════════════════════════════════════ -->
+
+</urlset>

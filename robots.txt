@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Block bare video page without ID (no content without JS + ID)
+Disallow: /video$
+Disallow: /video?
+
+# Allow all video pages with IDs
+Allow: /video?id=
+
+Sitemap: https://cineinsight.info/sitemap.xml
