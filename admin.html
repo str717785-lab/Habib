@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>VideoHub — Admin Panel</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0a;--card:#141414;--card2:#1c1c1c;--border:#222;--acc:#e55000;--green:#22c55e;--red:#ef4444;--txt:#f0f0f0;--txt2:#888;--r:8px}
+body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
+a{text-decoration:none;color:inherit}
+/* HEADER */
+header{background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-size:18px;font-weight:800;display:flex;align-items:center;gap:8px}
+.logo-icon{width:28px;height:28px;border-radius:6px;background:var(--acc);display:flex;align-items:center;justify-content:center}
+.admin-badge{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.5px}
+.hd-right{display:flex;align-items:center;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:8px;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:.18s;white-space:nowrap}
+.btn-acc{background:var(--acc);color:#fff}
+.btn-acc:hover{opacity:.88}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--txt2)}
+.btn-ghost:hover{color:var(--txt);border-color:#444}
+/* STATS BAR */
+.stats-bar{display:flex;gap:12px;padding:14px 16px;max-width:1100px;margin:0 auto;flex-wrap:wrap}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 20px;flex:1;min-width:140px}
+.stat-card h4{font-size:12px;color:var(--txt2);margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:.5px}
+.stat-card .val{font-size:24px;font-weight:800}
+.stat-card .val.acc{color:var(--acc)}
+/* TOOLBAR */
+.toolbar{display:flex;align-items:center;gap:10px;padding:0 16px 12px;max-width:1100px;margin:0 auto;flex-wrap:wrap}
+.toolbar input[type=search]{flex:1;min-width:200px;background:var(--card);border:1px solid var(--border);color:var(--txt);padding:8px 14px;border-radius:8px;font-size:13px;outline:none;font-family:inherit}
+.toolbar input:focus{border-color:var(--acc)}
+/* TABLE */
+.table-wrap{max-width:1100px;margin:0 auto 40px;padding:0 16px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:800px}
+th{background:var(--card);color:var(--txt2);font-weight:600;padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:hover td{background:rgba(255,255,255,.02)}
+.thumb-cell{width:80px}
+.thumb-cell img{width:80px;height:45px;object-fit:cover;border-radius:5px;display:block;border:1px solid var(--border)}
+.title-cell{max-width:220px;font-weight:500;line-height:1.4}
+.title-cell .vid-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.badge-lbl{background:rgba(229,80,0,.18);color:var(--acc);font-size:10px;font-weight:700;padding:1px 8px;border-radius:10px;display:inline-block;margin-top:4px}
+.ch-lbl{font-size:12px;color:var(--txt2)}
+.views-cell{white-space:nowrap;font-weight:600}
+.tag-lbl{color:var(--acc);font-size:11px}
+.actions{display:flex;gap:6px;white-space:nowrap}
+.act-btn{padding:5px 12px;border-radius:6px;border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:.15s}
+.act-edit{background:rgba(229,80,0,.15);color:var(--acc)}
+.act-edit:hover{background:rgba(229,80,0,.28)}
+.act-del{background:rgba(239,68,68,.12);color:var(--red)}
+.act-del:hover{background:rgba(239,68,68,.25)}
+/* SPINNER */
+.spinner{display:flex;justify-content:center;padding:60px 0}
+.spinner::after{content:'';width:36px;height:36px;border:3px solid #222;border-top-color:var(--acc);border-radius:50%;animation:spin .65s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* EMPTY */
+.empty-row td{text-align:center;padding:40px;color:var(--txt2)}
+/* MODAL */
+.modal-bg{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.82);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px}
+.modal-bg.open{display:flex}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:14px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto}
+.modal-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--card);z-index:1}
+.modal-hd h2{font-size:15px;font-weight:700}
+.modal-x{background:none;border:none;color:var(--txt2);cursor:pointer;font-size:22px;padding:2px 8px;border-radius:6px;line-height:1;font-family:inherit;transition:color .15s}
+.modal-x:hover{color:var(--txt)}
+.modal-body{padding:16px 18px 22px;display:flex;flex-direction:column;gap:12px}
+.field label{display:block;font-size:12px;color:var(--txt2);margin-bottom:4px;font-weight:500}
+.field input,.field textarea{width:100%;background:var(--card2);border:1px solid var(--border);color:var(--txt);padding:8px 12px;border-radius:8px;font-size:13px;outline:none;font-family:inherit;resize:none}
+.field input:focus,.field textarea:focus{border-color:var(--acc)}
+.field input::placeholder{color:#3a3a3a}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.modal-actions{display:flex;gap:10px;margin-top:4px}
+.modal-actions .btn{flex:1;justify-content:center;padding:10px}
+.err{color:#f88;background:rgba(255,80,80,.1);border-radius:8px;padding:8px 12px;font-size:12px}
+.success{color:#6ee7a0;background:rgba(34,197,94,.1);border-radius:8px;padding:8px 12px;font-size:12px}
+/* CONFIRM */
+.confirm-bg{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;padding:16px}
+.confirm-bg.open{display:flex}
+.confirm-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;max-width:360px;width:100%;text-align:center}
+.confirm-box h3{font-size:16px;margin-bottom:8px}
+.confirm-box p{font-size:13px;color:var(--txt2);margin-bottom:20px}
+.confirm-actions{display:flex;gap:10px;justify-content:center}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{opacity:.88}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+    VideoHub
+    <span class="admin-badge">ADMIN</span>
+  </div>
+  <div class="hd-right">
+    <button class="btn btn-acc" id="addNewBtn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      Add Video
+    </button>
+    <a class="btn btn-ghost" href="index.html">← Back to Site</a>
+  </div>
+</header>
+
+<!-- STATS -->
+<div class="stats-bar" id="statsBar">
+  <div class="stat-card"><h4>Total Videos</h4><div class="val acc" id="statTotal">—</div></div>
+  <div class="stat-card"><h4>Total Views</h4><div class="val" id="statViews">—</div></div>
+  <div class="stat-card"><h4>Channels</h4><div class="val" id="statChannels">—</div></div>
+  <div class="stat-card"><h4>With Preview</h4><div class="val" id="statPreview">—</div></div>
+</div>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <input type="search" id="tableSearch" placeholder="Search by title, channel, tag..."/>
+  <button class="btn btn-ghost" id="refreshBtn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+    Refresh
+  </button>
+</div>
+
+<!-- TABLE -->
+<div class="table-wrap">
+  <table id="videoTable">
+    <thead>
+      <tr>
+        <th>Thumbnail</th>
+        <th>Title / Channel</th>
+        <th>Views</th>
+        <th>Duration</th>
+        <th>Badge</th>
+        <th>Tags</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+      <tr class="empty-row"><td colspan="7"><div class="spinner"></div></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ADD / EDIT MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <div class="modal-hd">
+      <h2 id="modalTitle">Add New Video</h2>
+      <button class="modal-x" id="modalClose">&#x2715;</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editId"/>
+      <div class="field"><label>Title *</label><input id="fTitle" placeholder="Video title"/></div>
+      <div class="field"><label>Video URL (src) *</label><input id="fSrc" placeholder="https://example.com/video.mp4"/></div>
+      <div class="field"><label>Preview Clip URL</label><input id="fPreview" placeholder="https://example.com/preview.mp4"/></div>
+      <div class="field"><label>Thumbnail URL (thumb)</label><input id="fThumb" placeholder="https://example.com/thumb.jpg"/></div>
+      <div class="field-row">
+        <div class="field"><label>Duration</label><input id="fDuration" placeholder="12:35"/></div>
+        <div class="field"><label>Views</label><input id="fViews" type="number" placeholder="5000"/></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Channel</label><input id="fChannel" placeholder="Brazzers"/></div>
+        <div class="field"><label>Badge</label><input id="fBadge" placeholder="HD / 4K"/></div>
+      </div>
+      <div class="field"><label>Tags (comma separated)</label><input id="fTag" placeholder="action, drama, romance"/></div>
+      <p class="err" id="errMsg" style="display:none"></p>
+      <p class="success" id="okMsg" style="display:none"></p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="cancelBtn">Cancel</button>
+        <button class="btn btn-acc" id="saveBtn">Save to Firebase</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM -->
+<div class="confirm-bg" id="confirmBg">
+  <div class="confirm-box">
+    <h3>Delete Video?</h3>
+    <p id="confirmTitle">This cannot be undone.</p>
+    <div class="confirm-actions">
+      <button class="btn btn-ghost" id="confirmCancel">Cancel</button>
+      <button class="btn btn-red" id="confirmOk">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore, collection, getDocs, addDoc, setDoc, deleteDoc, doc,
+  query, orderBy, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const FIREBASE_CONFIG = {
+  apiKey:            "AIzaSyBYNU7wTq9_1-TdIVuG-yxAlKjeFb9Rm_M",
+  authDomain:        "video-cms-b7c1e.firebaseapp.com",
+  projectId:         "video-cms-b7c1e",
+  storageBucket:     "video-cms-b7c1e.firebasestorage.app",
+  messagingSenderId: "991575420179",
+  appId:             "1:991575420179:web:23459a09aa36f868e37ee6"
+};
+const db = getFirestore(initializeApp(FIREBASE_CONFIG));
+
+let allVideos  = [];
+let previewMap = {};
+let deleteTarget = null;
+
+const esc = s => String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const parseViews = raw => {
+  if (raw===null||raw===undefined) return 0;
+  if (typeof raw==='number') return raw;
+  const s=String(raw).trim().replace(/,/g,'');
+  if (/^\d+$/.test(s)) return parseInt(s,10);
+  if (s.toLowerCase().endsWith('m')) return Math.round(parseFloat(s)*1e6);
+  if (s.toLowerCase().endsWith('k')) return Math.round(parseFloat(s)*1e3);
+  return parseInt(s,10)||0;
+};
+const fmtViews = n => {
+  const x=Number(n)||0;
+  if (x>=1e6) return (x/1e6).toFixed(1)+'M';
+  if (x>=1e3) return (x/1e3).toFixed(1)+'K';
+  return x.toLocaleString();
+};
+
+/* ── LOAD ── */
+async function loadAll() {
+  document.getElementById('tableBody').innerHTML =
+    '<tr class="empty-row"><td colspan="7"><div class="spinner"></div></td></tr>';
+
+  // preview collection
+  previewMap = {};
+  try {
+    const pSnap = await getDocs(collection(db,'preview'));
+    pSnap.docs.forEach(d => {
+      const r=d.data(), url=r.src||r.url||r.preview||'';
+      if (!url) return;
+      previewMap[d.id]=url;
+      if (r.videoId) previewMap[String(r.videoId)]=url;
+      if (r.title)   previewMap[String(r.title).trim().toLowerCase()]=url;
+    });
+  } catch {}
+
+  // videos
+  try {
+    let snap;
+    try   { snap = await getDocs(query(collection(db,'videos'), orderBy('views','desc'))); }
+    catch { snap = await getDocs(collection(db,'videos')); }
+
+    allVideos = snap.docs.map(d => {
+      const r=d.data();
+      const v={
+        id:       d.id,
+        title:    String(r.title    ??''),
+        src:      String(r.src      ??''),
+        thumb:    String(r.thumb    ??''),
+        views:    parseViews(r.views??r.view_count??r.viewCount??r.view),
+        channel:  String(r.channel  ??''),
+        badge:    String(r.badge    ??''),
+        tag:      String(r.tag      ??''),
+        duration: r.duration?String(r.duration):'',
+      };
+      v.previewSrc=previewMap[d.id]||previewMap[v.title.trim().toLowerCase()]||'';
+      return v;
+    });
+
+    updateStats();
+    renderTable(allVideos);
+  } catch(e) {
+    document.getElementById('tableBody').innerHTML =
+      `<tr class="empty-row"><td colspan="7">Load failed: ${esc(e.message)}</td></tr>`;
+  }
+}
+
+/* ── STATS ── */
+function updateStats() {
+  const totalViews = allVideos.reduce((s,v)=>s+v.views, 0);
+  const channels   = new Set(allVideos.map(v=>(v.channel||'').toLowerCase().trim()).filter(Boolean)).size;
+  const withPrev   = allVideos.filter(v=>v.previewSrc).length;
+  document.getElementById('statTotal').textContent    = allVideos.length;
+  document.getElementById('statViews').textContent    = fmtViews(totalViews);
+  document.getElementById('statChannels').textContent = channels;
+  document.getElementById('statPreview').textContent  = withPrev;
+}
+
+/* ── TABLE ── */
+function renderTable(list) {
+  const body = document.getElementById('tableBody');
+  if (!list.length) {
+    body.innerHTML = '<tr class="empty-row"><td colspan="7">No videos found.</td></tr>';
+    return;
+  }
+  body.innerHTML = list.map(v => `
+    <tr>
+      <td class="thumb-cell">
+        <img src="${esc(v.thumb)}" alt="" onerror="this.style.opacity=0"/>
+      </td>
+      <td class="title-cell">
+        <div class="vid-title">${esc(v.title||'Untitled')}</div>
+        ${v.channel?`<div class="ch-lbl">${esc(v.channel)}</div>`:''}
+        ${v.badge?`<span class="badge-lbl">${esc(v.badge)}</span>`:''}
+      </td>
+      <td class="views-cell">${fmtViews(v.views)}</td>
+      <td>${esc(v.duration||'—')}</td>
+      <td>${esc(v.badge||'—')}</td>
+      <td class="tag-lbl">${v.tag ? esc(v.tag).split(',').map(t=>`#${t.trim()}`).join(' ') : '—'}</td>
+      <td>
+        <div class="actions">
+          <button class="act-btn act-edit" data-id="${esc(v.id)}">Edit</button>
+          <button class="act-btn act-del"  data-id="${esc(v.id)}" data-title="${esc(v.title)}">Delete</button>
+        </div>
+      </td>
+    </tr>`).join('');
+
+  body.querySelectorAll('.act-edit').forEach(btn => btn.onclick = () => openEdit(btn.dataset.id));
+  body.querySelectorAll('.act-del').forEach(btn  => btn.onclick = () => openConfirm(btn.dataset.id, btn.dataset.title));
+}
+
+/* ── SEARCH ── */
+document.getElementById('tableSearch').oninput = function() {
+  const q = this.value.toLowerCase();
+  const filtered = allVideos.filter(v =>
+    (v.title||'').toLowerCase().includes(q) ||
+    (v.channel||'').toLowerCase().includes(q) ||
+    (v.tag||'').toLowerCase().includes(q)
+  );
+  renderTable(filtered);
+};
+
+/* ── MODAL HELPERS ── */
+const getField  = id => document.getElementById(id);
+const openModal  = () => getField('modalBg').classList.add('open');
+const closeModal = () => {
+  getField('modalBg').classList.remove('open');
+  getField('errMsg').style.display='none';
+  getField('okMsg').style.display='none';
+};
+
+function fillForm(v) {
+  getField('editId').value    = v.id||'';
+  getField('fTitle').value    = v.title||'';
+  getField('fSrc').value      = v.src||'';
+  getField('fPreview').value  = v.previewSrc||'';
+  getField('fThumb').value    = v.thumb||'';
+  getField('fDuration').value = v.duration||'';
+  getField('fViews').value    = v.views||'';
+  getField('fChannel').value  = v.channel||'';
+  getField('fBadge').value    = v.badge||'';
+  getField('fTag').value      = v.tag||'';
+}
+function clearForm() { fillForm({id:'',title:'',src:'',previewSrc:'',thumb:'',duration:'',views:'',channel:'',badge:'',tag:''}); }
+
+/* ── ADD ── */
+document.getElementById('addNewBtn').onclick = () => {
+  clearForm();
+  getField('modalTitle').textContent = 'Add New Video';
+  openModal();
+};
+
+/* ── EDIT ── */
+function openEdit(id) {
+  const v = allVideos.find(x=>x.id===id);
+  if (!v) return;
+  fillForm(v);
+  getField('modalTitle').textContent = 'Edit Video';
+  openModal();
+}
+
+/* ── SAVE ── */
+document.getElementById('saveBtn').onclick = async () => {
+  const id      = getField('editId').value;
+  const title   = getField('fTitle').value.trim();
+  const src     = getField('fSrc').value.trim();
+  const errEl   = getField('errMsg');
+  const okEl    = getField('okMsg');
+  if (!title || !src) { errEl.textContent='Title and Video URL are required.'; errEl.style.display='block'; return; }
+  errEl.style.display='none'; okEl.style.display='none';
+  const btn = getField('saveBtn');
+  btn.disabled=true; btn.textContent='Saving...';
+
+  try {
+    const payload = {
+      title,
+      src,
+      thumb:    getField('fThumb').value.trim(),
+      duration: getField('fDuration').value.trim(),
+      views:    Number(getField('fViews').value)||0,
+      channel:  getField('fChannel').value.trim(),
+      badge:    getField('fBadge').value.trim(),
+      tag:      getField('fTag').value.trim(),
+      updatedAt: serverTimestamp()
+    };
+    const previewSrc = getField('fPreview').value.trim();
+
+    if (id) {
+      // update existing
+      await setDoc(doc(db,'videos',id), payload, {merge:true});
+      if (previewSrc) await addDoc(collection(db,'preview'), {title, src:previewSrc, videoId:id, updatedAt:serverTimestamp()});
+      okEl.textContent='Video updated successfully!'; okEl.style.display='block';
+    } else {
+      // add new
+      payload.createdAt = serverTimestamp();
+      const ref = await addDoc(collection(db,'videos'), payload);
+      if (previewSrc) await addDoc(collection(db,'preview'), {title, src:previewSrc, videoId:ref.id, createdAt:serverTimestamp()});
+      okEl.textContent='Video added successfully!'; okEl.style.display='block';
+    }
+    setTimeout(async () => { closeModal(); await loadAll(); }, 900);
+  } catch(e) {
+    errEl.textContent='Error: '+e.message; errEl.style.display='block';
+  } finally {
+    btn.disabled=false; btn.textContent='Save to Firebase';
+  }
+};
+
+/* ── DELETE ── */
+function openConfirm(id, title) {
+  deleteTarget = id;
+  document.getElementById('confirmTitle').textContent = `"${title}" will be permanently deleted.`;
+  document.getElementById('confirmBg').classList.add('open');
+}
+document.getElementById('confirmCancel').onclick = () => {
+  document.getElementById('confirmBg').classList.remove('open');
+  deleteTarget=null;
+};
+document.getElementById('confirmOk').onclick = async () => {
+  if (!deleteTarget) return;
+  const btn = document.getElementById('confirmOk');
+  btn.disabled=true; btn.textContent='Deleting...';
+  try {
+    await deleteDoc(doc(db,'videos',deleteTarget));
+    document.getElementById('confirmBg').classList.remove('open');
+    deleteTarget=null;
+    await loadAll();
+  } catch(e) {
+    alert('Delete failed: '+e.message);
+  } finally {
+    btn.disabled=false; btn.textContent='Delete';
+  }
+};
+
+/* ── CLOSE ── */
+document.getElementById('modalClose').onclick  = closeModal;
+document.getElementById('cancelBtn').onclick   = closeModal;
+document.getElementById('modalBg').onclick     = e => { if(e.target.id==='modalBg') closeModal(); };
+document.getElementById('refreshBtn').onclick  = loadAll;
+
+loadAll();
+</script>
+</body>
+</html>

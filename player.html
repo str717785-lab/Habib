@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>VideoHub — Player</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0f0f0f;--card:#161616;--border:#1e1e1e;--acc:#e55000;--txt:#f0f0f0;--txt2:#888;--r:10px}
+body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
+a{text-decoration:none;color:inherit}
+header{background:rgba(15,15,15,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-size:21px;font-weight:900;display:flex;align-items:center;gap:8px}
+.logo-icon{width:30px;height:30px;border-radius:7px;background:var(--acc);display:flex;align-items:center;justify-content:center}
+.back-btn{display:flex;align-items:center;gap:6px;color:var(--txt2);font-size:13px;padding:6px 14px;border:1px solid #272727;border-radius:20px;transition:.2s;cursor:pointer;background:none;font-family:inherit}
+.back-btn:hover{color:var(--txt);border-color:#444}
+.spinner{display:flex;justify-content:center;padding:80px 0}
+.spinner::after{content:'';width:42px;height:42px;border:3px solid #222;border-top-color:var(--acc);border-radius:50%;animation:spin .65s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.player-wrap{background:#000;width:100%;display:flex;align-items:center;justify-content:center;max-height:72vh}
+.player-wrap video{width:100%;max-height:72vh;object-fit:contain;display:block}
+.info{max-width:920px;margin:0 auto;padding:16px 14px 60px}
+.top-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.pills{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.badge-pill{background:rgba(229,80,0,.2);color:var(--acc);font-size:11px;font-weight:800;padding:3px 12px;border-radius:20px;letter-spacing:.3px;text-transform:uppercase}
+.dur-pill{display:flex;align-items:center;gap:5px;background:#1a1a1a;color:var(--txt2);font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px}
+.dl-btn{display:flex;align-items:center;gap:7px;padding:9px 20px;border-radius:24px;background:var(--acc);border:none;color:#fff;font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap;transition:.18s;font-family:inherit}
+.dl-btn:hover{opacity:.88}
+.dl-btn:active{transform:scale(.96)}
+.v-title{font-size:19px;font-weight:700;line-height:1.4;margin-bottom:14px}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.chip{display:flex;align-items:center;gap:7px;background:#1a1a1a;border-radius:22px;padding:7px 16px;font-size:13px;color:var(--txt2)}
+.chip.ch{color:var(--txt);font-weight:600}
+.chip svg{color:var(--acc);flex-shrink:0}
+.tags-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px;align-items:center}
+.tag-pill{background:rgba(229,80,0,.13);color:var(--acc);font-size:12px;padding:3px 12px;border-radius:14px;font-weight:500}
+.section-title{font-size:15px;font-weight:700;margin-bottom:12px;padding-top:18px;border-top:1px solid var(--border)}
+.rel-row{display:flex;gap:12px;overflow-x:auto;padding-bottom:14px;scrollbar-width:none}
+.rel-row::-webkit-scrollbar{display:none}
+.rel-card{flex-shrink:0;width:210px;display:block}
+.rel-thumb{position:relative;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:#181818;margin-bottom:7px;border:1px solid var(--border)}
+.rel-thumb img{width:100%;height:100%;object-fit:cover}
+.rel-badge{position:absolute;bottom:5px;right:5px;background:rgba(0,0,0,.82);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px}
+.rel-dur{position:absolute;bottom:5px;left:5px;background:rgba(0,0,0,.82);color:#fff;font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px}
+.rel-title{font-size:12px;font-weight:600;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:3px}
+.rel-meta{font-size:11px;color:var(--txt2)}
+.err-box{text-align:center;padding:60px 14px;color:#555}
+.err-box h3{color:#888;margin-bottom:8px}
+.err-box a{color:var(--acc)}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="index.html">
+    <div class="logo-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
+    VideoHub
+  </a>
+  <button class="back-btn" onclick="history.length>1?history.back():location.href='index.html'">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    Back
+  </button>
+</header>
+
+<div id="root"><div class="spinner"></div></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, getDocs, getDoc, doc, query, orderBy, limit }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const FIREBASE_CONFIG = {
+  apiKey:            "AIzaSyBYNU7wTq9_1-TdIVuG-yxAlKjeFb9Rm_M",
+  authDomain:        "video-cms-b7c1e.firebaseapp.com",
+  projectId:         "video-cms-b7c1e",
+  storageBucket:     "video-cms-b7c1e.firebasestorage.app",
+  messagingSenderId: "991575420179",
+  appId:             "1:991575420179:web:23459a09aa36f868e37ee6"
+};
+const db = getFirestore(initializeApp(FIREBASE_CONFIG));
+const videoId = new URLSearchParams(location.search).get('id');
+
+const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const parseViews = raw => {
+  if (raw === null || raw === undefined) return 0;
+  if (typeof raw === 'number') return raw;
+  const s = String(raw).trim().replace(/,/g,'');
+  if (/^\d+$/.test(s)) return parseInt(s,10);
+  if (s.toLowerCase().endsWith('m')) return Math.round(parseFloat(s)*1e6);
+  if (s.toLowerCase().endsWith('k')) return Math.round(parseFloat(s)*1e3);
+  return parseInt(s,10)||0;
+};
+const fmtViews = n => {
+  const x = Number(n)||0;
+  if (x>=1e6) return (x/1e6).toFixed(1)+'M';
+  if (x>=1e3) return (x/1e3).toFixed(1)+'K';
+  return x.toLocaleString();
+};
+
+const SVG = {
+  tv:  `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>`,
+  eye: `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>`,
+  clk: `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23L13 11.33z"/></svg>`,
+  tag: `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.37.86.58 1.41.58.55 0 1.05-.21 1.41-.58l7-7c.37-.36.59-.86.59-1.42 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>`,
+  dl:  `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>`
+};
+
+function showError(msg) {
+  document.getElementById('root').innerHTML =
+    `<div class="err-box"><h3>Error</h3><p>${esc(msg)}</p><p style="margin-top:14px"><a href="index.html">← Back to Home</a></p></div>`;
+}
+
+async function init() {
+  if (!videoId) { showError('No video ID provided.'); return; }
+
+  // preview map
+  const previewMap = {};
+  try {
+    const pSnap = await getDocs(collection(db,'preview'));
+    pSnap.docs.forEach(d => {
+      const r=d.data(), url=r.src||r.url||r.preview||'';
+      if (!url) return;
+      previewMap[d.id]=url;
+      if (r.videoId) previewMap[String(r.videoId)]=url;
+      if (r.title)   previewMap[String(r.title).trim().toLowerCase()]=url;
+    });
+  } catch {}
+
+  // main video
+  let v;
+  try {
+    const snap = await getDoc(doc(db,'videos',videoId));
+    if (!snap.exists()) { showError('Video not found.'); return; }
+    const r = snap.data();
+    v = {
+      id:       snap.id,
+      title:    String(r.title    ?? ''),
+      src:      String(r.src      ?? ''),
+      thumb:    String(r.thumb    ?? ''),
+      views:    parseViews(r.views ?? r.view_count ?? r.viewCount ?? r.view),
+      channel:  String(r.channel  ?? ''),
+      badge:    String(r.badge    ?? ''),
+      tag:      String(r.tag      ?? ''),
+      duration: r.duration ? String(r.duration) : '',
+    };
+    v.previewSrc = previewMap[snap.id] || previewMap[v.title.trim().toLowerCase()] || '';
+    document.title = (v.title || 'VideoHub') + ' — VideoHub';
+  } catch(e) { showError(e.message); return; }
+
+  // related videos
+  let related = [];
+  try {
+    let rSnap;
+    try   { rSnap = await getDocs(query(collection(db,'videos'), orderBy('views','desc'), limit(15))); }
+    catch { rSnap = await getDocs(query(collection(db,'videos'), limit(15))); }
+    related = rSnap.docs
+      .map(d => { const r=d.data(); return { id:d.id, title:String(r.title??''), thumb:String(r.thumb??''), badge:String(r.badge??''), duration:r.duration?String(r.duration):'', channel:String(r.channel??''), views:parseViews(r.views??r.view_count??r.viewCount) }; })
+      .filter(x => x.id !== videoId).slice(0, 12);
+  } catch {}
+
+  const tags = v.tag ? v.tag.split(',').map(t=>t.trim()).filter(Boolean) : [];
+
+  document.getElementById('root').innerHTML = `
+    <div class="player-wrap">
+      <video id="mainVid" src="${esc(v.src)}" poster="${esc(v.thumb)}"
+             controls autoplay playsinline>Your browser does not support video.</video>
+    </div>
+
+    <div class="info">
+      <div class="top-row">
+        <div class="pills">
+          ${v.badge ? `<span class="badge-pill">${esc(v.badge)}</span>` : ''}
+          ${v.duration
+            ? `<span class="dur-pill">${SVG.clk}${esc(v.duration)}</span>`
+            : `<span class="dur-pill" id="liveDurEl" style="display:none">${SVG.clk}<span id="liveDurTxt"></span></span>`
+          }
+        </div>
+        ${v.src ? `<button class="dl-btn" id="dlBtn">${SVG.dl} Download</button>` : ''}
+      </div>
+
+      <h1 class="v-title">${esc(v.title || 'Untitled')}</h1>
+
+      <div class="meta-row">
+        ${v.channel ? `<div class="chip ch">${SVG.tv}${esc(v.channel)}</div>` : ''}
+        <div class="chip">${SVG.eye}${new Intl.NumberFormat('en-US').format(v.views)} views</div>
+      </div>
+
+      ${tags.length ? `
+        <div class="tags-row">
+          ${SVG.tag}
+          ${tags.map(t=>`<span class="tag-pill">#${esc(t)}</span>`).join('')}
+        </div>` : ''}
+
+      ${related.length ? `
+        <div class="section-title">Related Videos</div>
+        <div class="rel-row">
+          ${related.map(r=>`
+            <a class="rel-card" href="player.html?id=${esc(r.id)}">
+              <div class="rel-thumb">
+                <img src="${esc(r.thumb)}" alt="${esc(r.title)}" loading="lazy"
+                     onerror="this.style.opacity=0"/>
+                ${r.badge    ? `<div class="rel-badge">${esc(r.badge)}</div>` : ''}
+                ${r.duration ? `<div class="rel-dur">${esc(r.duration)}</div>` : ''}
+              </div>
+              <div class="rel-title">${esc(r.title||'Untitled')}</div>
+              <div class="rel-meta">${r.channel?esc(r.channel)+' · ':''}${fmtViews(r.views)} views</div>
+            </a>`).join('')}
+        </div>` : ''}
+    </div>`;
+
+  // live duration detection
+  const vidEl = document.getElementById('mainVid');
+  if (vidEl && !v.duration) {
+    vidEl.addEventListener('loadedmetadata', () => {
+      if (!vidEl.duration || isNaN(vidEl.duration)) return;
+      const secs = Math.round(vidEl.duration);
+      const m = Math.floor(secs/60), s = secs % 60;
+      const txt = `${m}:${String(s).padStart(2,'0')}`;
+      const el = document.getElementById('liveDurTxt');
+      const pill = document.getElementById('liveDurEl');
+      if (el) el.textContent = txt;
+      if (pill) pill.style.display = 'flex';
+    });
+  }
+
+  // download button
+  const dlBtn = document.getElementById('dlBtn');
+  if (dlBtn && v.src) {
+    dlBtn.addEventListener('click', () => {
+      const a = document.createElement('a');
+      a.href = v.src;
+      a.download = (v.title||'video').replace(/[^\w\s-]/g,'').trim().replace(/\s+/g,'_').toLowerCase() + '.mp4';
+      a.target = '_blank';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    });
+  }
+}
+
+init();
+</script>
+</body>
+</html>
