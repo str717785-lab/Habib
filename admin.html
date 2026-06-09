@@ -9,137 +9,219 @@
 :root{--bg:#0a0a0a;--card:#141414;--card2:#1c1c1c;--border:#222;--acc:#e55000;--green:#22c55e;--red:#ef4444;--txt:#f0f0f0;--txt2:#888;--r:8px}
 body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
 a{text-decoration:none;color:inherit}
+
+/* LOGIN */
+#loginScreen{position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:36px 32px;width:100%;max-width:380px;text-align:center}
+.login-logo{display:flex;justify-content:center;margin-bottom:18px}
+.login-logo img{height:48px;width:auto;filter:drop-shadow(0 0 8px rgba(229,80,0,.4))}
+.login-logo-fallback{width:56px;height:56px;border-radius:14px;background:var(--acc);display:none;align-items:center;justify-content:center;margin:0 auto}
+.login-box h2{font-size:20px;font-weight:800;margin-bottom:6px}
+.login-box p{font-size:13px;color:var(--txt2);margin-bottom:24px}
+.pw-wrap{position:relative;margin-bottom:14px}
+.pw-wrap input{width:100%;background:#1a1a1a;border:1px solid var(--border);color:var(--txt);padding:11px 42px 11px 14px;border-radius:10px;font-size:14px;outline:none;font-family:inherit;transition:border-color .2s}
+.pw-wrap input:focus{border-color:var(--acc)}
+.pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--txt2);cursor:pointer;padding:2px;display:flex}
+.login-btn{width:100%;padding:12px;border-radius:10px;background:var(--acc);border:none;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;transition:opacity .18s}
+.login-btn:hover{opacity:.88}
+.login-err{color:#f88;background:rgba(255,80,80,.1);border-radius:8px;padding:8px;font-size:12px;margin-top:10px;display:none}
+.login-hint{margin-top:16px;font-size:11px;color:#444;background:#111;border-radius:8px;padding:10px;text-align:left;line-height:1.6}
+.login-hint code{color:#888;background:#1a1a1a;padding:1px 5px;border-radius:4px;font-size:11px}
+
+/* ADMIN UI */
+#adminUi{display:none}
+
 /* HEADER */
-header{background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.logo{font-size:18px;font-weight:800;display:flex;align-items:center;gap:8px}
-.logo-icon{width:28px;height:28px;border-radius:6px;background:var(--acc);display:flex;align-items:center;justify-content:center}
+header{background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
+.hd{display:flex;align-items:center;padding:8px 16px;gap:10px;position:relative;min-height:52px}
+.hd-left{flex-shrink:0;display:flex;align-items:center;gap:8px;z-index:2}
+.hd-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;z-index:1;pointer-events:none}
+.hd-center a{pointer-events:all}
+.logo-img{height:36px;width:auto;object-fit:contain;display:block;filter:drop-shadow(0 0 6px rgba(229,80,0,.3))}
+.hd-right{flex:1;display:flex;align-items:center;justify-content:flex-end;gap:8px;z-index:2}
 .admin-badge{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.5px}
-.hd-right{display:flex;align-items:center;gap:10px}
+
 .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:8px;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:.18s;white-space:nowrap}
-.btn-acc{background:var(--acc);color:#fff}
-.btn-acc:hover{opacity:.88}
-.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--txt2)}
-.btn-ghost:hover{color:var(--txt);border-color:#444}
-/* STATS BAR */
+.btn-acc{background:var(--acc);color:#fff}.btn-acc:hover{opacity:.88}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--txt2)}.btn-ghost:hover{color:var(--txt);border-color:#444}
+.btn-logout{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.2)}.btn-logout:hover{background:rgba(239,68,68,.22)}
+
+.fb-alert{margin:14px 16px;max-width:1100px;background:rgba(229,80,0,.09);border:1px solid rgba(229,80,0,.25);border-radius:10px;padding:12px 16px;font-size:12px;line-height:1.6;display:none}
+.fb-alert.vis{display:block}
+.fb-alert strong{color:var(--acc)}
+.fb-alert code{background:#1a1a1a;padding:2px 6px;border-radius:4px;color:#ccc;font-size:11px;display:block;margin:6px 0 2px;white-space:pre-wrap;font-family:monospace}
+
 .stats-bar{display:flex;gap:12px;padding:14px 16px;max-width:1100px;margin:0 auto;flex-wrap:wrap}
 .stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 20px;flex:1;min-width:140px}
 .stat-card h4{font-size:12px;color:var(--txt2);margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:.5px}
 .stat-card .val{font-size:24px;font-weight:800}
 .stat-card .val.acc{color:var(--acc)}
-/* TOOLBAR */
+
 .toolbar{display:flex;align-items:center;gap:10px;padding:0 16px 12px;max-width:1100px;margin:0 auto;flex-wrap:wrap}
 .toolbar input[type=search]{flex:1;min-width:200px;background:var(--card);border:1px solid var(--border);color:var(--txt);padding:8px 14px;border-radius:8px;font-size:13px;outline:none;font-family:inherit}
 .toolbar input:focus{border-color:var(--acc)}
-/* TABLE */
+
 .table-wrap{max-width:1100px;margin:0 auto 40px;padding:0 16px;overflow-x:auto}
 table{width:100%;border-collapse:collapse;font-size:13px;min-width:800px}
 th{background:var(--card);color:var(--txt2);font-weight:600;padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;font-size:12px;text-transform:uppercase;letter-spacing:.4px}
 td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
 tr:hover td{background:rgba(255,255,255,.02)}
-.thumb-cell{width:80px}
 .thumb-cell img{width:80px;height:45px;object-fit:cover;border-radius:5px;display:block;border:1px solid var(--border)}
 .title-cell{max-width:220px;font-weight:500;line-height:1.4}
 .title-cell .vid-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .badge-lbl{background:rgba(229,80,0,.18);color:var(--acc);font-size:10px;font-weight:700;padding:1px 8px;border-radius:10px;display:inline-block;margin-top:4px}
 .ch-lbl{font-size:12px;color:var(--txt2)}
 .views-cell{white-space:nowrap;font-weight:600}
+.prev-yes{color:var(--green);font-size:11px;font-weight:700}
+.prev-no{color:#444;font-size:11px}
 .tag-lbl{color:var(--acc);font-size:11px}
 .actions{display:flex;gap:6px;white-space:nowrap}
 .act-btn{padding:5px 12px;border-radius:6px;border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:.15s}
-.act-edit{background:rgba(229,80,0,.15);color:var(--acc)}
-.act-edit:hover{background:rgba(229,80,0,.28)}
-.act-del{background:rgba(239,68,68,.12);color:var(--red)}
-.act-del:hover{background:rgba(239,68,68,.25)}
-/* SPINNER */
+.act-edit{background:rgba(229,80,0,.15);color:var(--acc)}.act-edit:hover{background:rgba(229,80,0,.28)}
+.act-del{background:rgba(239,68,68,.12);color:var(--red)}.act-del:hover{background:rgba(239,68,68,.25)}
+
 .spinner{display:flex;justify-content:center;padding:60px 0}
 .spinner::after{content:'';width:36px;height:36px;border:3px solid #222;border-top-color:var(--acc);border-radius:50%;animation:spin .65s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-/* EMPTY */
 .empty-row td{text-align:center;padding:40px;color:var(--txt2)}
-/* MODAL */
+
 .modal-bg{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.82);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px}
 .modal-bg.open{display:flex}
-.modal{background:var(--card);border:1px solid var(--border);border-radius:14px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:14px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto}
 .modal-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--card);z-index:1}
 .modal-hd h2{font-size:15px;font-weight:700}
-.modal-x{background:none;border:none;color:var(--txt2);cursor:pointer;font-size:22px;padding:2px 8px;border-radius:6px;line-height:1;font-family:inherit;transition:color .15s}
+.modal-x{background:none;border:none;color:var(--txt2);cursor:pointer;font-size:22px;padding:2px 8px;border-radius:6px;line-height:1;font-family:inherit}
 .modal-x:hover{color:var(--txt)}
 .modal-body{padding:16px 18px 22px;display:flex;flex-direction:column;gap:12px}
 .field label{display:block;font-size:12px;color:var(--txt2);margin-bottom:4px;font-weight:500}
-.field input,.field textarea{width:100%;background:var(--card2);border:1px solid var(--border);color:var(--txt);padding:8px 12px;border-radius:8px;font-size:13px;outline:none;font-family:inherit;resize:none}
+.field input,.field textarea{width:100%;background:var(--card2);border:1px solid var(--border);color:var(--txt);padding:8px 12px;border-radius:8px;font-size:13px;outline:none;font-family:inherit}
+.field textarea{resize:vertical;min-height:70px;line-height:1.5}
 .field input:focus,.field textarea:focus{border-color:var(--acc)}
-.field input::placeholder{color:#3a3a3a}
+.field input::placeholder,.field textarea::placeholder{color:#3a3a3a}
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .modal-actions{display:flex;gap:10px;margin-top:4px}
 .modal-actions .btn{flex:1;justify-content:center;padding:10px}
 .err{color:#f88;background:rgba(255,80,80,.1);border-radius:8px;padding:8px 12px;font-size:12px}
 .success{color:#6ee7a0;background:rgba(34,197,94,.1);border-radius:8px;padding:8px 12px;font-size:12px}
-/* CONFIRM */
+
 .confirm-bg{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;padding:16px}
 .confirm-bg.open{display:flex}
 .confirm-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;max-width:360px;width:100%;text-align:center}
 .confirm-box h3{font-size:16px;margin-bottom:8px}
 .confirm-box p{font-size:13px;color:var(--txt2);margin-bottom:20px}
 .confirm-actions{display:flex;gap:10px;justify-content:center}
-.btn-red{background:var(--red);color:#fff}
-.btn-red:hover{opacity:.88}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{opacity:.88}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">
-    <div class="logo-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></div>
-    VideoHub
-    <span class="admin-badge">ADMIN</span>
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="https://i.ibb.co/qF25Zjg1/Airbrush-IMAGE-ENHANCER-1780971547051-1780971547052-removebg-preview.png" alt="VideoHub"
+           onerror="this.style.display='none';document.getElementById('loginLogoFallback').style.display='flex'"/>
+      <div class="login-logo-fallback" id="loginLogoFallback">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+    </div>
+    <h2>Admin Panel</h2>
+    <p>Enter the admin password to continue</p>
+    <div class="pw-wrap">
+      <input type="password" id="pwInput" placeholder="Password" autocomplete="current-password"/>
+      <button class="pw-toggle" id="pwToggle" title="Show/hide">
+        <svg id="eyeShow" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+        <svg id="eyeHide" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
+      </button>
+    </div>
+    <button class="login-btn" id="loginBtn">Login</button>
+    <div class="login-err" id="loginErr">Incorrect password. Please try again.</div>
+    <div class="login-hint">
+      <strong style="color:#666">Firebase Permission Error?</strong><br/>
+      Go to <strong style="color:#888">Firebase Console → Firestore → Rules</strong> and set:
+      <code>allow read, write: if true;</code>
+    </div>
   </div>
-  <div class="hd-right">
-    <button class="btn btn-acc" id="addNewBtn">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-      Add Video
-    </button>
-    <a class="btn btn-ghost" href="index.html">← Back to Site</a>
+</div>
+
+<!-- ADMIN UI -->
+<div id="adminUi">
+
+<header>
+  <div class="hd">
+    <!-- LEFT: actions -->
+    <div class="hd-left">
+      <button class="btn btn-acc" id="addNewBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        Add Video
+      </button>
+      <span class="admin-badge">ADMIN</span>
+    </div>
+
+    <!-- CENTER: Logo -->
+    <div class="hd-center">
+      <a href="index.html">
+        <img class="logo-img" src="https://i.ibb.co/qF25Zjg1/Airbrush-IMAGE-ENHANCER-1780971547051-1780971547052-removebg-preview.png" alt="VideoHub"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
+        <span style="display:none;align-items:center;gap:8px;font-size:18px;font-weight:900;color:var(--txt)">
+          <span style="width:28px;height:28px;border-radius:6px;background:var(--acc);display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></span>
+          VideoHub
+        </span>
+      </a>
+    </div>
+
+    <!-- RIGHT: nav links -->
+    <div class="hd-right">
+      <a class="btn btn-ghost" href="index.html">← Site</a>
+      <button class="btn btn-logout" id="logoutBtn">Logout</button>
+    </div>
   </div>
 </header>
 
-<!-- STATS -->
-<div class="stats-bar" id="statsBar">
+<div class="fb-alert" id="fbAlert">
+  <strong>⚠ Firebase Permission Error Detected</strong><br/>
+  Fix in <strong>Firebase Console → Firestore Database → Rules</strong>:
+  <code>rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}</code>
+</div>
+
+<div class="stats-bar">
   <div class="stat-card"><h4>Total Videos</h4><div class="val acc" id="statTotal">—</div></div>
   <div class="stat-card"><h4>Total Views</h4><div class="val" id="statViews">—</div></div>
   <div class="stat-card"><h4>Channels</h4><div class="val" id="statChannels">—</div></div>
   <div class="stat-card"><h4>With Preview</h4><div class="val" id="statPreview">—</div></div>
 </div>
 
-<!-- TOOLBAR -->
 <div class="toolbar">
-  <input type="search" id="tableSearch" placeholder="Search by title, channel, tag..."/>
+  <input type="search" id="tableSearch" placeholder="Search by title, channel, tag — or paste a video link..."/>
   <button class="btn btn-ghost" id="refreshBtn">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
     Refresh
   </button>
 </div>
 
-<!-- TABLE -->
 <div class="table-wrap">
   <table id="videoTable">
     <thead>
       <tr>
-        <th>Thumbnail</th>
-        <th>Title / Channel</th>
-        <th>Views</th>
-        <th>Duration</th>
-        <th>Badge</th>
-        <th>Tags</th>
-        <th>Actions</th>
+        <th>Thumb</th><th>Title / Channel</th><th>Views</th><th>Duration</th>
+        <th>Badge</th><th>Preview</th><th>Tags</th><th>Actions</th>
       </tr>
     </thead>
     <tbody id="tableBody">
-      <tr class="empty-row"><td colspan="7"><div class="spinner"></div></td></tr>
+      <tr class="empty-row"><td colspan="8"><div class="spinner"></div></td></tr>
     </tbody>
   </table>
 </div>
+</div><!-- /adminUi -->
 
-<!-- ADD / EDIT MODAL -->
+<!-- MODAL -->
 <div class="modal-bg" id="modalBg">
   <div class="modal">
     <div class="modal-hd">
@@ -151,34 +233,36 @@ tr:hover td{background:rgba(255,255,255,.02)}
       <div class="field"><label>Title *</label><input id="fTitle" placeholder="Video title"/></div>
       <div class="field"><label>Video URL (src) *</label><input id="fSrc" placeholder="https://example.com/video.mp4"/></div>
       <div class="field"><label>Preview Clip URL</label><input id="fPreview" placeholder="https://example.com/preview.mp4"/></div>
-      <div class="field"><label>Thumbnail URL (thumb)</label><input id="fThumb" placeholder="https://example.com/thumb.jpg"/></div>
+      <div class="field"><label>Thumbnail URL</label><input id="fThumb" placeholder="https://example.com/thumb.jpg"/></div>
       <div class="field-row">
         <div class="field"><label>Duration</label><input id="fDuration" placeholder="12:35"/></div>
         <div class="field"><label>Views</label><input id="fViews" type="number" placeholder="5000"/></div>
       </div>
       <div class="field-row">
-        <div class="field"><label>Channel</label><input id="fChannel" placeholder="Brazzers"/></div>
-        <div class="field"><label>Badge</label><input id="fBadge" placeholder="HD / 4K"/></div>
+        <div class="field"><label>Channel</label><input id="fChannel" placeholder="Channel name"/></div>
+        <div class="field"><label>Badge</label><input id="fBadge" placeholder="4K / HD"/></div>
       </div>
-      <div class="field"><label>Tags (comma separated)</label><input id="fTag" placeholder="action, drama, romance"/></div>
-      <p class="err" id="errMsg" style="display:none"></p>
-      <p class="success" id="okMsg" style="display:none"></p>
+      <div class="field"><label>Tags (comma separated)</label><input id="fTag" placeholder="action, drama"/></div>
+      <div class="field"><label>Description (SEO meta)</label><textarea id="fDescription" placeholder="Short description of this video..."></textarea></div>
+      <div class="field"><label>Keywords (SEO meta, comma separated)</label><input id="fKeywords" placeholder="keyword1, keyword2"/></div>
+      <p class="err"     id="errMsg" style="display:none"></p>
+      <p class="success" id="okMsg"  style="display:none"></p>
       <div class="modal-actions">
         <button class="btn btn-ghost" id="cancelBtn">Cancel</button>
-        <button class="btn btn-acc" id="saveBtn">Save to Firebase</button>
+        <button class="btn btn-acc"   id="saveBtn">Save to Firebase</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- DELETE CONFIRM -->
+<!-- CONFIRM DELETE -->
 <div class="confirm-bg" id="confirmBg">
   <div class="confirm-box">
     <h3>Delete Video?</h3>
     <p id="confirmTitle">This cannot be undone.</p>
     <div class="confirm-actions">
       <button class="btn btn-ghost" id="confirmCancel">Cancel</button>
-      <button class="btn btn-red" id="confirmOk">Delete</button>
+      <button class="btn btn-red"   id="confirmOk">Delete</button>
     </div>
   </div>
 </div>
@@ -190,6 +274,49 @@ import {
   query, orderBy, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+/* ── PASSWORD — always ask, no session storage ── */
+const ADMIN_PASSWORD = 'videohub@2024';
+let authenticated = false;
+
+function showAdmin() {
+  authenticated = true;
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('adminUi').style.display = 'block';
+  loadAll();
+}
+
+function tryLogin() {
+  const pw  = document.getElementById('pwInput').value;
+  const err = document.getElementById('loginErr');
+  if (pw === ADMIN_PASSWORD) {
+    err.style.display = 'none';
+    showAdmin();
+  } else {
+    err.style.display = 'block';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+document.getElementById('loginBtn').onclick = tryLogin;
+document.getElementById('pwInput').onkeydown = e => { if (e.key === 'Enter') tryLogin(); };
+
+document.getElementById('pwToggle').onclick = () => {
+  const inp  = document.getElementById('pwInput');
+  const show = document.getElementById('eyeShow');
+  const hide = document.getElementById('eyeHide');
+  if (inp.type === 'password') { inp.type='text'; show.style.display='none'; hide.style.display='block'; }
+  else { inp.type='password'; show.style.display='block'; hide.style.display='none'; }
+};
+
+document.getElementById('logoutBtn').onclick = () => {
+  authenticated = false;
+  document.getElementById('adminUi').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('pwInput').value = '';
+  document.getElementById('pwInput').focus();
+};
+
+/* ── FIREBASE ── */
 const FIREBASE_CONFIG = {
   apiKey:            "AIzaSyBYNU7wTq9_1-TdIVuG-yxAlKjeFb9Rm_M",
   authDomain:        "video-cms-b7c1e.firebaseapp.com",
@@ -206,7 +333,7 @@ let deleteTarget = null;
 
 const esc = s => String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 const parseViews = raw => {
-  if (raw===null||raw===undefined) return 0;
+  if (!raw && raw!==0) return 0;
   if (typeof raw==='number') return raw;
   const s=String(raw).trim().replace(/,/g,'');
   if (/^\d+$/.test(s)) return parseInt(s,10);
@@ -221,12 +348,21 @@ const fmtViews = n => {
   return x.toLocaleString();
 };
 
+function showFbAlert(show=true) { document.getElementById('fbAlert').classList.toggle('vis', show); }
+
+function extractIdFromUrl(q) {
+  try { const u=new URL(q, location.href); const id=u.searchParams.get('id'); if(id) return id; } catch {}
+  const m = q.match(/[?&]id=([^&]+)/);
+  return m ? m[1] : null;
+}
+
 /* ── LOAD ── */
 async function loadAll() {
+  if (!authenticated) return;
   document.getElementById('tableBody').innerHTML =
-    '<tr class="empty-row"><td colspan="7"><div class="spinner"></div></td></tr>';
+    '<tr class="empty-row"><td colspan="8"><div class="spinner"></div></td></tr>';
+  showFbAlert(false);
 
-  // preview collection
   previewMap = {};
   try {
     const pSnap = await getDocs(collection(db,'preview'));
@@ -239,7 +375,6 @@ async function loadAll() {
     });
   } catch {}
 
-  // videos
   try {
     let snap;
     try   { snap = await getDocs(query(collection(db,'videos'), orderBy('views','desc'))); }
@@ -248,15 +383,17 @@ async function loadAll() {
     allVideos = snap.docs.map(d => {
       const r=d.data();
       const v={
-        id:       d.id,
-        title:    String(r.title    ??''),
-        src:      String(r.src      ??''),
-        thumb:    String(r.thumb    ??''),
-        views:    parseViews(r.views??r.view_count??r.viewCount??r.view),
-        channel:  String(r.channel  ??''),
-        badge:    String(r.badge    ??''),
-        tag:      String(r.tag      ??''),
-        duration: r.duration?String(r.duration):'',
+        id:          d.id,
+        title:       String(r.title       ??''),
+        src:         String(r.src         ??''),
+        thumb:       String(r.thumb       ??''),
+        views:       parseViews(r.views??r.view_count??r.viewCount??r.view),
+        channel:     String(r.channel     ??''),
+        badge:       String(r.badge       ??''),
+        tag:         String(r.tag         ??''),
+        duration:    r.duration?String(r.duration):'',
+        description: String(r.description ??''),
+        keywords:    String(r.keywords    ??''),
       };
       v.previewSrc=previewMap[d.id]||previewMap[v.title.trim().toLowerCase()]||'';
       return v;
@@ -265,14 +402,15 @@ async function loadAll() {
     updateStats();
     renderTable(allVideos);
   } catch(e) {
+    const isPerm = e.code==='permission-denied'||e.message?.includes('Missing or insufficient permissions');
+    if (isPerm) showFbAlert(true);
     document.getElementById('tableBody').innerHTML =
-      `<tr class="empty-row"><td colspan="7">Load failed: ${esc(e.message)}</td></tr>`;
+      `<tr class="empty-row"><td colspan="8">Load failed: ${esc(e.message)}</td></tr>`;
   }
 }
 
-/* ── STATS ── */
 function updateStats() {
-  const totalViews = allVideos.reduce((s,v)=>s+v.views, 0);
+  const totalViews = allVideos.reduce((s,v)=>s+v.views,0);
   const channels   = new Set(allVideos.map(v=>(v.channel||'').toLowerCase().trim()).filter(Boolean)).size;
   const withPrev   = allVideos.filter(v=>v.previewSrc).length;
   document.getElementById('statTotal').textContent    = allVideos.length;
@@ -281,18 +419,12 @@ function updateStats() {
   document.getElementById('statPreview').textContent  = withPrev;
 }
 
-/* ── TABLE ── */
 function renderTable(list) {
   const body = document.getElementById('tableBody');
-  if (!list.length) {
-    body.innerHTML = '<tr class="empty-row"><td colspan="7">No videos found.</td></tr>';
-    return;
-  }
+  if (!list.length) { body.innerHTML='<tr class="empty-row"><td colspan="8">No videos found.</td></tr>'; return; }
   body.innerHTML = list.map(v => `
     <tr>
-      <td class="thumb-cell">
-        <img src="${esc(v.thumb)}" alt="" onerror="this.style.opacity=0"/>
-      </td>
+      <td class="thumb-cell"><img src="${esc(v.thumb)}" alt="" onerror="this.style.opacity=0"/></td>
       <td class="title-cell">
         <div class="vid-title">${esc(v.title||'Untitled')}</div>
         ${v.channel?`<div class="ch-lbl">${esc(v.channel)}</div>`:''}
@@ -301,102 +433,94 @@ function renderTable(list) {
       <td class="views-cell">${fmtViews(v.views)}</td>
       <td>${esc(v.duration||'—')}</td>
       <td>${esc(v.badge||'—')}</td>
-      <td class="tag-lbl">${v.tag ? esc(v.tag).split(',').map(t=>`#${t.trim()}`).join(' ') : '—'}</td>
-      <td>
-        <div class="actions">
-          <button class="act-btn act-edit" data-id="${esc(v.id)}">Edit</button>
-          <button class="act-btn act-del"  data-id="${esc(v.id)}" data-title="${esc(v.title)}">Delete</button>
-        </div>
-      </td>
+      <td>${v.previewSrc?`<span class="prev-yes">✓ Yes</span>`:`<span class="prev-no">No</span>`}</td>
+      <td class="tag-lbl">${v.tag?esc(v.tag).split(',').map(t=>`#${t.trim()}`).join(' '):'—'}</td>
+      <td><div class="actions">
+        <button class="act-btn act-edit" data-id="${esc(v.id)}">Edit</button>
+        <button class="act-btn act-del"  data-id="${esc(v.id)}" data-title="${esc(v.title)}">Delete</button>
+      </div></td>
     </tr>`).join('');
-
   body.querySelectorAll('.act-edit').forEach(btn => btn.onclick = () => openEdit(btn.dataset.id));
   body.querySelectorAll('.act-del').forEach(btn  => btn.onclick = () => openConfirm(btn.dataset.id, btn.dataset.title));
 }
 
-/* ── SEARCH ── */
+/* ── SEARCH — supports title/channel/tag/id AND pasted video links ── */
 document.getElementById('tableSearch').oninput = function() {
-  const q = this.value.toLowerCase();
-  const filtered = allVideos.filter(v =>
+  const raw = this.value.trim();
+  if (!raw) { renderTable(allVideos); return; }
+  const extractedId = extractIdFromUrl(raw);
+  if (extractedId) { renderTable(allVideos.filter(v => v.id === extractedId)); return; }
+  const q = raw.toLowerCase();
+  renderTable(allVideos.filter(v =>
+    v.id.toLowerCase().includes(q) ||
     (v.title||'').toLowerCase().includes(q) ||
     (v.channel||'').toLowerCase().includes(q) ||
     (v.tag||'').toLowerCase().includes(q)
-  );
-  renderTable(filtered);
+  ));
 };
 
-/* ── MODAL HELPERS ── */
-const getField  = id => document.getElementById(id);
-const openModal  = () => getField('modalBg').classList.add('open');
+/* ── MODAL ── */
+const getF = id => document.getElementById(id);
+const openModal  = () => getF('modalBg').classList.add('open');
 const closeModal = () => {
-  getField('modalBg').classList.remove('open');
-  getField('errMsg').style.display='none';
-  getField('okMsg').style.display='none';
+  getF('modalBg').classList.remove('open');
+  getF('errMsg').style.display='none';
+  getF('okMsg').style.display='none';
 };
 
 function fillForm(v) {
-  getField('editId').value    = v.id||'';
-  getField('fTitle').value    = v.title||'';
-  getField('fSrc').value      = v.src||'';
-  getField('fPreview').value  = v.previewSrc||'';
-  getField('fThumb').value    = v.thumb||'';
-  getField('fDuration').value = v.duration||'';
-  getField('fViews').value    = v.views||'';
-  getField('fChannel').value  = v.channel||'';
-  getField('fBadge').value    = v.badge||'';
-  getField('fTag').value      = v.tag||'';
+  getF('editId').value       = v.id          ||'';
+  getF('fTitle').value       = v.title       ||'';
+  getF('fSrc').value         = v.src         ||'';
+  getF('fPreview').value     = v.previewSrc  ||'';
+  getF('fThumb').value       = v.thumb       ||'';
+  getF('fDuration').value    = v.duration    ||'';
+  getF('fViews').value       = v.views       ||'';
+  getF('fChannel').value     = v.channel     ||'';
+  getF('fBadge').value       = v.badge       ||'';
+  getF('fTag').value         = v.tag         ||'';
+  getF('fDescription').value = v.description ||'';
+  getF('fKeywords').value    = v.keywords    ||'';
 }
-function clearForm() { fillForm({id:'',title:'',src:'',previewSrc:'',thumb:'',duration:'',views:'',channel:'',badge:'',tag:''}); }
+const clearForm = () => fillForm({});
 
-/* ── ADD ── */
-document.getElementById('addNewBtn').onclick = () => {
-  clearForm();
-  getField('modalTitle').textContent = 'Add New Video';
-  openModal();
-};
+document.getElementById('addNewBtn').onclick = () => { clearForm(); getF('modalTitle').textContent='Add New Video'; openModal(); };
 
-/* ── EDIT ── */
 function openEdit(id) {
   const v = allVideos.find(x=>x.id===id);
   if (!v) return;
-  fillForm(v);
-  getField('modalTitle').textContent = 'Edit Video';
-  openModal();
+  fillForm(v); getF('modalTitle').textContent='Edit Video'; openModal();
 }
 
-/* ── SAVE ── */
 document.getElementById('saveBtn').onclick = async () => {
-  const id      = getField('editId').value;
-  const title   = getField('fTitle').value.trim();
-  const src     = getField('fSrc').value.trim();
-  const errEl   = getField('errMsg');
-  const okEl    = getField('okMsg');
-  if (!title || !src) { errEl.textContent='Title and Video URL are required.'; errEl.style.display='block'; return; }
+  const id    = getF('editId').value;
+  const title = getF('fTitle').value.trim();
+  const src   = getF('fSrc').value.trim();
+  const errEl = getF('errMsg'), okEl = getF('okMsg');
+  if (!title||!src) { errEl.textContent='Title and Video URL are required.'; errEl.style.display='block'; return; }
   errEl.style.display='none'; okEl.style.display='none';
-  const btn = getField('saveBtn');
+  const btn = getF('saveBtn');
   btn.disabled=true; btn.textContent='Saving...';
-
   try {
     const payload = {
-      title,
-      src,
-      thumb:    getField('fThumb').value.trim(),
-      duration: getField('fDuration').value.trim(),
-      views:    Number(getField('fViews').value)||0,
-      channel:  getField('fChannel').value.trim(),
-      badge:    getField('fBadge').value.trim(),
-      tag:      getField('fTag').value.trim(),
-      updatedAt: serverTimestamp()
+      title, src,
+      thumb:       getF('fThumb').value.trim(),
+      duration:    getF('fDuration').value.trim(),
+      views:       Number(getF('fViews').value)||0,
+      channel:     getF('fChannel').value.trim(),
+      badge:       getF('fBadge').value.trim(),
+      tag:         getF('fTag').value.trim(),
+      description: getF('fDescription').value.trim(),
+      keywords:    getF('fKeywords').value.trim(),
+      updatedAt:   serverTimestamp()
     };
-    const previewSrc = getField('fPreview').value.trim();
-
+    const previewSrc = getF('fPreview').value.trim();
+    showFbAlert(false);
     if (id) {
-      // update existing
       await setDoc(doc(db,'videos',id), payload, {merge:true});
       if (previewSrc) await addDoc(collection(db,'preview'), {title, src:previewSrc, videoId:id, updatedAt:serverTimestamp()});
-      okEl.textContent='Video updated successfully!'; okEl.style.display='block';
+      okEl.textContent='Video updated!'; okEl.style.display='block';
     } else {
-      // add new
       payload.createdAt = serverTimestamp();
       const ref = await addDoc(collection(db,'videos'), payload);
       if (previewSrc) await addDoc(collection(db,'preview'), {title, src:previewSrc, videoId:ref.id, createdAt:serverTimestamp()});
@@ -404,10 +528,11 @@ document.getElementById('saveBtn').onclick = async () => {
     }
     setTimeout(async () => { closeModal(); await loadAll(); }, 900);
   } catch(e) {
-    errEl.textContent='Error: '+e.message; errEl.style.display='block';
-  } finally {
-    btn.disabled=false; btn.textContent='Save to Firebase';
-  }
+    const isPerm = e.code==='permission-denied'||e.message?.includes('Missing or insufficient permissions');
+    if (isPerm) { showFbAlert(true); errEl.textContent='Firebase permission denied. See alert above.'; }
+    else errEl.textContent = 'Error: ' + e.message;
+    errEl.style.display='block';
+  } finally { btn.disabled=false; btn.textContent='Save to Firebase'; }
 };
 
 /* ── DELETE ── */
@@ -416,10 +541,7 @@ function openConfirm(id, title) {
   document.getElementById('confirmTitle').textContent = `"${title}" will be permanently deleted.`;
   document.getElementById('confirmBg').classList.add('open');
 }
-document.getElementById('confirmCancel').onclick = () => {
-  document.getElementById('confirmBg').classList.remove('open');
-  deleteTarget=null;
-};
+document.getElementById('confirmCancel').onclick = () => { document.getElementById('confirmBg').classList.remove('open'); deleteTarget=null; };
 document.getElementById('confirmOk').onclick = async () => {
   if (!deleteTarget) return;
   const btn = document.getElementById('confirmOk');
@@ -427,22 +549,15 @@ document.getElementById('confirmOk').onclick = async () => {
   try {
     await deleteDoc(doc(db,'videos',deleteTarget));
     document.getElementById('confirmBg').classList.remove('open');
-    deleteTarget=null;
-    await loadAll();
-  } catch(e) {
-    alert('Delete failed: '+e.message);
-  } finally {
-    btn.disabled=false; btn.textContent='Delete';
-  }
+    deleteTarget=null; await loadAll();
+  } catch(e) { alert('Delete failed: '+e.message); }
+  finally { btn.disabled=false; btn.textContent='Delete'; }
 };
 
-/* ── CLOSE ── */
-document.getElementById('modalClose').onclick  = closeModal;
-document.getElementById('cancelBtn').onclick   = closeModal;
-document.getElementById('modalBg').onclick     = e => { if(e.target.id==='modalBg') closeModal(); };
-document.getElementById('refreshBtn').onclick  = loadAll;
-
-loadAll();
+document.getElementById('modalClose').onclick = closeModal;
+document.getElementById('cancelBtn').onclick  = closeModal;
+document.getElementById('modalBg').onclick    = e => { if(e.target.id==='modalBg') closeModal(); };
+document.getElementById('refreshBtn').onclick = loadAll;
 </script>
 </body>
 </html>
