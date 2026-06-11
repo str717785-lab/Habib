@@ -2,96 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 
-  <!-- ═══ STATIC PAGES ═══════════════════════════════════ -->
   <url>
-    <loc>https://cineinsight.info/</loc>
+    <loc>https://www.4kpornvideo.com/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <lastmod>2024-01-01</lastmod>
   </url>
 
-  <url>
-    <loc>https://cineinsight.info/privacy-policy</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
-  <url>
-    <loc>https://cineinsight.info/terms</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
-  <!-- ═══ CATEGORY PAGES (SSR — Google can index these) ══ -->
   <!--
-    Add one <url> per category that exists in your Firebase data.
-    The slug must match the category field value (lowercased, spaces→hyphens).
-    e.g.  category "Hot"     →  /category/hot
-          category "Action"  →  /category/action
-          category "Drama"   →  /category/drama
+    NOTE: Individual video pages are dynamically loaded from Firestore and
+    served at https://www.4kpornvideo.com/video?id=<FIRESTORE_DOC_ID>
+
+    For Google to index individual video pages you have two options:
+    1. RECOMMENDED — Generate a dynamic sitemap server-side (Vercel Edge Function
+       or serverless function) that fetches all Firestore doc IDs and outputs
+       <url> entries in the format below for each video.
+    2. FALLBACK — Manually add each video URL here as shown in the example below.
+
+    Example entry for a single video page:
+    <url>
+      <loc>https://www.4kpornvideo.com/video?id=FIRESTORE_DOC_ID</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.9</priority>
+      <video:video>
+        <video:thumbnail_loc>https://example.com/thumb.jpg</video:thumbnail_loc>
+        <video:title>Video Title Here</video:title>
+        <video:description>Video description here.</video:description>
+        <video:content_loc>https://example.com/video.mp4</video:content_loc>
+        <video:publication_date>2024-01-01T00:00:00+00:00</video:publication_date>
+        <video:family_friendly>no</video:family_friendly>
+        <video:restriction relationship="allow">US GB CA AU</video:restriction>
+      </video:video>
+    </url>
   -->
-  <url>
-    <loc>https://cineinsight.info/category/hot</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://cineinsight.info/category/trending</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
-    <loc>https://cineinsight.info/category/action</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://cineinsight.info/category/drama</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://cineinsight.info/category/comedy</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://cineinsight.info/category/thriller</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://cineinsight.info/category/romance</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://cineinsight.info/category/horror</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <!--
-  ═══ VIDEO PAGES ════════════════════════════════════════
-  Add one <url> per video. Replace VIDEO_ID, TITLE etc.
-
-  <url>
-    <loc>https://cineinsight.info/video?id=VIDEO_ID</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <video:video>
-      <video:thumbnail_loc>THUMBNAIL_URL</video:thumbnail_loc>
-      <video:title>TITLE</video:title>
-      <video:description>DESCRIPTION</video:description>
-      <video:publication_date>YYYY-MM-DD</video:publication_date>
-    </video:video>
-  </url>
-  ═══════════════════════════════════════════════════════ -->
 
 </urlset>

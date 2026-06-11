@@ -1,255 +1,593 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>VideoHub — Player</title>
-<meta name="description" content=""/>
-<meta name="keywords" content=""/>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0f0f0f;--card:#161616;--border:#1e1e1e;--acc:#e55000;--txt:#f0f0f0;--txt2:#888;--r:10px}
-body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
-a{text-decoration:none;color:inherit}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="metaTitle">4K Porn Video Player - Watch Free XXX HD Videos</title>
+  <meta id="metaDesc" name="description" content="Watch free 4K porn video online in ultra HD quality. Stream full-length XXX videos free." />
+  <meta id="metaKeywords" name="keywords" content="4k porn, free porn video, hd xxx, adult video, stream" />
+  <meta name="robots" content="index, follow" />
+  <link id="metaCanonical" rel="canonical" href="https://www.4kpornvideo.com/video" />
 
-header{background:rgba(15,15,15,.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
-.hd{display:flex;align-items:center;padding:8px 14px;gap:10px;position:relative;min-height:52px}
-.hd-left{flex-shrink:0;z-index:2}
-.hd-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;z-index:1;pointer-events:none}
-.hd-center a{pointer-events:all}
-.logo-img{height:38px;width:auto;object-fit:contain;display:block;filter:drop-shadow(0 0 8px rgba(229,80,0,.35))}
-.hd-right{flex:1;display:flex;align-items:center;justify-content:flex-end;z-index:2}
+  <!-- Open Graph — video-specific -->
+  <meta id="ogType" property="og:type" content="video.other" />
+  <meta id="ogUrl" property="og:url" content="https://www.4kpornvideo.com/video" />
+  <meta id="ogTitle" property="og:title" content="4K Porn Video" />
+  <meta id="ogDesc" property="og:description" content="Watch free 4K porn video online in ultra HD quality." />
+  <meta id="ogImage" property="og:image" content="https://www.4kpornvideo.com/og-image.jpg" />
+  <meta id="ogImageW" property="og:image:width" content="1280" />
+  <meta id="ogImageH" property="og:image:height" content="720" />
+  <meta property="og:site_name" content="4KPornVideo" />
+  <!-- og:video required for Google rich results -->
+  <meta id="ogVideoUrl" property="og:video" content="" />
+  <meta id="ogVideoSecure" property="og:video:secure_url" content="" />
+  <meta id="ogVideoType" property="og:video:type" content="video/mp4" />
+  <meta id="ogVideoW" property="og:video:width" content="1280" />
+  <meta id="ogVideoH" property="og:video:height" content="720" />
 
-.back-btn{display:flex;align-items:center;gap:6px;color:var(--acc);font-size:14px;font-weight:700;padding:6px 14px;border:1px solid var(--acc);border-radius:20px;transition:.2s;cursor:pointer;background:none;font-family:inherit}
-.back-btn:hover{background:rgba(229,80,0,.12)}
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="player" />
+  <meta id="twTitle" name="twitter:title" content="4K Porn Video" />
+  <meta id="twDesc" name="twitter:description" content="Watch free 4K porn video online in ultra HD quality." />
+  <meta id="twImage" name="twitter:image" content="https://www.4kpornvideo.com/og-image.jpg" />
+  <meta id="twPlayer" name="twitter:player" content="" />
+  <meta name="twitter:player:width" content="1280" />
+  <meta name="twitter:player:height" content="720" />
 
-.spinner{display:flex;justify-content:center;padding:80px 0}
-.spinner::after{content:'';width:42px;height:42px;border:3px solid #222;border-top-color:var(--acc);border-radius:50%;animation:spin .65s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
+  <!-- VideoObject schema — populated by JS after Firestore load -->
+  <script id="schemaScript" type="application/ld+json">{}</script>
 
-.player-wrap{background:#000;width:100%;display:flex;align-items:center;justify-content:center;max-height:72vh}
-.player-wrap video{width:100%;max-height:72vh;object-fit:contain;display:block}
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#0d0f18;--card:#13162a;--border:#1e2234;--gold:#f5c518;--text:#e8e8e8}
+    body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:#2a2d3a;border-radius:2px}
 
-.info{max-width:920px;margin:0 auto;padding:16px 14px 60px}
-.top-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-.pills{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.dur-pill{display:flex;align-items:center;gap:5px;background:#1a1a1a;color:var(--txt2);font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px}
-.views-pill{display:flex;align-items:center;gap:5px;background:#1a1a1a;color:var(--txt2);font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px}
+    /* ── HEADER ── */
+    header{background:#090b14;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50}
+    .header-row{max-width:600px;margin:0 auto;padding:0 12px;height:58px;display:flex;align-items:center;position:relative}
+    .logo-wrap{position:absolute;left:50%;transform:translateX(-50%);background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;text-decoration:none}
+    .logo-wrap img{height:42px;width:auto;object-fit:contain;max-width:180px}
+    .header-right{margin-left:auto;display:flex;align-items:center;gap:2px}
+    .icon-btn{background:none;border:none;cursor:pointer;color:#bbb;display:flex;align-items:center;padding:9px;border-radius:50%;-webkit-tap-highlight-color:transparent}
+    .icon-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
-.v-title{font-size:19px;font-weight:700;line-height:1.4;margin-bottom:14px}
-.meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
-.chip{display:flex;align-items:center;gap:7px;background:#1a1a1a;border-radius:22px;padding:7px 16px;font-size:13px;color:var(--txt2)}
-.chip.ch{color:var(--txt);font-weight:600}
-.chip svg{color:var(--acc);flex-shrink:0}
-.tags-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px;align-items:center}
-.tag-pill{background:rgba(229,80,0,.13);color:var(--acc);font-size:12px;padding:3px 12px;border-radius:14px;font-weight:500}
+    /* ── HAMBURGER MENU ── */
+    .menu-wrap{position:relative;z-index:60}
+    .menu-btn{background:none;border:none;cursor:pointer;color:#bbb;display:flex;align-items:center;padding:9px;border-radius:8px;-webkit-tap-highlight-color:transparent}
+    .menu-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .dropdown{position:absolute;top:calc(100% + 8px);left:0;background:#13162a;border:1px solid var(--border);border-radius:12px;min-width:200px;box-shadow:0 8px 30px rgba(0,0,0,.6);overflow:hidden;display:none}
+    .dropdown.open{display:block}
+    .dd-header{padding:8px 16px;font-size:10px;color:#555;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--border)}
+    .dd-item{display:flex;align-items:center;gap:12px;width:100%;padding:12px 16px;background:none;border:none;color:#ddd;font-size:14px;cursor:pointer;text-align:left;transition:background .15s;-webkit-tap-highlight-color:transparent;text-decoration:none}
+    .dd-item:hover{background:#1a1d2a}
+    .dd-item svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+    .dd-item .label{flex:1}
+    .dd-chevron{width:14px;height:14px;stroke:#555;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s;flex-shrink:0}
+    .dd-chevron.open{transform:rotate(90deg)}
+    .cat-list{display:none;border-top:1px solid #1a1d2a;max-height:220px;overflow-y:auto}
+    .cat-list.open{display:block}
+    .cat-item{display:block;width:100%;padding:9px 16px 9px 44px;background:none;border:none;color:#aaa;font-size:13px;cursor:pointer;text-align:left;transition:background .15s;-webkit-tap-highlight-color:transparent;text-decoration:none}
+    .cat-item:hover{background:#1a1d2a}
 
-.section-title{font-size:15px;font-weight:700;margin-bottom:14px;padding-top:18px;border-top:1px solid var(--border)}
-.rec-list{display:flex;flex-direction:column;gap:14px}
-.rec-card{display:flex;gap:11px;text-decoration:none;color:inherit}
-.rec-card:hover .rec-title{color:var(--acc)}
-.rec-thumb{position:relative;flex-shrink:0;width:160px;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:#181818;border:1px solid var(--border)}
-.rec-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.rec-dur{position:absolute;bottom:4px;right:4px;background:rgba(0,0,0,.78);color:#fff;font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px}
-.rec-info{flex:1;min-width:0;padding-top:2px}
-.rec-title{font-size:13px;font-weight:600;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:5px;transition:color .18s}
-.rec-meta{font-size:12px;color:var(--txt2)}
+    /* ── INLINE SEARCH ── */
+    .search-bar{max-width:600px;margin:0 auto;padding:0 12px 10px;border-top:1px solid #1a1d2a;display:none}
+    .search-bar.open{display:block}
+    .search-inner{display:flex;align-items:center;background:#1a1d2a;border:1.5px solid var(--gold);border-radius:10px;padding:0 12px;gap:8px}
+    .search-inner svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+    .search-inner input{flex:1;background:none;border:none;color:#fff;font-size:14px;outline:none;padding:10px 0}
+    .s-clear{background:none;border:none;cursor:pointer;color:#555;display:none;align-items:center;padding:2px}
+    .s-clear svg{width:14px;height:14px;stroke:#555;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .s-go{background:var(--gold);color:#111;border:none;padding:6px 14px;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0}
 
-.err-box{text-align:center;padding:60px 14px;color:#555}
-.err-box h3{color:#888;margin-bottom:8px}
-.err-box a{color:var(--acc)}
-</style>
+    /* ── PLAYER ── */
+    .player-wrap{position:sticky;top:58px;z-index:30;background:#000}
+    .player-wrap video{width:100%;aspect-ratio:16/9;display:block;background:#000}
+
+    /* ── INFO ── */
+    .container{max-width:600px;margin:0 auto}
+    .video-info{padding:12px 12px 8px}
+    h1.vtitle{font-size:15px;font-weight:600;color:#eee;line-height:1.4;margin-bottom:12px}
+    .actions{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+    .vote-group{display:flex;align-items:center;gap:6px}
+    .vote-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:20px;border:none;cursor:pointer;font-size:13px;font-weight:600;transition:all .2s;-webkit-tap-highlight-color:transparent}
+    .vote-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .vote-btn.neutral{background:#1e2234;color:#999}
+    .vote-btn.liked{background:#2563eb;color:#fff}
+    .vote-btn.liked svg{fill:#fff;stroke:#fff}
+    .vote-btn.disliked{background:#dc2626;color:#fff}
+    .vote-btn.disliked svg{fill:#fff;stroke:#fff}
+    .vote-btn:disabled{opacity:.6;cursor:not-allowed}
+    .views-row{display:flex;align-items:center;gap:5px;color:#666;font-size:13px;margin-left:4px}
+    .views-row svg{width:15px;height:15px;stroke:#666;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .wl-btn{display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;font-size:13px;padding:4px;-webkit-tap-highlight-color:transparent;color:#777}
+    .wl-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .wl-btn.saved{color:var(--gold)}.wl-btn.saved svg{fill:var(--gold);stroke:var(--gold)}
+    .info-box{background:#111320;border-radius:10px;padding:10px 12px;margin-bottom:10px}
+    .info-label{font-size:11px;color:#555;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+    .ch-tag{display:inline-flex;align-items:center;gap:5px;background:#1a1d2a;color:#ccc;font-size:13px;padding:5px 14px;border-radius:20px;border:1px solid #2a2d3a}
+    .ch-tag svg{width:14px;height:14px;stroke:#777;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .desc-text{font-size:13px;color:#bbb;line-height:1.6;white-space:pre-wrap;overflow:hidden;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3}
+    .desc-text.exp{display:block;-webkit-line-clamp:unset}
+    .show-more{display:flex;align-items:center;gap:4px;margin-top:6px;background:none;border:none;cursor:pointer;color:var(--gold);font-size:12px;padding:0}
+    .show-more svg{width:14px;height:14px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+    /* ── RECOMMENDED ── */
+    .rec-section{padding:0 12px 40px}
+    .rec-adlabel{font-size:11px;color:#444;margin-bottom:12px;text-align:center;text-transform:uppercase;letter-spacing:1px}
+    .rec-title{font-size:15px;font-weight:600;color:#ddd;margin-bottom:12px}
+    .video-list{display:flex;flex-direction:column;gap:16px}
+    .video-card{cursor:pointer;-webkit-tap-highlight-color:transparent}
+    .thumb-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:#111;touch-action:manipulation}
+    .thumb-wrap img,.thumb-wrap video{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+    .thumb-wrap video{position:absolute;inset:0}
+    .duration-badge{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.85);color:#fff;font-size:11px;font-weight:700;padding:3px 7px;border-radius:5px;z-index:2}
+    .badge-4k{position:absolute;top:6px;right:6px;background:#f5c518;color:#111;font-size:9px;font-weight:900;padding:2px 6px;border-radius:4px;letter-spacing:1px;animation:pulse4k 1.8s ease-in-out infinite;z-index:2}
+    .preview-badge{position:absolute;bottom:6px;left:6px;background:rgba(220,38,38,.9);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:.5px;display:flex;align-items:center;gap:3px;z-index:3}
+    .preview-dot{width:5px;height:5px;border-radius:50%;background:#fff;animation:blink 1s ease-in-out infinite}
+    @keyframes pulse4k{0%,100%{box-shadow:0 0 6px rgba(245,197,24,.6)}50%{box-shadow:0 0 14px rgba(245,197,24,1);opacity:.85}}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+    .card-info{padding:6px 2px 2px}
+    .card-title{font-size:13px;font-weight:500;color:#e0e0e0;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:5px}
+    .card-meta{display:flex;align-items:center;justify-content:space-between}
+    .card-ch{display:inline-flex;align-items:center;gap:4px;background:#13162a;color:#999;font-size:10px;padding:2px 8px;border-radius:10px;border:1px solid #1e2234}
+    .card-ch svg{width:10px;height:10px;stroke:#666;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .card-views{display:flex;align-items:center;gap:3px;color:#555;font-size:10px}
+    .card-views svg{width:11px;height:11px;stroke:#555;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+    .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#1e2234;color:#fff;padding:10px 20px;border-radius:24px;font-size:13px;z-index:200;opacity:0;transition:opacity .3s;pointer-events:none;border:1px solid #2a2d3a;white-space:nowrap}
+    .toast.show{opacity:1}
+    .skeleton{background:#1a1d2a;border-radius:8px;animation:sk 1.5s ease-in-out infinite}
+    @keyframes sk{0%,100%{opacity:1}50%{opacity:.5}}
+  </style>
 </head>
 <body>
 
+<div id="toast" class="toast"></div>
+
 <header>
-  <div class="hd">
-    <!-- LEFT: back button -->
-    <div class="hd-left">
-      <button class="back-btn" onclick="history.length>1?history.back():location.href='index.html'">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-        Back
+  <div class="header-row">
+    <!-- Hamburger LEFT -->
+    <div class="menu-wrap" id="menuWrap">
+      <button class="menu-btn" id="menuBtn" aria-label="Menu">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div class="dropdown" id="dropdown">
+        <div class="dd-header">Sort &amp; Filter</div>
+        <a href="index.html?sort=latest" class="dd-item">
+          <svg viewBox="0 0 24 24" style="stroke:#f5c518"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="label">Latest</span>
+        </a>
+        <a href="index.html?sort=mostviews" class="dd-item">
+          <svg viewBox="0 0 24 24" style="stroke:#f87171"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          <span class="label">Most Views</span>
+        </a>
+        <button class="dd-item" id="catToggle">
+          <svg viewBox="0 0 24 24" style="stroke:#60a5fa"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span class="label">Category</span>
+          <svg class="dd-chevron" id="catChevron" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <div class="cat-list" id="catList"><div style="padding:10px 16px;color:#555;font-size:12px">Loading...</div></div>
+      </div>
+    </div>
+
+    <!-- Logo CENTER -->
+    <a href="index.html" class="logo-wrap">
+      <img src="https://i.ibb.co.com/KJR1M1S/Airbrush-IMAGE-ENHANCER-1780990857633-1780990857634.png" alt="4KPornVideo"
+           onerror="this.style.display='none'" />
+    </a>
+
+    <!-- Right icons -->
+    <div class="header-right">
+      <button class="icon-btn" id="searchBtn" aria-label="Search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Favorites">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       </button>
     </div>
+  </div>
 
-    <!-- CENTER: Logo -->
-    <div class="hd-center">
-      <a href="index.html">
-        <img class="logo-img" src="https://i.ibb.co/qF25Zjg1/Airbrush-IMAGE-ENHANCER-1780971547051-1780971547052-removebg-preview.png" alt="VideoHub" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <span style="display:none;align-items:center;gap:8px;font-size:20px;font-weight:900;color:var(--txt)">
-          <span style="width:30px;height:30px;border-radius:7px;background:var(--acc);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></span>
-          VideoHub
-        </span>
-      </a>
-    </div>
-
-    <!-- RIGHT: spacer to balance layout -->
-    <div class="hd-right"></div>
+  <!-- Inline Search Bar -->
+  <div class="search-bar" id="searchBar">
+    <form id="searchForm">
+      <div class="search-inner">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="searchInput" type="search" placeholder="Search videos..." autocomplete="off" />
+        <button type="button" class="s-clear" id="searchClear">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <button type="submit" class="s-go">Search</button>
+      </div>
+    </form>
   </div>
 </header>
 
-<div id="root"><div class="spinner"></div></div>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, getDocs, getDoc, doc, query, orderBy, limit }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-const FIREBASE_CONFIG = {
-  apiKey:            "AIzaSyBYNU7wTq9_1-TdIVuG-yxAlKjeFb9Rm_M",
-  authDomain:        "video-cms-b7c1e.firebaseapp.com",
-  projectId:         "video-cms-b7c1e",
-  storageBucket:     "video-cms-b7c1e.firebasestorage.app",
-  messagingSenderId: "991575420179",
-  appId:             "1:991575420179:web:23459a09aa36f868e37ee6"
-};
-const db = getFirestore(initializeApp(FIREBASE_CONFIG));
-const videoId = new URLSearchParams(location.search).get('id');
-
-const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-const parseViews = raw => {
-  if (raw === null || raw === undefined) return 0;
-  if (typeof raw === 'number') return raw;
-  const s = String(raw).trim().replace(/,/g,'');
-  if (/^\d+$/.test(s)) return parseInt(s,10);
-  if (s.toLowerCase().endsWith('m')) return Math.round(parseFloat(s)*1e6);
-  if (s.toLowerCase().endsWith('k')) return Math.round(parseFloat(s)*1e3);
-  return parseInt(s,10)||0;
-};
-const fmtViews = n => {
-  const x = Number(n)||0;
-  if (x>=1e6) return (x/1e6).toFixed(1)+'M';
-  if (x>=1e3) return (x/1e3).toFixed(1)+'K';
-  return x.toLocaleString();
-};
-
-const SVG = {
-  tv:  `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/></svg>`,
-  eye: `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>`,
-  clk: `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23L13 11.33z"/></svg>`,
-  tag: `<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.37.86.58 1.41.58.55 0 1.05-.21 1.41-.58l7-7c.37-.36.59-.86.59-1.42 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/></svg>`
-};
-
-function setMeta(title, description, keywords) {
-  document.title = title ? title + ' — VideoHub' : 'VideoHub';
-  document.querySelector('meta[name="description"]').setAttribute('content', description || '');
-  document.querySelector('meta[name="keywords"]').setAttribute('content', keywords || '');
-}
-
-function showError(msg) {
-  document.getElementById('root').innerHTML =
-    `<div class="err-box"><h3>Error</h3><p>${esc(msg)}</p><p style="margin-top:14px"><a href="index.html">← Back to Home</a></p></div>`;
-}
-
-async function init() {
-  if (!videoId) { showError('No video ID provided.'); return; }
-
-  const previewMap = {};
-  try {
-    const pSnap = await getDocs(collection(db,'preview'));
-    pSnap.docs.forEach(d => {
-      const r=d.data(), url=r.src||r.url||r.preview||'';
-      if (!url) return;
-      previewMap[d.id]=url;
-      if (r.videoId) previewMap[String(r.videoId)]=url;
-      if (r.title)   previewMap[String(r.title).trim().toLowerCase()]=url;
-    });
-  } catch {}
-
-  let v;
-  try {
-    const snap = await getDoc(doc(db,'videos',videoId));
-    if (!snap.exists()) { showError('Video not found.'); return; }
-    const r = snap.data();
-    v = {
-      id:          snap.id,
-      title:       String(r.title       ?? ''),
-      src:         String(r.src         ?? ''),
-      thumb:       String(r.thumb       ?? ''),
-      views:       parseViews(r.views ?? r.view_count ?? r.viewCount ?? r.view),
-      channel:     String(r.channel     ?? ''),
-      tag:         String(r.tag         ?? ''),
-      duration:    r.duration ? String(r.duration) : '',
-      description: String(r.description ?? ''),
-      keywords:    String(r.keywords    ?? ''),
-    };
-    v.previewSrc = previewMap[snap.id] || previewMap[v.title.trim().toLowerCase()] || '';
-    setMeta(v.title, v.description, v.keywords);
-  } catch(e) { showError(e.message); return; }
-
-  let related = [];
-  try {
-    let rSnap;
-    try   { rSnap = await getDocs(query(collection(db,'videos'), orderBy('views','desc'), limit(15))); }
-    catch { rSnap = await getDocs(query(collection(db,'videos'), limit(15))); }
-    related = rSnap.docs
-      .map(d => { const r=d.data(); return { id:d.id, title:String(r.title??''), thumb:String(r.thumb??''), duration:r.duration?String(r.duration):'', channel:String(r.channel??''), views:parseViews(r.views??r.view_count??r.viewCount) }; })
-      .filter(x => x.id !== videoId).slice(0, 12);
-  } catch {}
-
-  const tags = v.tag ? v.tag.split(',').map(t=>t.trim()).filter(Boolean) : [];
-
-  document.getElementById('root').innerHTML = `
-    <div class="player-wrap">
-      <video id="mainVid" src="${esc(v.src)}" poster="${esc(v.thumb)}"
-             controls autoplay playsinline>Your browser does not support video.</video>
-    </div>
-
-    <div class="info">
-      <div class="top-row">
-        <div class="pills">
-          <span class="views-pill">${SVG.eye}${fmtViews(v.views)} views</span>
-          ${v.duration
-            ? `<span class="dur-pill">${SVG.clk}${esc(v.duration)}</span>`
-            : `<span class="dur-pill" id="liveDurEl" style="display:none">${SVG.clk}<span id="liveDurTxt"></span></span>`
-          }
+<div id="playerSection" style="display:none">
+  <div class="player-wrap"><video id="mainVideo" controls playsinline autoplay></video></div>
+  <div class="container">
+    <div class="video-info">
+      <h1 class="vtitle" id="videoTitle"></h1>
+      <div class="actions">
+        <div class="vote-group">
+          <button class="vote-btn neutral" id="likeBtn">
+            <svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+            <span id="likeCount">0</span>
+          </button>
+          <button class="vote-btn neutral" id="dislikeBtn">
+            <svg viewBox="0 0 24 24"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10z"/><path d="M17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"/></svg>
+            <span id="dislikeCount">0</span>
+          </button>
+          <div class="views-row">
+            <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <span id="videoViews">0</span>
+          </div>
+        </div>
+        <button class="wl-btn" id="wlBtn">
+          <svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          Watch Later
+        </button>
+      </div>
+      <div class="info-box">
+        <div class="info-label">Channel</div>
+        <div class="ch-tag">
+          <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg>
+          <span id="channelName"></span>
         </div>
       </div>
-
-      <h1 class="v-title">${esc(v.title || 'Untitled')}</h1>
-
-      <div class="meta-row">
-        ${v.channel ? `<div class="chip ch">${SVG.tv}${esc(v.channel)}</div>` : ''}
+      <div class="info-box" id="descBox" style="display:none">
+        <div class="info-label">Description</div>
+        <div class="desc-text" id="descText"></div>
+        <button class="show-more" id="descToggle" style="display:none">
+          Show more <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
       </div>
+    </div>
+    <div class="rec-section" id="recSection" style="display:none">
+      <div class="rec-adlabel">Advertisement</div>
+      <div class="rec-title">Recommended Videos</div>
+      <div class="video-list" id="recList"></div>
+    </div>
+  </div>
+</div>
 
-      ${tags.length ? `
-        <div class="tags-row">
-          ${SVG.tag}
-          ${tags.map(t=>`<span class="tag-pill">#${esc(t)}</span>`).join('')}
-        </div>` : ''}
+<div id="loadingSection" style="max-width:600px;margin:0 auto;padding:10px">
+  <div class="skeleton" style="width:100%;aspect-ratio:16/9"></div>
+  <div class="skeleton" style="height:18px;width:70%;margin-top:10px;border-radius:4px"></div>
+  <div class="skeleton" style="height:14px;width:45%;margin-top:8px;border-radius:4px"></div>
+</div>
 
-      ${related.length ? `
-        <div class="section-title">Recommended Videos</div>
-        <div class="rec-list">
-          ${related.map(r=>`
-            <a class="rec-card" href="player.html?id=${esc(r.id)}">
-              <div class="rec-thumb">
-                <img src="${esc(r.thumb)}" alt="${esc(r.title)}" loading="lazy" onerror="this.style.opacity=0"/>
-                ${r.duration ? `<div class="rec-dur">${esc(r.duration)}</div>` : ''}
-              </div>
-              <div class="rec-info">
-                <div class="rec-title">${esc(r.title||'Untitled')}</div>
-                <div class="rec-meta">${r.channel?esc(r.channel)+' · ':''}${fmtViews(r.views)} views</div>
-              </div>
-            </a>`).join('')}
-        </div>` : ''}
-    </div>`;
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, increment, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
 
-  const vidEl = document.getElementById('mainVid');
-  if (vidEl && !v.duration) {
-    vidEl.addEventListener('loadedmetadata', () => {
-      if (!vidEl.duration || isNaN(vidEl.duration)) return;
-      const secs = Math.round(vidEl.duration);
-      const m = Math.floor(secs/60), s = secs % 60;
-      const el = document.getElementById('liveDurTxt');
-      const pill = document.getElementById('liveDurEl');
-      if (el) el.textContent = `${m}:${String(s).padStart(2,'0')}`;
-      if (pill) pill.style.display = 'flex';
-    });
-  }
+const app = initializeApp({
+  apiKey:"AIzaSyBYNU7wTq9_1-TdIVuG-yxAlKjeFb9Rm_M",
+  authDomain:"video-cms-b7c1e.firebaseapp.com",
+  projectId:"video-cms-b7c1e",
+  storageBucket:"video-cms-b7c1e.firebasestorage.app",
+  messagingSenderId:"991575420179",
+  appId:"1:991575420179:web:23459a09aa36f868e37ee6",
+  measurementId:"G-S9R2HDC5FZ"
+});
+const db = getFirestore(app);
+
+/* ── Validate video ID — only allow Firestore doc IDs (alphanumeric + -_) ── */
+const rawId = new URLSearchParams(location.search).get('id') || '';
+const videoId = /^[a-zA-Z0-9_\-]{1,128}$/.test(rawId) ? rawId : null;
+
+const getCh  = v => (v.channel||v.tag||'').trim();
+const fmtNum = v => { const n=parseInt(String(v||0).replace(/\D/g,"")||"0"); if(isNaN(n))return"0"; if(n>=1e6)return(n/1e6).toFixed(1)+"M"; if(n>=1e3)return(n/1e3).toFixed(1)+"K"; return String(n); };
+
+let currentVote=null, voting=false, currentLikes=0, currentDislikes=0, videoRef=null;
+
+/* ── TOAST ── */
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
+
+/* ── VOTES ── */
+function updateVoteUI(){
+  const lb=document.getElementById('likeBtn'), db2=document.getElementById('dislikeBtn');
+  lb.className='vote-btn '+(currentVote==='liked'?'liked':'neutral');
+  db2.className='vote-btn '+(currentVote==='disliked'?'disliked':'neutral');
+  document.getElementById('likeCount').textContent=fmtNum(currentLikes);
+  document.getElementById('dislikeCount').textContent=fmtNum(currentDislikes);
 }
 
-init();
+async function handleVote(type){
+  if(voting||!videoRef)return;
+  voting=true;
+  document.getElementById('likeBtn').disabled=true;
+  document.getElementById('dislikeBtn').disabled=true;
+  try{
+    const prev=currentVote, updates={};
+    if(prev===type){
+      updates[type==='liked'?'likes':'dislikes']=increment(-1);
+      currentVote=null; localStorage.removeItem('vote_'+videoId);
+      if(type==='liked') currentLikes=Math.max(0,currentLikes-1); else currentDislikes=Math.max(0,currentDislikes-1);
+      showToast(type==='liked'?'👍 Like removed':'👎 Dislike removed');
+    } else {
+      updates[type==='liked'?'likes':'dislikes']=increment(1);
+      if(prev==='liked'){updates.likes=increment(-1);currentLikes=Math.max(0,currentLikes-1);}
+      if(prev==='disliked'){updates.dislikes=increment(-1);currentDislikes=Math.max(0,currentDislikes-1);}
+      currentVote=type; localStorage.setItem('vote_'+videoId,type);
+      if(type==='liked') currentLikes++; else currentDislikes++;
+      showToast(type==='liked'?'👍 Liked!':'👎 Disliked');
+    }
+    await updateDoc(videoRef,updates); updateVoteUI();
+  } catch(e){ console.error(e); showToast('⚠️ Failed. Try again.'); }
+  finally{ voting=false; document.getElementById('likeBtn').disabled=false; document.getElementById('dislikeBtn').disabled=false; }
+}
+
+document.getElementById('likeBtn').addEventListener('click', () => handleVote('liked'));
+document.getElementById('dislikeBtn').addEventListener('click', () => handleVote('disliked'));
+
+/* ── WATCH LATER ── */
+document.getElementById('wlBtn').addEventListener('click', () => {
+  const btn=document.getElementById('wlBtn'), saved=localStorage.getItem('wl_'+videoId)==='1';
+  if(saved){ localStorage.removeItem('wl_'+videoId); btn.className='wl-btn'; showToast('🔖 Removed'); }
+  else { localStorage.setItem('wl_'+videoId,'1'); btn.className='wl-btn saved'; showToast('🔖 Saved to Watch Later'); }
+});
+
+/* ── META TAG HELPERS ── */
+function setMeta(id, val) {
+  const el=document.getElementById(id);
+  if(!el) return;
+  if(el.tagName==='META') el.setAttribute('content', val);
+  else if(el.tagName==='LINK') el.setAttribute('href', val);
+  else el.textContent = val;
+}
+
+/* ── ISO 8601 DURATION — e.g. "28:14" → "PT28M14S", "1:28:14" → "PT1H28M14S" ── */
+function toDuration(str) {
+  if (!str) return '';
+  const parts = String(str).trim().split(':').map(p => parseInt(p, 10) || 0);
+  if (parts.length === 2) return `PT${parts[0]}M${parts[1]}S`;
+  if (parts.length === 3) return `PT${parts[0]}H${parts[1]}M${parts[2]}S`;
+  return '';
+}
+
+/* ── SCHEMA.ORG VideoObject — required for Google video indexing ── */
+function buildSchema(v, pageUrl, uploadDate) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": v.title || "",
+    "description": v.description || v.title || "",
+    "thumbnailUrl": v.thumb ? [v.thumb] : [],
+    "uploadDate": uploadDate,
+    "contentUrl": v.src || "",
+    "embedUrl": pageUrl,
+    "interactionStatistic": {
+      "@type": "InteractionCounter",
+      "interactionType": { "@type": "WatchAction" },
+      "userInteractionCount": parseInt(v.views) || 0
+    }
+  };
+  const dur = toDuration(v.duration);
+  if (dur) schema.duration = dur;
+  return JSON.stringify(schema);
+}
+
+/* ── REC CARDS — DOM-based, no innerHTML for user data ── */
+function createRecCard(v) {
+  const ch = getCh(v);
+  const card = document.createElement('div');
+  card.className = 'video-card';
+  card.dataset.id = v.id;
+  card.dataset.preview = v.preview || '';
+
+  const thumbWrap = document.createElement('div');
+  thumbWrap.className = 'thumb-wrap';
+  thumbWrap.dataset.preview = v.preview || '';
+
+  const img = document.createElement('img');
+  img.src = v.thumb || '';
+  img.alt = v.title || '';
+  img.loading = 'lazy';
+  img.onerror = () => { img.src = 'https://placehold.co/640x360/13162a/444?text=Video'; };
+
+  const badge4k = document.createElement('div');
+  badge4k.className = 'badge-4k';
+  badge4k.textContent = '4K';
+
+  thumbWrap.appendChild(img);
+  thumbWrap.appendChild(badge4k);
+  if (v.duration) {
+    const dur = document.createElement('div');
+    dur.className = 'duration-badge';
+    dur.textContent = v.duration;
+    thumbWrap.appendChild(dur);
+  }
+
+  const cardInfo = document.createElement('div');
+  cardInfo.className = 'card-info';
+
+  const titleEl = document.createElement('div');
+  titleEl.className = 'card-title';
+  titleEl.textContent = v.title || '';
+
+  const meta = document.createElement('div');
+  meta.className = 'card-meta';
+
+  const chTag = document.createElement('div');
+  chTag.className = 'card-ch';
+  chTag.innerHTML = '<svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></svg>';
+  chTag.appendChild(document.createTextNode(ch || 'Channel'));
+
+  const viewsEl = document.createElement('div');
+  viewsEl.className = 'card-views';
+  viewsEl.innerHTML = '<svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+  viewsEl.appendChild(document.createTextNode(fmtNum(v.views||0)));
+
+  meta.appendChild(chTag);
+  meta.appendChild(viewsEl);
+  cardInfo.appendChild(titleEl);
+  cardInfo.appendChild(meta);
+  card.appendChild(thumbWrap);
+  card.appendChild(cardInfo);
+  return card;
+}
+
+function attachRecEvents() {
+  document.querySelectorAll('#recList .video-card').forEach(card => {
+    const id=card.dataset.id, previewUrl=card.dataset.preview;
+    const thumb=card.querySelector('.thumb-wrap');
+    let previewEl=null, touchTimer=null, touchMoved=false;
+    function showP(){if(!previewUrl||previewEl)return;previewEl=document.createElement('video');previewEl.src=previewUrl;previewEl.autoplay=true;previewEl.muted=true;previewEl.loop=true;previewEl.playsInline=true;previewEl.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1';const b=document.createElement('div');b.className='preview-badge';b.style.zIndex='3';const dot=document.createElement('span');dot.className='preview-dot';b.appendChild(dot);b.appendChild(document.createTextNode('PREVIEW'));b.id='pb_'+id;thumb.appendChild(previewEl);thumb.appendChild(b);}
+    function hideP(){if(previewEl){previewEl.remove();previewEl=null;}const pb=document.getElementById('pb_'+id);if(pb)pb.remove();}
+    thumb.addEventListener('mouseenter',showP);thumb.addEventListener('mouseleave',hideP);
+    thumb.addEventListener('touchstart',()=>{touchMoved=false;touchTimer=setTimeout(()=>{if(!touchMoved)showP();},150);},{passive:true});
+    thumb.addEventListener('touchmove',()=>{touchMoved=true;if(touchTimer)clearTimeout(touchTimer);hideP();},{passive:true});
+    thumb.addEventListener('touchend',()=>{if(touchTimer)clearTimeout(touchTimer);setTimeout(hideP,600);},{passive:true});
+    thumb.addEventListener('touchcancel',()=>{if(touchTimer)clearTimeout(touchTimer);hideP();},{passive:true});
+    card.addEventListener('click',()=>location.href='video.html?id='+encodeURIComponent(id));
+  });
+}
+
+/* ── HAMBURGER MENU ── */
+const dropdown=document.getElementById('dropdown'), menuBtn=document.getElementById('menuBtn');
+const catList=document.getElementById('catList'), catChevron=document.getElementById('catChevron');
+let dropOpen=false, catOpen=false;
+function closeMenu(){dropOpen=false;catOpen=false;dropdown.classList.remove('open');catList.classList.remove('open');catChevron.classList.remove('open');}
+menuBtn.addEventListener('click',e=>{e.stopPropagation();dropOpen=!dropOpen;dropdown.classList.toggle('open',dropOpen);if(!dropOpen){catOpen=false;catList.classList.remove('open');catChevron.classList.remove('open');}});
+document.getElementById('catToggle').addEventListener('click',e=>{e.stopPropagation();catOpen=!catOpen;catList.classList.toggle('open',catOpen);catChevron.classList.toggle('open',catOpen);});
+document.addEventListener('click',e=>{if(!document.getElementById('menuWrap').contains(e.target))closeMenu();});
+
+/* ── INLINE SEARCH ── */
+const searchBar=document.getElementById('searchBar'), searchInput=document.getElementById('searchInput'), searchClear=document.getElementById('searchClear');
+document.getElementById('searchBtn').addEventListener('click',()=>{searchBar.classList.toggle('open');if(searchBar.classList.contains('open'))setTimeout(()=>searchInput.focus(),60);});
+searchInput.addEventListener('input',()=>{searchClear.style.display=searchInput.value?'flex':'none';});
+searchClear.addEventListener('click',()=>{searchInput.value='';searchClear.style.display='none';searchInput.focus();});
+document.getElementById('searchForm').addEventListener('submit',e=>{
+  e.preventDefault();const q=searchInput.value.trim();
+  if(q) location.href='index.html?q='+encodeURIComponent(q);
+});
+
+/* ── MAIN LOAD ── */
+(async()=>{
+  if(!videoId){ location.href='index.html'; return; }
+  try{
+    videoRef=doc(db,'videos',videoId);
+    const vSnap=await getDoc(videoRef);
+    if(!vSnap.exists()){ location.href='index.html'; return; }
+    const v={id:vSnap.id,...vSnap.data()};
+    const ch=getCh(v);
+    currentLikes=Number(v.likes)||0;
+    currentDislikes=Number(v.dislikes)||0;
+    currentVote=localStorage.getItem('vote_'+videoId)||null;
+
+    const pageUrl=`https://www.4kpornvideo.com/video?id=${encodeURIComponent(videoId)}`;
+
+    /* ── uploadDate: use Firestore timestamp if available ── */
+    let uploadDate = new Date().toISOString();
+    if (v.createdAt && v.createdAt.toDate) {
+      uploadDate = v.createdAt.toDate().toISOString();
+    } else if (v.createdAt && v.createdAt.seconds) {
+      uploadDate = new Date(v.createdAt.seconds * 1000).toISOString();
+    }
+
+    /* ── Page meta ── */
+    document.title=(v.title||'Video')+' - 4KPornVideo | Watch Free 4K XXX HD';
+    setMeta('metaTitle', document.title);
+    setMeta('metaDesc', v.description||v.title||'Watch free 4K porn video online in ultra HD quality.');
+    setMeta('metaKeywords', v.keywords||ch||'4k porn video');
+    setMeta('metaCanonical', pageUrl);
+
+    /* ── Open Graph ── */
+    setMeta('ogTitle', v.title||'');
+    setMeta('ogDesc', v.description||v.title||'');
+    setMeta('ogImage', v.thumb||'https://www.4kpornvideo.com/og-image.jpg');
+    setMeta('ogUrl', pageUrl);
+    /* og:video — direct video URL for Google rich results */
+    if (v.src) {
+      setMeta('ogVideoUrl', v.src);
+      setMeta('ogVideoSecure', v.src.replace('http://', 'https://'));
+    }
+
+    /* ── Twitter Card ── */
+    setMeta('twTitle', v.title||'');
+    setMeta('twDesc', v.description||v.title||'');
+    setMeta('twImage', v.thumb||'https://www.4kpornvideo.com/og-image.jpg');
+    setMeta('twPlayer', pageUrl);
+
+    /* ── VideoObject schema for Google indexing ── */
+    document.getElementById('schemaScript').textContent = buildSchema(v, pageUrl, uploadDate);
+
+    /* ── Player ── */
+    const vid = document.getElementById('mainVideo');
+    vid.src = v.src || '';
+    vid.poster = v.thumb || '';
+
+    /* ── Info ── */
+    document.getElementById('videoTitle').textContent = v.title || '';
+    document.getElementById('videoViews').textContent = fmtNum(v.views||0);
+    document.getElementById('channelName').textContent = ch || 'Channel';
+
+    if(localStorage.getItem('wl_'+videoId)==='1') document.getElementById('wlBtn').className='wl-btn saved';
+    updateVoteUI();
+
+    if(v.description){
+      document.getElementById('descBox').style.display='block';
+      const dt=document.getElementById('descText');
+      dt.textContent=v.description;
+      if(v.description.length>120){
+        const btn=document.getElementById('descToggle');
+        btn.style.display='flex';
+        let exp=false;
+        btn.onclick=()=>{
+          exp=!exp;
+          dt.className='desc-text'+(exp?' exp':'');
+          btn.innerHTML=exp
+            ? 'Show less <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><polyline points="18 15 12 9 6 15"/></svg>'
+            : 'Show more <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><polyline points="6 9 12 15 18 9"/></svg>';
+        };
+      }
+    }
+
+    document.getElementById('loadingSection').style.display='none';
+    document.getElementById('playerSection').style.display='block';
+
+    /* ── Recommended videos — limit to 20, ordered by views desc ── */
+    const recSnap = await getDocs(query(collection(db,'videos'), orderBy('views','desc'), limit(21)));
+    const all = recSnap.docs.filter(d=>d.id!==videoId).slice(0,20).map(d=>({id:d.id,...d.data()}));
+
+    /* ── Build category list for hamburger menu ── */
+    const chMap=new Map();
+    all.forEach(v2=>{const c=getCh(v2);if(c&&!chMap.has(c.toLowerCase()))chMap.set(c.toLowerCase(),c);});
+    const channels=[...chMap.values()].sort((a,b)=>a.toLowerCase().localeCompare(b.toLowerCase()));
+    catList.innerHTML='';
+    if (channels.length) {
+      channels.forEach(c => {
+        const a = document.createElement('a');
+        a.href = `index.html?channel=${encodeURIComponent(c)}`;
+        a.className = 'cat-item';
+        a.textContent = c;
+        catList.appendChild(a);
+      });
+    } else {
+      catList.innerHTML = '<div style="padding:10px 16px;color:#555;font-size:12px">No categories</div>';
+    }
+
+    if(all.length){
+      const recList = document.getElementById('recList');
+      recList.innerHTML = '';
+      all.forEach(v2 => recList.appendChild(createRecCard(v2)));
+      document.getElementById('recSection').style.display='block';
+      attachRecEvents();
+    }
+
+    /* ── Increment view count (fire-and-forget) ── */
+    const viewKey = 'viewed_'+videoId;
+    if (!sessionStorage.getItem(viewKey)) {
+      sessionStorage.setItem(viewKey, '1');
+      updateDoc(videoRef, { views: increment(1) }).catch(() => {});
+    }
+
+  } catch(e){
+    console.error(e);
+    document.getElementById('loadingSection').innerHTML='<div style="text-align:center;padding:60px 20px;color:#555"><div style="font-size:44px">⚠️</div><div style="margin-top:10px">Failed to load video</div></div>';
+  }
+})();
 </script>
 </body>
 </html>

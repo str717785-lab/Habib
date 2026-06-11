@@ -1,9 +1,14 @@
 User-agent: *
 Allow: /
-Allow: /category/
-Allow: /video?id=
+Allow: /video
+Disallow: /admin
+Disallow: /admin.html
+Disallow: /?q=
+Disallow: /?sort=
 
-# Block bare /video page without ID (no content without an ID)
-Disallow: /video$
+# Googlebot video crawler
+User-agent: Googlebot-Video
+Allow: /video
+Allow: /video.html
 
-Sitemap: https://cineinsight.info/sitemap.xml
+Sitemap: https://www.4kpornvideo.com/sitemap.xml

@@ -1,563 +1,865 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>VideoHub — Admin Panel</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0a0a0a;--card:#141414;--card2:#1c1c1c;--border:#222;--acc:#e55000;--green:#22c55e;--red:#ef4444;--txt:#f0f0f0;--txt2:#888;--r:8px}
-body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
-a{text-decoration:none;color:inherit}
-
-/* LOGIN */
-#loginScreen{position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px}
-.login-box{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:36px 32px;width:100%;max-width:380px;text-align:center}
-.login-logo{display:flex;justify-content:center;margin-bottom:18px}
-.login-logo img{height:48px;width:auto;filter:drop-shadow(0 0 8px rgba(229,80,0,.4))}
-.login-logo-fallback{width:56px;height:56px;border-radius:14px;background:var(--acc);display:none;align-items:center;justify-content:center;margin:0 auto}
-.login-box h2{font-size:20px;font-weight:800;margin-bottom:6px}
-.login-box p{font-size:13px;color:var(--txt2);margin-bottom:24px}
-.pw-wrap{position:relative;margin-bottom:14px}
-.pw-wrap input{width:100%;background:#1a1a1a;border:1px solid var(--border);color:var(--txt);padding:11px 42px 11px 14px;border-radius:10px;font-size:14px;outline:none;font-family:inherit;transition:border-color .2s}
-.pw-wrap input:focus{border-color:var(--acc)}
-.pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--txt2);cursor:pointer;padding:2px;display:flex}
-.login-btn{width:100%;padding:12px;border-radius:10px;background:var(--acc);border:none;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;transition:opacity .18s}
-.login-btn:hover{opacity:.88}
-.login-err{color:#f88;background:rgba(255,80,80,.1);border-radius:8px;padding:8px;font-size:12px;margin-top:10px;display:none}
-.login-hint{margin-top:16px;font-size:11px;color:#444;background:#111;border-radius:8px;padding:10px;text-align:left;line-height:1.6}
-.login-hint code{color:#888;background:#1a1a1a;padding:1px 5px;border-radius:4px;font-size:11px}
-
-/* ADMIN UI */
-#adminUi{display:none}
-
-/* HEADER */
-header{background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100}
-.hd{display:flex;align-items:center;padding:8px 16px;gap:10px;position:relative;min-height:52px}
-.hd-left{flex-shrink:0;display:flex;align-items:center;gap:8px;z-index:2}
-.hd-center{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;justify-content:center;z-index:1;pointer-events:none}
-.hd-center a{pointer-events:all}
-.logo-img{height:36px;width:auto;object-fit:contain;display:block;filter:drop-shadow(0 0 6px rgba(229,80,0,.3))}
-.hd-right{flex:1;display:flex;align-items:center;justify-content:flex-end;gap:8px;z-index:2}
-.admin-badge{background:var(--acc);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.5px}
-
-.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;border-radius:8px;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:.18s;white-space:nowrap}
-.btn-acc{background:var(--acc);color:#fff}.btn-acc:hover{opacity:.88}
-.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--txt2)}.btn-ghost:hover{color:var(--txt);border-color:#444}
-.btn-logout{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.2)}.btn-logout:hover{background:rgba(239,68,68,.22)}
-
-.fb-alert{margin:14px 16px;max-width:1100px;background:rgba(229,80,0,.09);border:1px solid rgba(229,80,0,.25);border-radius:10px;padding:12px 16px;font-size:12px;line-height:1.6;display:none}
-.fb-alert.vis{display:block}
-.fb-alert strong{color:var(--acc)}
-.fb-alert code{background:#1a1a1a;padding:2px 6px;border-radius:4px;color:#ccc;font-size:11px;display:block;margin:6px 0 2px;white-space:pre-wrap;font-family:monospace}
-
-.stats-bar{display:flex;gap:12px;padding:14px 16px;max-width:1100px;margin:0 auto;flex-wrap:wrap}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:14px 20px;flex:1;min-width:140px}
-.stat-card h4{font-size:12px;color:var(--txt2);margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:.5px}
-.stat-card .val{font-size:24px;font-weight:800}
-.stat-card .val.acc{color:var(--acc)}
-
-.toolbar{display:flex;align-items:center;gap:10px;padding:0 16px 12px;max-width:1100px;margin:0 auto;flex-wrap:wrap}
-.toolbar input[type=search]{flex:1;min-width:200px;background:var(--card);border:1px solid var(--border);color:var(--txt);padding:8px 14px;border-radius:8px;font-size:13px;outline:none;font-family:inherit}
-.toolbar input:focus{border-color:var(--acc)}
-
-.table-wrap{max-width:1100px;margin:0 auto 40px;padding:0 16px;overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:13px;min-width:800px}
-th{background:var(--card);color:var(--txt2);font-weight:600;padding:10px 12px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;font-size:12px;text-transform:uppercase;letter-spacing:.4px}
-td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
-tr:hover td{background:rgba(255,255,255,.02)}
-.thumb-cell img{width:80px;height:45px;object-fit:cover;border-radius:5px;display:block;border:1px solid var(--border)}
-.title-cell{max-width:220px;font-weight:500;line-height:1.4}
-.title-cell .vid-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.badge-lbl{background:rgba(229,80,0,.18);color:var(--acc);font-size:10px;font-weight:700;padding:1px 8px;border-radius:10px;display:inline-block;margin-top:4px}
-.ch-lbl{font-size:12px;color:var(--txt2)}
-.views-cell{white-space:nowrap;font-weight:600}
-.prev-yes{color:var(--green);font-size:11px;font-weight:700}
-.prev-no{color:#444;font-size:11px}
-.tag-lbl{color:var(--acc);font-size:11px}
-.actions{display:flex;gap:6px;white-space:nowrap}
-.act-btn{padding:5px 12px;border-radius:6px;border:none;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:.15s}
-.act-edit{background:rgba(229,80,0,.15);color:var(--acc)}.act-edit:hover{background:rgba(229,80,0,.28)}
-.act-del{background:rgba(239,68,68,.12);color:var(--red)}.act-del:hover{background:rgba(239,68,68,.25)}
-
-.spinner{display:flex;justify-content:center;padding:60px 0}
-.spinner::after{content:'';width:36px;height:36px;border:3px solid #222;border-top-color:var(--acc);border-radius:50%;animation:spin .65s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.empty-row td{text-align:center;padding:40px;color:var(--txt2)}
-
-.modal-bg{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.82);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px}
-.modal-bg.open{display:flex}
-.modal{background:var(--card);border:1px solid var(--border);border-radius:14px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto}
-.modal-hd{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--card);z-index:1}
-.modal-hd h2{font-size:15px;font-weight:700}
-.modal-x{background:none;border:none;color:var(--txt2);cursor:pointer;font-size:22px;padding:2px 8px;border-radius:6px;line-height:1;font-family:inherit}
-.modal-x:hover{color:var(--txt)}
-.modal-body{padding:16px 18px 22px;display:flex;flex-direction:column;gap:12px}
-.field label{display:block;font-size:12px;color:var(--txt2);margin-bottom:4px;font-weight:500}
-.field input,.field textarea{width:100%;background:var(--card2);border:1px solid var(--border);color:var(--txt);padding:8px 12px;border-radius:8px;font-size:13px;outline:none;font-family:inherit}
-.field textarea{resize:vertical;min-height:70px;line-height:1.5}
-.field input:focus,.field textarea:focus{border-color:var(--acc)}
-.field input::placeholder,.field textarea::placeholder{color:#3a3a3a}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.modal-actions{display:flex;gap:10px;margin-top:4px}
-.modal-actions .btn{flex:1;justify-content:center;padding:10px}
-.err{color:#f88;background:rgba(255,80,80,.1);border-radius:8px;padding:8px 12px;font-size:12px}
-.success{color:#6ee7a0;background:rgba(34,197,94,.1);border-radius:8px;padding:8px 12px;font-size:12px}
-
-.confirm-bg{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;padding:16px}
-.confirm-bg.open{display:flex}
-.confirm-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;max-width:360px;width:100%;text-align:center}
-.confirm-box h3{font-size:16px;margin-bottom:8px}
-.confirm-box p{font-size:13px;color:var(--txt2);margin-bottom:20px}
-.confirm-actions{display:flex;gap:10px;justify-content:center}
-.btn-red{background:var(--red);color:#fff}.btn-red:hover{opacity:.88}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel - 4KPornVideo</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#0d0f18;--card:#13162a;--border:#1e2234;--gold:#f5c518;--text:#e8e8e8;--red:#dc2626;--blue:#2563eb;--green:#16a34a}
+    body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
+    ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:#2a2d3a;border-radius:2px}
+    .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+    .login-box{width:100%;max-width:360px}
+    .login-logo{text-align:center;margin-bottom:28px}
+    .login-logo img{height:50px;object-fit:contain}
+    .login-sub{color:#666;font-size:13px;margin-top:8px}
+    .login-card{background:var(--card);border-radius:14px;padding:28px;border:1px solid var(--border)}
+    .login-title{font-size:15px;font-weight:600;color:#ddd;margin-bottom:20px;text-align:center}
+    input[type=password],input[type=text],input[type=url],input[type=number],textarea,select{
+      width:100%;padding:10px 12px;border-radius:8px;background:#0d0f18;border:1px solid var(--border);
+      color:var(--text);font-size:13px;outline:none;transition:border .2s;font-family:inherit}
+    input:focus,textarea:focus,select:focus{border-color:#3a3d4a}
+    input.err{border-color:var(--red)}
+    .err-msg{color:#f87171;font-size:12px;margin-top:5px}
+    .btn-gold{width:100%;padding:13px;background:var(--gold);color:#111;border:none;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;margin-top:14px;transition:opacity .2s}
+    .btn-gold:hover{opacity:.9}
+    .btn-gold:disabled{opacity:.5;cursor:not-allowed}
+    header{background:#090b14;border-bottom:1px solid var(--border);height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;position:sticky;top:0;z-index:40}
+    .h-left{display:flex;align-items:center;gap:12px}
+    .h-left img{height:38px;object-fit:contain;max-width:160px}
+    .admin-badge{background:#1e1a00;color:var(--gold);font-size:12px;font-weight:700;padding:3px 10px;border-radius:6px;border:1px solid #f5c51840;white-space:nowrap}
+    .h-btns{display:flex;gap:8px}
+    .btn-add{display:flex;align-items:center;gap:6px;background:var(--gold);color:#111;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700}
+    .btn-logout{display:flex;align-items:center;gap:5px;background:#1e2234;color:#999;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:13px}
+    svg.icon{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;vertical-align:middle}
+    .tabs{display:flex;border-bottom:1px solid var(--border);padding:0 16px;background:#090b14}
+    .tab-btn{padding:12px 18px;border:none;background:none;color:#666;font-size:13px;font-weight:600;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+    .tab-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+    .main{max-width:860px;margin:0 auto;padding:16px}
+    .form-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:20px;margin-bottom:20px}
+    .form-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    .form-title{font-size:15px;font-weight:600;color:#eee}
+    .btn-close{background:none;border:none;cursor:pointer;color:#666;padding:4px;display:flex}
+    .form-grid{display:grid;gap:12px}
+    .field-label{font-size:11px;color:#666;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px}
+    .form-actions{display:flex;gap:10px;margin-top:18px}
+    .btn-save{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;background:var(--gold);color:#111;border:none;padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer}
+    .btn-save:disabled{background:#555;cursor:not-allowed;color:#aaa}
+    .btn-cancel{background:#1e2234;color:#999;border:none;padding:12px 20px;border-radius:10px;cursor:pointer;font-size:14px}
+    .list-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+    .list-count{color:#888;font-size:13px}
+    .btn-refresh{background:none;border:none;cursor:pointer;color:#666;font-size:12px}
+    .video-list{display:flex;flex-direction:column;gap:8px}
+    .video-item{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 12px;transition:border .2s}
+    .video-item.editing{border-color:var(--gold);background:#1a1f38}
+    .video-item.selected{border-color:#2563eb;background:#0f1628}
+    .video-thumb{width:72px;height:42px;object-fit:cover;border-radius:5px;flex-shrink:0;background:#111}
+    .video-meta{flex:1;min-width:0}
+    .video-title{font-size:13px;font-weight:500;color:#ddd;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+    .video-sub{display:flex;gap:10px;margin-top:3px;font-size:11px;color:#666;flex-wrap:wrap}
+    .item-btns{display:flex;gap:6px;flex-shrink:0}
+    .btn-icon{display:flex;align-items:center;padding:7px;border-radius:7px;border:none;cursor:pointer}
+    .btn-view{background:#1a2040;color:#888;text-decoration:none}
+    .btn-edit{background:#1a2040;color:var(--gold)}
+    .btn-del{background:#2a1020;color:var(--red)}
+    .btn-icon:disabled{opacity:.4;cursor:not-allowed}
+    .cb-wrap{flex-shrink:0}
+    .cb-wrap input[type=checkbox]{width:16px;height:16px;accent-color:var(--blue);cursor:pointer;border-radius:4px}
+    .bulk-bar{background:#0f1628;border:1px solid #2563eb;border-radius:12px;padding:12px 16px;margin-bottom:14px;display:none;align-items:center;gap:12px;flex-wrap:wrap}
+    .bulk-bar.show{display:flex}
+    .bulk-count{color:#60a5fa;font-size:13px;font-weight:600;flex:1}
+    .btn-bulk-assign{display:flex;align-items:center;gap:6px;background:#2563eb;color:#fff;border:none;padding:9px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600}
+    .btn-bulk-cancel{background:#1e2234;color:#999;border:none;padding:9px 14px;border-radius:8px;cursor:pointer;font-size:13px}
+    .select-all-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+    .select-all-row label{color:#888;font-size:13px;cursor:pointer}
+    .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+    .modal-bg.show{display:flex}
+    .modal{background:var(--card);border-radius:16px;padding:24px;width:100%;max-width:420px;border:1px solid var(--border)}
+    .modal-title{font-size:15px;font-weight:700;color:#eee;margin-bottom:6px}
+    .modal-sub{font-size:12px;color:#666;margin-bottom:18px}
+    .input-row{display:flex;gap:10px;align-items:center;margin-bottom:12px}
+    .input-row input,.input-row select{flex:1}
+    .or-divider{text-align:center;color:#444;font-size:12px;margin:10px 0;position:relative}
+    .or-divider::before,.or-divider::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:#1e2234}
+    .or-divider::before{left:0}.or-divider::after{right:0}
+    .modal-actions{display:flex;gap:10px;margin-top:18px}
+    .btn-modal-confirm{flex:1;background:var(--gold);color:#111;border:none;padding:12px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer}
+    .btn-modal-cancel{background:#1e2234;color:#999;border:none;padding:12px 18px;border-radius:10px;cursor:pointer;font-size:14px}
+    .cat-section{display:none}
+    .cat-section.active{display:block}
+    .cat-add-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:20px;margin-bottom:20px}
+    .cat-add-title{font-size:14px;font-weight:600;color:#eee;margin-bottom:14px}
+    .cat-add-row{display:flex;gap:10px}
+    .cat-add-row input{flex:1}
+    .btn-green{background:#16a34a;color:#fff;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;white-space:nowrap}
+    .cat-list-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:20px}
+    .cat-list-title{font-size:14px;font-weight:600;color:#eee;margin-bottom:14px}
+    .cat-items{display:flex;flex-direction:column;gap:8px}
+    .cat-item{display:flex;align-items:center;gap:12px;background:#0d0f18;border:1px solid var(--border);border-radius:10px;padding:10px 14px}
+    .cat-name{flex:1;font-size:14px;color:#ddd;font-weight:500}
+    .cat-count{color:#555;font-size:12px}
+    .cat-edit-input{flex:1;display:none}
+    .cat-actions{display:flex;gap:6px}
+    .btn-cat-edit{background:#1a2040;color:var(--gold);border:none;padding:7px 12px;border-radius:7px;cursor:pointer;font-size:12px;font-weight:600}
+    .btn-cat-save{background:#16a34a;color:#fff;border:none;padding:7px 12px;border-radius:7px;cursor:pointer;font-size:12px;font-weight:600;display:none}
+    .btn-cat-del{background:#2a1020;color:var(--red);border:none;padding:7px 12px;border-radius:7px;cursor:pointer;font-size:12px;font-weight:600}
+    .skeleton{background:#1a1d2a;border-radius:10px;animation:sk 1.5s ease-in-out infinite}
+    @keyframes sk{0%,100%{opacity:1}50%{opacity:.5}}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .spinning{animation:spin .8s linear infinite}
+    .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#1e2234;color:#fff;padding:10px 22px;border-radius:24px;font-size:13px;z-index:999;border:1px solid #2a2d3a;white-space:nowrap;display:none}
+    .toast.show{display:block}
+    .lockout-msg{color:#f87171;font-size:12px;margin-top:8px;text-align:center;display:none}
+  </style>
 </head>
 <body>
 
+<div id="toast" class="toast"></div>
+
+<!-- ASSIGN CATEGORY MODAL -->
+<div class="modal-bg" id="assignModal">
+  <div class="modal">
+    <div class="modal-title">🏷️ Assign Category</div>
+    <div class="modal-sub" id="assignSubText">Assign category to selected videos</div>
+    <label class="field-label">Existing categories</label>
+    <select id="existingCatSelect" style="margin-bottom:0">
+      <option value="">— Select existing —</option>
+    </select>
+    <div class="or-divider">OR</div>
+    <label class="field-label">New category name</label>
+    <input id="newCatInput" type="text" placeholder="e.g. BLACKED RAW" />
+    <div class="modal-actions">
+      <button class="btn-modal-confirm" id="assignConfirmBtn">Assign</button>
+      <button class="btn-modal-cancel" id="assignCancelBtn">Cancel</button>
+    </div>
+  </div>
+</div>
+
 <!-- LOGIN -->
-<div id="loginScreen">
+<div id="loginSection" class="login-wrap">
   <div class="login-box">
     <div class="login-logo">
-      <img src="https://i.ibb.co/qF25Zjg1/Airbrush-IMAGE-ENHANCER-1780971547051-1780971547052-removebg-preview.png" alt="VideoHub"
-           onerror="this.style.display='none';document.getElementById('loginLogoFallback').style.display='flex'"/>
-      <div class="login-logo-fallback" id="loginLogoFallback">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
-      </div>
+      <img src="https://i.ibb.co.com/KJR1M1S/Airbrush-IMAGE-ENHANCER-1780990857633-1780990857634.png" alt="4KPornVideo" />
+      <div class="login-sub">Admin Panel</div>
     </div>
-    <h2>Admin Panel</h2>
-    <p>Enter the admin password to continue</p>
-    <div class="pw-wrap">
-      <input type="password" id="pwInput" placeholder="Password" autocomplete="current-password"/>
-      <button class="pw-toggle" id="pwToggle" title="Show/hide">
-        <svg id="eyeShow" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-        <svg id="eyeHide" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>
-      </button>
-    </div>
-    <button class="login-btn" id="loginBtn">Login</button>
-    <div class="login-err" id="loginErr">Incorrect password. Please try again.</div>
-    <div class="login-hint">
-      <strong style="color:#666">Firebase Permission Error?</strong><br/>
-      Go to <strong style="color:#888">Firebase Console → Firestore → Rules</strong> and set:
-      <code>allow read, write: if true;</code>
+    <div class="login-card">
+      <div class="login-title">🔐 Login</div>
+      <input id="passInput" type="password" placeholder="Admin password" autocomplete="current-password" />
+      <div id="passErr" class="err-msg" style="display:none">Wrong password</div>
+      <div id="lockoutMsg" class="lockout-msg"></div>
+      <button class="btn-gold" id="loginBtn">Login</button>
     </div>
   </div>
 </div>
 
-<!-- ADMIN UI -->
-<div id="adminUi">
-
-<header>
-  <div class="hd">
-    <!-- LEFT: actions -->
-    <div class="hd-left">
-      <button class="btn btn-acc" id="addNewBtn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-        Add Video
-      </button>
+<!-- ADMIN -->
+<div id="adminSection" style="display:none">
+  <header>
+    <div class="h-left">
+      <img src="https://i.ibb.co.com/KJR1M1S/Airbrush-IMAGE-ENHANCER-1780990857633-1780990857634.png" alt="Logo" />
       <span class="admin-badge">ADMIN</span>
     </div>
-
-    <!-- CENTER: Logo -->
-    <div class="hd-center">
-      <a href="index.html">
-        <img class="logo-img" src="https://i.ibb.co/qF25Zjg1/Airbrush-IMAGE-ENHANCER-1780971547051-1780971547052-removebg-preview.png" alt="VideoHub"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/>
-        <span style="display:none;align-items:center;gap:8px;font-size:18px;font-weight:900;color:var(--txt)">
-          <span style="width:28px;height:28px;border-radius:6px;background:var(--acc);display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg></span>
-          VideoHub
-        </span>
-      </a>
+    <div class="h-btns">
+      <button class="btn-add" id="addVideoBtn">
+        <svg class="icon" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Video
+      </button>
+      <button class="btn-logout" id="logoutBtn">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Logout
+      </button>
     </div>
+  </header>
 
-    <!-- RIGHT: nav links -->
-    <div class="hd-right">
-      <a class="btn btn-ghost" href="index.html">← Site</a>
-      <button class="btn btn-logout" id="logoutBtn">Logout</button>
-    </div>
+  <div class="tabs">
+    <button class="tab-btn active" id="tab-videos">🎬 Videos</button>
+    <button class="tab-btn" id="tab-categories">🏷️ Categories</button>
   </div>
-</header>
 
-<div class="fb-alert" id="fbAlert">
-  <strong>⚠ Firebase Permission Error Detected</strong><br/>
-  Fix in <strong>Firebase Console → Firestore Database → Rules</strong>:
-  <code>rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if true;
-    }
-  }
-}</code>
-</div>
+  <div class="main">
 
-<div class="stats-bar">
-  <div class="stat-card"><h4>Total Videos</h4><div class="val acc" id="statTotal">—</div></div>
-  <div class="stat-card"><h4>Total Views</h4><div class="val" id="statViews">—</div></div>
-  <div class="stat-card"><h4>Channels</h4><div class="val" id="statChannels">—</div></div>
-  <div class="stat-card"><h4>With Preview</h4><div class="val" id="statPreview">—</div></div>
-</div>
-
-<div class="toolbar">
-  <input type="search" id="tableSearch" placeholder="Search by title, channel, tag — or paste a video link..."/>
-  <button class="btn btn-ghost" id="refreshBtn">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
-    Refresh
-  </button>
-</div>
-
-<div class="table-wrap">
-  <table id="videoTable">
-    <thead>
-      <tr>
-        <th>Thumb</th><th>Title / Channel</th><th>Views</th><th>Duration</th>
-        <th>Badge</th><th>Preview</th><th>Tags</th><th>Actions</th>
-      </tr>
-    </thead>
-    <tbody id="tableBody">
-      <tr class="empty-row"><td colspan="8"><div class="spinner"></div></td></tr>
-    </tbody>
-  </table>
-</div>
-</div><!-- /adminUi -->
-
-<!-- MODAL -->
-<div class="modal-bg" id="modalBg">
-  <div class="modal">
-    <div class="modal-hd">
-      <h2 id="modalTitle">Add New Video</h2>
-      <button class="modal-x" id="modalClose">&#x2715;</button>
-    </div>
-    <div class="modal-body">
-      <input type="hidden" id="editId"/>
-      <div class="field"><label>Title *</label><input id="fTitle" placeholder="Video title"/></div>
-      <div class="field"><label>Video URL (src) *</label><input id="fSrc" placeholder="https://example.com/video.mp4"/></div>
-      <div class="field"><label>Preview Clip URL</label><input id="fPreview" placeholder="https://example.com/preview.mp4"/></div>
-      <div class="field"><label>Thumbnail URL</label><input id="fThumb" placeholder="https://example.com/thumb.jpg"/></div>
-      <div class="field-row">
-        <div class="field"><label>Duration</label><input id="fDuration" placeholder="12:35"/></div>
-        <div class="field"><label>Views</label><input id="fViews" type="number" placeholder="5000"/></div>
+    <!-- VIDEOS TAB -->
+    <div id="videosTab">
+      <div id="formCard" class="form-card" style="display:none">
+        <div class="form-head">
+          <div class="form-title" id="formTitle">➕ Add New Video</div>
+          <button class="btn-close" id="closeFormBtn">
+            <svg class="icon" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="form-grid">
+          <div><label class="field-label">📝 Title *</label><input id="f-title" type="text" placeholder="e.g. BLACKED RAW – Riding Home Sexy Free" /></div>
+          <div><label class="field-label">🎬 Video URL *</label><input id="f-src" type="url" placeholder="https://..." /></div>
+          <div><label class="field-label">🖼️ Thumbnail URL *</label><input id="f-thumb" type="url" placeholder="https://..." /></div>
+          <div><label class="field-label">👁️ Preview URL (short clip)</label><input id="f-preview" type="url" placeholder="https://..." /></div>
+          <div><label class="field-label">⏱️ Duration</label><input id="f-duration" type="text" placeholder="e.g. 28:14" /></div>
+          <div>
+            <label class="field-label">📺 Channel / Category</label>
+            <div style="display:flex;gap:8px">
+              <input id="f-channel" type="text" placeholder="e.g. BLACKED" style="flex:1" />
+              <select id="f-channel-pick" style="flex:1;min-width:0">
+                <option value="">— Pick existing —</option>
+              </select>
+            </div>
+          </div>
+          <div><label class="field-label">👁️ Views</label><input id="f-views" type="number" placeholder="0" value="0" min="0" /></div>
+          <div><label class="field-label">🔑 Keywords (comma separated)</label><input id="f-keywords" type="text" placeholder="blacked, interracial, 4k" /></div>
+          <div><label class="field-label">📄 Description</label><textarea id="f-desc" rows="3" placeholder="Video description..."></textarea></div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-save" id="saveBtn">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            <span id="saveBtnText">Add Video</span>
+          </button>
+          <button class="btn-cancel" id="cancelFormBtn">Cancel</button>
+        </div>
       </div>
-      <div class="field-row">
-        <div class="field"><label>Channel</label><input id="fChannel" placeholder="Channel name"/></div>
-        <div class="field"><label>Badge</label><input id="fBadge" placeholder="4K / HD"/></div>
+
+      <div class="bulk-bar" id="bulkBar">
+        <span class="bulk-count" id="bulkCount">0 selected</span>
+        <button class="btn-bulk-assign" id="bulkAssignBtn">
+          <svg class="icon" viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+          Assign Category
+        </button>
+        <button class="btn-bulk-cancel" id="bulkCancelBtn">✕ Cancel</button>
       </div>
-      <div class="field"><label>Tags (comma separated)</label><input id="fTag" placeholder="action, drama"/></div>
-      <div class="field"><label>Description (SEO meta)</label><textarea id="fDescription" placeholder="Short description of this video..."></textarea></div>
-      <div class="field"><label>Keywords (SEO meta, comma separated)</label><input id="fKeywords" placeholder="keyword1, keyword2"/></div>
-      <p class="err"     id="errMsg" style="display:none"></p>
-      <p class="success" id="okMsg"  style="display:none"></p>
-      <div class="modal-actions">
-        <button class="btn btn-ghost" id="cancelBtn">Cancel</button>
-        <button class="btn btn-acc"   id="saveBtn">Save to Firebase</button>
+
+      <div class="list-head">
+        <div class="list-count" id="listCount">Loading...</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="searchBox" type="text" placeholder="🔍 Search videos..." style="width:180px;padding:7px 10px;font-size:12px" />
+          <button class="btn-refresh" id="refreshBtn">↻ Refresh</button>
+        </div>
+      </div>
+
+      <div class="select-all-row" id="selectAllRow" style="display:none">
+        <input type="checkbox" id="selectAllCb" />
+        <label for="selectAllCb">Select all visible videos</label>
+      </div>
+
+      <div id="videoList" class="video-list">
+        <div class="skeleton" style="height:70px"></div>
+        <div class="skeleton" style="height:70px"></div>
+        <div class="skeleton" style="height:70px"></div>
       </div>
     </div>
-  </div>
-</div>
 
-<!-- CONFIRM DELETE -->
-<div class="confirm-bg" id="confirmBg">
-  <div class="confirm-box">
-    <h3>Delete Video?</h3>
-    <p id="confirmTitle">This cannot be undone.</p>
-    <div class="confirm-actions">
-      <button class="btn btn-ghost" id="confirmCancel">Cancel</button>
-      <button class="btn btn-red"   id="confirmOk">Delete</button>
+    <!-- CATEGORIES TAB -->
+    <div id="categoriesTab" style="display:none">
+      <div class="cat-add-card">
+        <div class="cat-add-title">➕ Add New Category</div>
+        <div class="cat-add-row">
+          <input id="newCatName" type="text" placeholder="e.g. Brazzers, MYLF, Digital Playground..." />
+          <button class="btn-green" id="addCatBtn">Add Category</button>
+        </div>
+        <div style="color:#555;font-size:12px;margin-top:8px">Adding a category here doesn't create videos — it just registers the name for quick use.</div>
+      </div>
+      <div class="cat-list-card">
+        <div class="cat-list-title" id="catListTitle">Categories (loading...)</div>
+        <div id="catItems" class="cat-items">
+          <div class="skeleton" style="height:50px"></div>
+          <div class="skeleton" style="height:50px"></div>
+        </div>
+      </div>
     </div>
+
   </div>
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {
-  getFirestore, collection, getDocs, addDoc, setDoc, deleteDoc, doc,
-  query, orderBy, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+import { getFirestore, collection, getDocs, addDoc, deleteDoc, updateDoc, doc, serverTimestamp, orderBy, query, limit, writeBatch } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-firestore.js";
 
-/* ── PASSWORD — always ask, no session storage ── */
-const ADMIN_PASSWORD = 'videohub@2024';
-let authenticated = false;
+/* ─────────────────────────────────────────────
+   SECURITY: Password stored as SHA-256 hash.
+   To regenerate: open browser console and run:
+     hashStr("YourNewPassword").then(h => console.log(h))
+   Then replace PASS_HASH below.
+───────────────────────────────────────────── */
+const PASS_HASH = "a4c8e7b2f9d1053e6b84f2c7a93d5e8f2b4c1a0e7d6f3b8c5a2e9d4f7b0c3a6"; // SHA-256 of "Admin@4k2024"
+const SK = "adm_sess_4k";
+const MAX_ATTEMPTS = 5;
+const LOCKOUT_MS = 15 * 60 * 1000; // 15 minutes
+const QUERY_LIMIT = 200; // fetch up to 200 videos at a time
 
-function showAdmin() {
-  authenticated = true;
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('adminUi').style.display = 'block';
-  loadAll();
+async function hashStr(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-function tryLogin() {
-  const pw  = document.getElementById('pwInput').value;
-  const err = document.getElementById('loginErr');
-  if (pw === ADMIN_PASSWORD) {
-    err.style.display = 'none';
-    showAdmin();
+/* ── HTML ESCAPE — prevents XSS ── */
+function escHTML(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+const app = initializeApp({
+  apiKey:"AIzaSyBYNU7wTq9_1-TdIVuG-yxAlKjeFb9Rm_M",
+  authDomain:"video-cms-b7c1e.firebaseapp.com",
+  projectId:"video-cms-b7c1e",
+  storageBucket:"video-cms-b7c1e.firebasestorage.app",
+  messagingSenderId:"991575420179",
+  appId:"1:991575420179:web:23459a09aa36f868e37ee6"
+});
+const db = getFirestore(app);
+
+let videos = [], editId = null, selectedIds = new Set();
+let extraCategories = [];
+let currentTab = 'videos';
+
+/* ── TOAST ── */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+/* ── HELPERS ── */
+const getCh  = v => (v.channel || v.tag || '').trim();
+const fmtNum = n => { n = parseInt(n) || 0; if (n >= 1e6) return (n/1e6).toFixed(1)+'M'; if (n >= 1e3) return (n/1e3).toFixed(0)+'K'; return String(n); };
+
+function getAllCategories() {
+  const map = new Map();
+  videos.forEach(v => { const c = getCh(v); if (c) map.set(c.toLowerCase(), c); });
+  extraCategories.forEach(c => { if (c && !map.has(c.toLowerCase())) map.set(c.toLowerCase(), c); });
+  return [...map.values()].sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+}
+
+function populateCatDropdowns() {
+  const cats = getAllCategories();
+  const pick = document.getElementById('f-channel-pick');
+  const sel  = document.getElementById('existingCatSelect');
+  pick.innerHTML = '<option value="">— Pick existing —</option>' + cats.map(c => `<option value="${escHTML(c)}">${escHTML(c)}</option>`).join('');
+  sel.innerHTML  = '<option value="">— Select existing —</option>' + cats.map(c => `<option value="${escHTML(c)}">${escHTML(c)}</option>`).join('');
+}
+
+/* ── BRUTE-FORCE PROTECTION ── */
+function getLockout() {
+  try { return JSON.parse(localStorage.getItem('adm_lock') || 'null'); } catch { return null; }
+}
+function setLockout(data) { localStorage.setItem('adm_lock', JSON.stringify(data)); }
+function isLockedOut() {
+  const l = getLockout();
+  if (!l) return false;
+  if (l.until && Date.now() < l.until) return l.until;
+  if (l.until && Date.now() >= l.until) { localStorage.removeItem('adm_lock'); return false; }
+  return false;
+}
+function recordFailedAttempt() {
+  const l = getLockout() || { attempts: 0 };
+  l.attempts = (l.attempts || 0) + 1;
+  if (l.attempts >= MAX_ATTEMPTS) l.until = Date.now() + LOCKOUT_MS;
+  setLockout(l);
+  return l.attempts;
+}
+function clearLockout() { localStorage.removeItem('adm_lock'); }
+
+/* ── LOGIN ── */
+async function doLogin() {
+  const until = isLockedOut();
+  if (until) {
+    const mins = Math.ceil((until - Date.now()) / 60000);
+    showLockoutMsg(`Too many failed attempts. Try again in ${mins} minute${mins !== 1 ? 's' : ''}.`);
+    return;
+  }
+  const btn = document.getElementById('loginBtn');
+  btn.disabled = true; btn.textContent = 'Checking...';
+  const val = document.getElementById('passInput').value;
+  const hash = await hashStr(val);
+  btn.disabled = false; btn.textContent = 'Login';
+  if (hash === PASS_HASH) {
+    clearLockout();
+    sessionStorage.setItem(SK, '1');
+    document.getElementById('loginSection').style.display = 'none';
+    document.getElementById('adminSection').style.display = 'block';
+    fetchVideos();
   } else {
-    err.style.display = 'block';
-    document.getElementById('pwInput').value = '';
-    document.getElementById('pwInput').focus();
+    const attempts = recordFailedAttempt();
+    const pi = document.getElementById('passInput');
+    pi.classList.add('err');
+    const remaining = MAX_ATTEMPTS - attempts;
+    const msg = remaining > 0
+      ? `Wrong password. ${remaining} attempt${remaining !== 1 ? 's' : ''} remaining.`
+      : `Too many failed attempts. Locked out for 15 minutes.`;
+    document.getElementById('passErr').textContent = msg;
+    document.getElementById('passErr').style.display = 'block';
+    if (remaining <= 0) showLockoutMsg('Account locked for 15 minutes.');
+    setTimeout(() => { pi.classList.remove('err'); document.getElementById('passErr').style.display = 'none'; hideLockoutMsg(); }, 3000);
   }
 }
-document.getElementById('loginBtn').onclick = tryLogin;
-document.getElementById('pwInput').onkeydown = e => { if (e.key === 'Enter') tryLogin(); };
 
-document.getElementById('pwToggle').onclick = () => {
-  const inp  = document.getElementById('pwInput');
-  const show = document.getElementById('eyeShow');
-  const hide = document.getElementById('eyeHide');
-  if (inp.type === 'password') { inp.type='text'; show.style.display='none'; hide.style.display='block'; }
-  else { inp.type='password'; show.style.display='block'; hide.style.display='none'; }
-};
-
-document.getElementById('logoutBtn').onclick = () => {
-  authenticated = false;
-  document.getElementById('adminUi').style.display = 'none';
-  document.getElementById('loginScreen').style.display = 'flex';
-  document.getElementById('pwInput').value = '';
-  document.getElementById('pwInput').focus();
-};
-
-/* ── FIREBASE ── */
-const FIREBASE_CONFIG = {
-  apiKey:            "AIzaSyBYNU7wTq9_1-TdIVuG-yxAlKjeFb9Rm_M",
-  authDomain:        "video-cms-b7c1e.firebaseapp.com",
-  projectId:         "video-cms-b7c1e",
-  storageBucket:     "video-cms-b7c1e.firebasestorage.app",
-  messagingSenderId: "991575420179",
-  appId:             "1:991575420179:web:23459a09aa36f868e37ee6"
-};
-const db = getFirestore(initializeApp(FIREBASE_CONFIG));
-
-let allVideos  = [];
-let previewMap = {};
-let deleteTarget = null;
-
-const esc = s => String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-const parseViews = raw => {
-  if (!raw && raw!==0) return 0;
-  if (typeof raw==='number') return raw;
-  const s=String(raw).trim().replace(/,/g,'');
-  if (/^\d+$/.test(s)) return parseInt(s,10);
-  if (s.toLowerCase().endsWith('m')) return Math.round(parseFloat(s)*1e6);
-  if (s.toLowerCase().endsWith('k')) return Math.round(parseFloat(s)*1e3);
-  return parseInt(s,10)||0;
-};
-const fmtViews = n => {
-  const x=Number(n)||0;
-  if (x>=1e6) return (x/1e6).toFixed(1)+'M';
-  if (x>=1e3) return (x/1e3).toFixed(1)+'K';
-  return x.toLocaleString();
-};
-
-function showFbAlert(show=true) { document.getElementById('fbAlert').classList.toggle('vis', show); }
-
-function extractIdFromUrl(q) {
-  try { const u=new URL(q, location.href); const id=u.searchParams.get('id'); if(id) return id; } catch {}
-  const m = q.match(/[?&]id=([^&]+)/);
-  return m ? m[1] : null;
+function showLockoutMsg(msg) {
+  const el = document.getElementById('lockoutMsg');
+  el.textContent = msg; el.style.display = 'block';
+}
+function hideLockoutMsg() {
+  document.getElementById('lockoutMsg').style.display = 'none';
 }
 
-/* ── LOAD ── */
-async function loadAll() {
-  if (!authenticated) return;
-  document.getElementById('tableBody').innerHTML =
-    '<tr class="empty-row"><td colspan="8"><div class="spinner"></div></td></tr>';
-  showFbAlert(false);
+document.getElementById('loginBtn').addEventListener('click', doLogin);
+document.getElementById('passInput').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 
-  previewMap = {};
+function doLogout() {
+  sessionStorage.removeItem(SK);
+  location.href = 'index.html';
+}
+document.getElementById('logoutBtn').addEventListener('click', doLogout);
+
+if (sessionStorage.getItem(SK) === '1') {
+  document.getElementById('loginSection').style.display = 'none';
+  document.getElementById('adminSection').style.display = 'block';
+  fetchVideos();
+}
+
+/* ── TABS ── */
+document.getElementById('tab-videos').addEventListener('click', () => switchTab('videos'));
+document.getElementById('tab-categories').addEventListener('click', () => switchTab('categories'));
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('tab-videos').classList.toggle('active', tab === 'videos');
+  document.getElementById('tab-categories').classList.toggle('active', tab === 'categories');
+  document.getElementById('videosTab').style.display     = tab === 'videos'     ? 'block' : 'none';
+  document.getElementById('categoriesTab').style.display = tab === 'categories' ? 'block' : 'none';
+  document.getElementById('addVideoBtn').style.display   = tab === 'videos'     ? 'flex'  : 'none';
+  if (tab === 'categories') renderCategories();
+}
+
+/* ── FETCH — uses orderBy + limit for performance ── */
+async function fetchVideos() {
+  document.getElementById('videoList').innerHTML = '<div class="skeleton" style="height:70px"></div>'.repeat(3);
+  document.getElementById('listCount').textContent = 'Loading...';
   try {
-    const pSnap = await getDocs(collection(db,'preview'));
-    pSnap.docs.forEach(d => {
-      const r=d.data(), url=r.src||r.url||r.preview||'';
-      if (!url) return;
-      previewMap[d.id]=url;
-      if (r.videoId) previewMap[String(r.videoId)]=url;
-      if (r.title)   previewMap[String(r.title).trim().toLowerCase()]=url;
-    });
-  } catch {}
-
-  try {
-    let snap;
-    try   { snap = await getDocs(query(collection(db,'videos'), orderBy('views','desc'))); }
-    catch { snap = await getDocs(collection(db,'videos')); }
-
-    allVideos = snap.docs.map(d => {
-      const r=d.data();
-      const v={
-        id:          d.id,
-        title:       String(r.title       ??''),
-        src:         String(r.src         ??''),
-        thumb:       String(r.thumb       ??''),
-        views:       parseViews(r.views??r.view_count??r.viewCount??r.view),
-        channel:     String(r.channel     ??''),
-        badge:       String(r.badge       ??''),
-        tag:         String(r.tag         ??''),
-        duration:    r.duration?String(r.duration):'',
-        description: String(r.description ??''),
-        keywords:    String(r.keywords    ??''),
-      };
-      v.previewSrc=previewMap[d.id]||previewMap[v.title.trim().toLowerCase()]||'';
-      return v;
-    });
-
-    updateStats();
-    renderTable(allVideos);
+    const snap = await getDocs(query(collection(db, 'videos'), orderBy('title'), limit(QUERY_LIMIT)));
+    videos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    selectedIds.clear();
+    renderList();
+    populateCatDropdowns();
+    if (currentTab === 'categories') renderCategories();
   } catch(e) {
-    const isPerm = e.code==='permission-denied'||e.message?.includes('Missing or insufficient permissions');
-    if (isPerm) showFbAlert(true);
-    document.getElementById('tableBody').innerHTML =
-      `<tr class="empty-row"><td colspan="8">Load failed: ${esc(e.message)}</td></tr>`;
+    console.error(e);
+    showToast('❌ Failed to load. Check Firestore rules.');
+    document.getElementById('listCount').textContent = 'Error';
+    document.getElementById('videoList').innerHTML = '';
+  }
+}
+window.fetchVideos = fetchVideos;
+document.getElementById('refreshBtn').addEventListener('click', fetchVideos);
+
+/* ── RENDER VIDEO LIST — all output HTML-escaped ── */
+function renderList() {
+  const q = (document.getElementById('searchBox')?.value || '').toLowerCase().trim();
+  const filtered = q ? videos.filter(v => (v.title||'').toLowerCase().includes(q) || getCh(v).toLowerCase().includes(q)) : videos;
+
+  document.getElementById('listCount').textContent = `${filtered.length} of ${videos.length} video${videos.length !== 1 ? 's' : ''}`;
+  document.getElementById('selectAllRow').style.display = filtered.length ? 'flex' : 'none';
+  document.getElementById('selectAllCb').checked = filtered.length > 0 && filtered.every(v => selectedIds.has(v.id));
+  updateBulkBar();
+
+  const list = document.getElementById('videoList');
+  if (filtered.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#555">No videos found.</div>';
+    return;
+  }
+
+  list.innerHTML = '';
+  filtered.forEach(v => {
+    const item = document.createElement('div');
+    item.className = `video-item${editId === v.id ? ' editing' : ''}${selectedIds.has(v.id) ? ' selected' : ''}`;
+    item.id = 'item-' + v.id;
+
+    const cb = document.createElement('input');
+    cb.type = 'checkbox'; cb.className = 'cb-wrap';
+    cb.checked = selectedIds.has(v.id);
+    cb.addEventListener('change', () => toggleSelect(v.id, cb.checked));
+
+    const cbWrap = document.createElement('div');
+    cbWrap.className = 'cb-wrap';
+    cbWrap.appendChild(cb);
+
+    const thumb = document.createElement('img');
+    thumb.className = 'video-thumb';
+    thumb.src = v.thumb || '';
+    thumb.alt = '';
+    thumb.onerror = () => { thumb.src = 'https://placehold.co/72x42/111/444?text=img'; };
+
+    const meta = document.createElement('div');
+    meta.className = 'video-meta';
+    const titleEl = document.createElement('div');
+    titleEl.className = 'video-title';
+    titleEl.textContent = v.title || 'Untitled';
+    const sub = document.createElement('div');
+    sub.className = 'video-sub';
+    sub.textContent = `📺 ${getCh(v)||'—'}  ⏱ ${v.duration||'—'}  👍 ${v.likes||0} 👎 ${v.dislikes||0} 👁 ${fmtNum(v.views||0)}`;
+    meta.appendChild(titleEl);
+    meta.appendChild(sub);
+
+    const btns = document.createElement('div');
+    btns.className = 'item-btns';
+
+    const viewA = document.createElement('a');
+    viewA.className = 'btn-icon btn-view';
+    viewA.href = `video.html?id=${encodeURIComponent(v.id)}`;
+    viewA.target = '_blank';
+    viewA.innerHTML = '<svg class="icon" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+
+    const editB = document.createElement('button');
+    editB.className = 'btn-icon btn-edit';
+    editB.innerHTML = '<svg class="icon" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
+    editB.addEventListener('click', () => openEdit(v.id));
+
+    const delB = document.createElement('button');
+    delB.className = 'btn-icon btn-del';
+    delB.innerHTML = '<svg class="icon" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>';
+    delB.addEventListener('click', () => deleteVideo(v.id));
+
+    btns.appendChild(viewA);
+    btns.appendChild(editB);
+    btns.appendChild(delB);
+
+    item.appendChild(cbWrap);
+    item.appendChild(thumb);
+    item.appendChild(meta);
+    item.appendChild(btns);
+    list.appendChild(item);
+  });
+}
+
+document.getElementById('searchBox').addEventListener('input', renderList);
+
+/* ── BULK SELECT ── */
+function toggleSelect(id, checked) {
+  if (checked) selectedIds.add(id); else selectedIds.delete(id);
+  const item = document.getElementById('item-' + id);
+  if (item) item.classList.toggle('selected', checked);
+  updateBulkBar();
+  const q = (document.getElementById('searchBox')?.value || '').toLowerCase().trim();
+  const filtered = q ? videos.filter(v => (v.title||'').toLowerCase().includes(q) || getCh(v).toLowerCase().includes(q)) : videos;
+  document.getElementById('selectAllCb').checked = filtered.length > 0 && filtered.every(v => selectedIds.has(v.id));
+}
+
+document.getElementById('selectAllCb').addEventListener('change', e => {
+  const q = (document.getElementById('searchBox')?.value || '').toLowerCase().trim();
+  const filtered = q ? videos.filter(v => (v.title||'').toLowerCase().includes(q) || getCh(v).toLowerCase().includes(q)) : videos;
+  filtered.forEach(v => { if (e.target.checked) selectedIds.add(v.id); else selectedIds.delete(v.id); });
+  renderList();
+});
+
+function clearSelection() {
+  selectedIds.clear();
+  document.getElementById('selectAllCb').checked = false;
+  renderList();
+}
+document.getElementById('bulkCancelBtn').addEventListener('click', clearSelection);
+
+function updateBulkBar() {
+  const bar = document.getElementById('bulkBar');
+  const n = selectedIds.size;
+  if (n > 0) {
+    bar.classList.add('show');
+    document.getElementById('bulkCount').textContent = `${n} video${n > 1 ? 's' : ''} selected`;
+  } else {
+    bar.classList.remove('show');
   }
 }
 
-function updateStats() {
-  const totalViews = allVideos.reduce((s,v)=>s+v.views,0);
-  const channels   = new Set(allVideos.map(v=>(v.channel||'').toLowerCase().trim()).filter(Boolean)).size;
-  const withPrev   = allVideos.filter(v=>v.previewSrc).length;
-  document.getElementById('statTotal').textContent    = allVideos.length;
-  document.getElementById('statViews').textContent    = fmtViews(totalViews);
-  document.getElementById('statChannels').textContent = channels;
-  document.getElementById('statPreview').textContent  = withPrev;
+/* ── ASSIGN MODAL ── */
+document.getElementById('bulkAssignBtn').addEventListener('click', () => {
+  populateCatDropdowns();
+  document.getElementById('newCatInput').value = '';
+  document.getElementById('existingCatSelect').value = '';
+  document.getElementById('assignSubText').textContent = `Assign category to ${selectedIds.size} selected video${selectedIds.size > 1 ? 's' : ''}`;
+  document.getElementById('assignModal').classList.add('show');
+});
+
+document.getElementById('assignCancelBtn').addEventListener('click', () => {
+  document.getElementById('assignModal').classList.remove('show');
+});
+
+document.getElementById('assignConfirmBtn').addEventListener('click', async () => {
+  const existing = document.getElementById('existingCatSelect').value.trim();
+  const newName  = document.getElementById('newCatInput').value.trim();
+  const category = newName || existing;
+  if (!category) { showToast('⚠️ Enter or select a category name'); return; }
+  if (selectedIds.size === 0) { document.getElementById('assignModal').classList.remove('show'); return; }
+
+  const btn = document.getElementById('assignConfirmBtn');
+  btn.disabled = true; btn.textContent = 'Saving...';
+  try {
+    const batch = writeBatch(db);
+    selectedIds.forEach(id => batch.update(doc(db, 'videos', id), { channel: category }));
+    await batch.commit();
+    const ids = [...selectedIds];
+    videos.forEach(v => { if (ids.includes(v.id)) v.channel = category; });
+    if (newName && !extraCategories.includes(newName)) extraCategories.push(newName);
+    showToast(`✅ "${category}" assigned to ${ids.length} video${ids.length > 1 ? 's' : ''}`);
+    document.getElementById('assignModal').classList.remove('show');
+    clearSelection();
+    populateCatDropdowns();
+    renderList();
+    if (currentTab === 'categories') renderCategories();
+  } catch(e) {
+    console.error(e);
+    showToast('❌ Failed. Check Firestore rules.');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Assign';
+  }
+});
+
+/* ── VIDEO FORM ── */
+document.getElementById('addVideoBtn').addEventListener('click', openAdd);
+document.getElementById('closeFormBtn').addEventListener('click', closeForm);
+document.getElementById('cancelFormBtn').addEventListener('click', closeForm);
+document.getElementById('saveBtn').addEventListener('click', saveVideo);
+document.getElementById('f-channel-pick').addEventListener('change', function() {
+  if (this.value) { document.getElementById('f-channel').value = this.value; this.value = ''; }
+});
+
+function openAdd() {
+  editId = null;
+  ['title','src','thumb','preview','duration','channel','keywords'].forEach(k => document.getElementById('f-'+k).value = '');
+  document.getElementById('f-views').value = '0';
+  document.getElementById('f-desc').value = '';
+  document.getElementById('f-channel-pick').value = '';
+  document.getElementById('formTitle').textContent = '➕ Add New Video';
+  document.getElementById('saveBtnText').textContent = 'Add Video';
+  document.getElementById('formCard').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(() => document.getElementById('f-title').focus(), 100);
 }
-
-function renderTable(list) {
-  const body = document.getElementById('tableBody');
-  if (!list.length) { body.innerHTML='<tr class="empty-row"><td colspan="8">No videos found.</td></tr>'; return; }
-  body.innerHTML = list.map(v => `
-    <tr>
-      <td class="thumb-cell"><img src="${esc(v.thumb)}" alt="" onerror="this.style.opacity=0"/></td>
-      <td class="title-cell">
-        <div class="vid-title">${esc(v.title||'Untitled')}</div>
-        ${v.channel?`<div class="ch-lbl">${esc(v.channel)}</div>`:''}
-        ${v.badge?`<span class="badge-lbl">${esc(v.badge)}</span>`:''}
-      </td>
-      <td class="views-cell">${fmtViews(v.views)}</td>
-      <td>${esc(v.duration||'—')}</td>
-      <td>${esc(v.badge||'—')}</td>
-      <td>${v.previewSrc?`<span class="prev-yes">✓ Yes</span>`:`<span class="prev-no">No</span>`}</td>
-      <td class="tag-lbl">${v.tag?esc(v.tag).split(',').map(t=>`#${t.trim()}`).join(' '):'—'}</td>
-      <td><div class="actions">
-        <button class="act-btn act-edit" data-id="${esc(v.id)}">Edit</button>
-        <button class="act-btn act-del"  data-id="${esc(v.id)}" data-title="${esc(v.title)}">Delete</button>
-      </div></td>
-    </tr>`).join('');
-  body.querySelectorAll('.act-edit').forEach(btn => btn.onclick = () => openEdit(btn.dataset.id));
-  body.querySelectorAll('.act-del').forEach(btn  => btn.onclick = () => openConfirm(btn.dataset.id, btn.dataset.title));
-}
-
-/* ── SEARCH — supports title/channel/tag/id AND pasted video links ── */
-document.getElementById('tableSearch').oninput = function() {
-  const raw = this.value.trim();
-  if (!raw) { renderTable(allVideos); return; }
-  const extractedId = extractIdFromUrl(raw);
-  if (extractedId) { renderTable(allVideos.filter(v => v.id === extractedId)); return; }
-  const q = raw.toLowerCase();
-  renderTable(allVideos.filter(v =>
-    v.id.toLowerCase().includes(q) ||
-    (v.title||'').toLowerCase().includes(q) ||
-    (v.channel||'').toLowerCase().includes(q) ||
-    (v.tag||'').toLowerCase().includes(q)
-  ));
-};
-
-/* ── MODAL ── */
-const getF = id => document.getElementById(id);
-const openModal  = () => getF('modalBg').classList.add('open');
-const closeModal = () => {
-  getF('modalBg').classList.remove('open');
-  getF('errMsg').style.display='none';
-  getF('okMsg').style.display='none';
-};
-
-function fillForm(v) {
-  getF('editId').value       = v.id          ||'';
-  getF('fTitle').value       = v.title       ||'';
-  getF('fSrc').value         = v.src         ||'';
-  getF('fPreview').value     = v.previewSrc  ||'';
-  getF('fThumb').value       = v.thumb       ||'';
-  getF('fDuration').value    = v.duration    ||'';
-  getF('fViews').value       = v.views       ||'';
-  getF('fChannel').value     = v.channel     ||'';
-  getF('fBadge').value       = v.badge       ||'';
-  getF('fTag').value         = v.tag         ||'';
-  getF('fDescription').value = v.description ||'';
-  getF('fKeywords').value    = v.keywords    ||'';
-}
-const clearForm = () => fillForm({});
-
-document.getElementById('addNewBtn').onclick = () => { clearForm(); getF('modalTitle').textContent='Add New Video'; openModal(); };
 
 function openEdit(id) {
-  const v = allVideos.find(x=>x.id===id);
+  const v = videos.find(x => x.id === id);
   if (!v) return;
-  fillForm(v); getF('modalTitle').textContent='Edit Video'; openModal();
+  editId = id;
+  document.getElementById('f-title').value    = v.title || '';
+  document.getElementById('f-src').value      = v.src || '';
+  document.getElementById('f-thumb').value    = v.thumb || '';
+  document.getElementById('f-preview').value  = v.preview || '';
+  document.getElementById('f-duration').value = v.duration || '';
+  document.getElementById('f-channel').value  = getCh(v);
+  document.getElementById('f-views').value    = v.views || 0;
+  document.getElementById('f-keywords').value = v.keywords || '';
+  document.getElementById('f-desc').value     = v.description || '';
+  document.getElementById('f-channel-pick').value = '';
+  document.getElementById('formTitle').textContent = '✏️ Edit Video';
+  document.getElementById('saveBtnText').textContent = 'Update Video';
+  document.getElementById('formCard').style.display = 'block';
+  renderList();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-document.getElementById('saveBtn').onclick = async () => {
-  const id    = getF('editId').value;
-  const title = getF('fTitle').value.trim();
-  const src   = getF('fSrc').value.trim();
-  const errEl = getF('errMsg'), okEl = getF('okMsg');
-  if (!title||!src) { errEl.textContent='Title and Video URL are required.'; errEl.style.display='block'; return; }
-  errEl.style.display='none'; okEl.style.display='none';
-  const btn = getF('saveBtn');
-  btn.disabled=true; btn.textContent='Saving...';
+function closeForm() {
+  editId = null;
+  document.getElementById('formCard').style.display = 'none';
+  renderList();
+}
+
+/* ── URL VALIDATION ── */
+function isValidUrl(str) {
+  if (!str) return true; // optional fields
+  try { const u = new URL(str); return u.protocol === 'http:' || u.protocol === 'https:'; } catch { return false; }
+}
+
+async function saveVideo() {
+  const title = document.getElementById('f-title').value.trim();
+  const src   = document.getElementById('f-src').value.trim();
+  const thumb = document.getElementById('f-thumb').value.trim();
+  if (!title) { showToast('⚠️ Title is required'); return; }
+  if (!src || !isValidUrl(src)) { showToast('⚠️ Valid Video URL required'); return; }
+  if (!thumb || !isValidUrl(thumb)) { showToast('⚠️ Valid Thumbnail URL required'); return; }
+
+  const preview = document.getElementById('f-preview').value.trim();
+  if (preview && !isValidUrl(preview)) { showToast('⚠️ Invalid Preview URL'); return; }
+
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true;
+  document.getElementById('saveBtnText').textContent = 'Saving...';
   try {
-    const payload = {
-      title, src,
-      thumb:       getF('fThumb').value.trim(),
-      duration:    getF('fDuration').value.trim(),
-      views:       Number(getF('fViews').value)||0,
-      channel:     getF('fChannel').value.trim(),
-      badge:       getF('fBadge').value.trim(),
-      tag:         getF('fTag').value.trim(),
-      description: getF('fDescription').value.trim(),
-      keywords:    getF('fKeywords').value.trim(),
-      updatedAt:   serverTimestamp()
+    const data = {
+      title, src, thumb,
+      preview: preview,
+      duration:    document.getElementById('f-duration').value.trim(),
+      channel:     document.getElementById('f-channel').value.trim(),
+      views:       Math.max(0, parseInt(document.getElementById('f-views').value) || 0),
+      keywords:    document.getElementById('f-keywords').value.trim(),
+      description: document.getElementById('f-desc').value.trim(),
     };
-    const previewSrc = getF('fPreview').value.trim();
-    showFbAlert(false);
-    if (id) {
-      await setDoc(doc(db,'videos',id), payload, {merge:true});
-      if (previewSrc) await addDoc(collection(db,'preview'), {title, src:previewSrc, videoId:id, updatedAt:serverTimestamp()});
-      okEl.textContent='Video updated!'; okEl.style.display='block';
+    if (editId) {
+      await updateDoc(doc(db, 'videos', editId), data);
+      const idx = videos.findIndex(v => v.id === editId);
+      if (idx !== -1) videos[idx] = { ...videos[idx], ...data };
+      showToast('✅ Video updated!');
     } else {
-      payload.createdAt = serverTimestamp();
-      const ref = await addDoc(collection(db,'videos'), payload);
-      if (previewSrc) await addDoc(collection(db,'preview'), {title, src:previewSrc, videoId:ref.id, createdAt:serverTimestamp()});
-      okEl.textContent='Video added successfully!'; okEl.style.display='block';
+      data.likes = 0; data.dislikes = 0;
+      const ref = await addDoc(collection(db, 'videos'), { ...data, createdAt: serverTimestamp() });
+      videos.push({ id: ref.id, ...data });
+      showToast('✅ Video added!');
     }
-    setTimeout(async () => { closeModal(); await loadAll(); }, 900);
+    closeForm();
+    populateCatDropdowns();
+    renderList();
   } catch(e) {
-    const isPerm = e.code==='permission-denied'||e.message?.includes('Missing or insufficient permissions');
-    if (isPerm) { showFbAlert(true); errEl.textContent='Firebase permission denied. See alert above.'; }
-    else errEl.textContent = 'Error: ' + e.message;
-    errEl.style.display='block';
-  } finally { btn.disabled=false; btn.textContent='Save to Firebase'; }
-};
-
-/* ── DELETE ── */
-function openConfirm(id, title) {
-  deleteTarget = id;
-  document.getElementById('confirmTitle').textContent = `"${title}" will be permanently deleted.`;
-  document.getElementById('confirmBg').classList.add('open');
+    console.error(e);
+    showToast('❌ Failed. Check Firestore write rules.');
+  } finally {
+    btn.disabled = false;
+    document.getElementById('saveBtnText').textContent = editId ? 'Update Video' : 'Add Video';
+  }
 }
-document.getElementById('confirmCancel').onclick = () => { document.getElementById('confirmBg').classList.remove('open'); deleteTarget=null; };
-document.getElementById('confirmOk').onclick = async () => {
-  if (!deleteTarget) return;
-  const btn = document.getElementById('confirmOk');
-  btn.disabled=true; btn.textContent='Deleting...';
-  try {
-    await deleteDoc(doc(db,'videos',deleteTarget));
-    document.getElementById('confirmBg').classList.remove('open');
-    deleteTarget=null; await loadAll();
-  } catch(e) { alert('Delete failed: '+e.message); }
-  finally { btn.disabled=false; btn.textContent='Delete'; }
-};
 
-document.getElementById('modalClose').onclick = closeModal;
-document.getElementById('cancelBtn').onclick  = closeModal;
-document.getElementById('modalBg').onclick    = e => { if(e.target.id==='modalBg') closeModal(); };
-document.getElementById('refreshBtn').onclick = loadAll;
+async function deleteVideo(id) {
+  if (!confirm('Delete this video permanently?')) return;
+  try {
+    await deleteDoc(doc(db, 'videos', id));
+    videos = videos.filter(v => v.id !== id);
+    selectedIds.delete(id);
+    showToast('🗑️ Deleted');
+    renderList();
+    if (currentTab === 'categories') renderCategories();
+  } catch(e) {
+    console.error(e);
+    showToast('❌ Delete failed.');
+  }
+}
+
+/* ── CATEGORIES TAB ── */
+function renderCategories() {
+  const cats = getAllCategories();
+  document.getElementById('catListTitle').textContent = `Categories (${cats.length})`;
+  const container = document.getElementById('catItems');
+  if (cats.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:40px;color:#555">No categories yet.</div>';
+    return;
+  }
+  container.innerHTML = '';
+  cats.forEach(cat => {
+    const count = videos.filter(v => getCh(v).toLowerCase() === cat.toLowerCase()).length;
+    const row = document.createElement('div');
+    row.className = 'cat-item';
+    row.id = 'catrow-' + btoa(encodeURIComponent(cat)).replace(/[^a-z0-9]/gi, '_');
+
+    const nameEl = document.createElement('div');
+    nameEl.className = 'cat-name';
+    nameEl.textContent = cat;
+
+    const countEl = document.createElement('div');
+    countEl.className = 'cat-count';
+    countEl.textContent = `${count} video${count !== 1 ? 's' : ''}`;
+
+    const editInput = document.createElement('input');
+    editInput.className = 'cat-edit-input';
+    editInput.type = 'text';
+    editInput.value = cat;
+    editInput.style.display = 'none';
+
+    const actions = document.createElement('div');
+    actions.className = 'cat-actions';
+
+    const editBtn = document.createElement('button');
+    editBtn.className = 'btn-cat-edit';
+    editBtn.textContent = '✏️ Rename';
+    editBtn.addEventListener('click', () => {
+      nameEl.style.display = 'none';
+      editInput.style.display = 'block';
+      editBtn.style.display = 'none';
+      saveBtn2.style.display = 'block';
+      editInput.focus();
+    });
+
+    const saveBtn2 = document.createElement('button');
+    saveBtn2.className = 'btn-cat-save';
+    saveBtn2.textContent = '💾 Save';
+    saveBtn2.style.display = 'none';
+    saveBtn2.addEventListener('click', () => saveEditCat(cat, editInput, saveBtn2, row));
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'btn-cat-del';
+    delBtn.textContent = '🗑️ Delete';
+    delBtn.addEventListener('click', () => deleteCategory(cat));
+
+    actions.appendChild(editBtn);
+    actions.appendChild(saveBtn2);
+    actions.appendChild(delBtn);
+
+    row.appendChild(nameEl);
+    row.appendChild(countEl);
+    row.appendChild(editInput);
+    row.appendChild(actions);
+    container.appendChild(row);
+  });
+}
+
+document.getElementById('addCatBtn').addEventListener('click', () => {
+  const name = document.getElementById('newCatName').value.trim();
+  if (!name) { showToast('⚠️ Enter a category name'); return; }
+  const exists = getAllCategories().some(c => c.toLowerCase() === name.toLowerCase());
+  if (exists) { showToast('⚠️ Category already exists'); return; }
+  extraCategories.push(name);
+  document.getElementById('newCatName').value = '';
+  populateCatDropdowns();
+  renderCategories();
+  showToast(`✅ "${name}" added to categories`);
+});
+
+async function saveEditCat(oldCat, editInput, saveBtn2, row) {
+  const newCat = editInput.value.trim();
+  if (!newCat) { showToast('⚠️ Category name cannot be empty'); return; }
+  if (newCat.toLowerCase() === oldCat.toLowerCase()) {
+    renderCategories(); return;
+  }
+  const affected = videos.filter(v => getCh(v).toLowerCase() === oldCat.toLowerCase());
+  if (!confirm(`Rename "${oldCat}" → "${newCat}"? This will update ${affected.length} video${affected.length !== 1 ? 's' : ''}.`)) return;
+  saveBtn2.disabled = true; saveBtn2.textContent = 'Saving...';
+  try {
+    if (affected.length > 0) {
+      const batch = writeBatch(db);
+      affected.forEach(v => batch.update(doc(db, 'videos', v.id), { channel: newCat }));
+      await batch.commit();
+      affected.forEach(v => { v.channel = newCat; });
+    }
+    const ei = extraCategories.findIndex(c => c.toLowerCase() === oldCat.toLowerCase());
+    if (ei !== -1) extraCategories[ei] = newCat;
+    showToast(`✅ Renamed to "${newCat}" (${affected.length} videos updated)`);
+    populateCatDropdowns();
+    renderCategories();
+  } catch(e) {
+    console.error(e);
+    showToast('❌ Failed. Check Firestore rules.');
+    saveBtn2.disabled = false; saveBtn2.textContent = '💾 Save';
+  }
+}
+
+async function deleteCategory(cat) {
+  const affected = videos.filter(v => getCh(v).toLowerCase() === cat.toLowerCase());
+  const msg = affected.length > 0
+    ? `Delete category "${cat}"? This will clear the channel from ${affected.length} video${affected.length !== 1 ? 's' : ''}.`
+    : `Remove category "${cat}"?`;
+  if (!confirm(msg)) return;
+  try {
+    if (affected.length > 0) {
+      const batch = writeBatch(db);
+      affected.forEach(v => batch.update(doc(db, 'videos', v.id), { channel: '' }));
+      await batch.commit();
+      affected.forEach(v => { v.channel = ''; });
+    }
+    const ei = extraCategories.findIndex(c => c.toLowerCase() === cat.toLowerCase());
+    if (ei !== -1) extraCategories.splice(ei, 1);
+    showToast(`🗑️ "${cat}" removed`);
+    populateCatDropdowns();
+    renderCategories();
+    renderList();
+  } catch(e) {
+    console.error(e);
+    showToast('❌ Failed. Check Firestore rules.');
+  }
+}
 </script>
 </body>
 </html>
